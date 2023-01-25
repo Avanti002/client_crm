@@ -8,6 +8,9 @@ import 'home.dart';
 
 var loginStatus;
 String sCode="";
+String usernm="";
+String emailid="";
+String password="";
 class MyLogin extends StatefulWidget {
 const MyLogin({Key? key}) : super(key: key);
   @override
@@ -22,6 +25,8 @@ class _MyLoginState extends State<MyLogin> {
   void usrLogin(String curl,String email,String pass) async { 
     try
     {
+      emailid=email;
+      password=pass;
     var request =http.Request('GET', Uri.parse('http://$curl/api/method/login?usr=$email&pwd=$pass'));
     http.StreamedResponse response = await request.send(); 
     if (response.statusCode == 200) {
@@ -51,10 +56,11 @@ class _MyLoginState extends State<MyLogin> {
           Container(
               margin: const EdgeInsets.symmetric(vertical: 70,horizontal: 130),
               child:
-              Image.asset(
-                'assets/hd1.png',
-                width: 150.0,
-              ),
+              Image.network(
+                  'https://scontent.fpnq7-3.fna.fbcdn.net/v/t39.30808-6/298901972_439781191497646_6645786026494038575_n.png?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=vymLlBzEmVQAX889w05&_nc_ht=scontent.fpnq7-3.fna&oh=00_AfDJ5lCxNWDSBEGU39KLjABcNin_ZgdhizPWRHS3qbvrDw&oe=63D66393',
+                  fit: BoxFit.cover,
+                  
+                ),
             ),
           const SizedBox(
             height: 60,
@@ -150,6 +156,10 @@ class _MyLoginState extends State<MyLogin> {
                                              context,
                                               MaterialPageRoute(builder: (context) => TasksPage(Goback:(int){} ),)
                                              );
+                                             String usrnm=loginStatus.toString();
+                                             usrnm=usrnm.substring(55);
+                                             usernm = usrnm.replaceAll(RegExp('[^A-Za-z]'), '');
+                                             //print(usernm);
                                }
                                else
                                {
@@ -159,6 +169,7 @@ class _MyLoginState extends State<MyLogin> {
                                }
                                }
                                else{
+                                 
                                  ScaffoldMessenger.of(context).showSnackBar(
                                  const SnackBar(content: Text('Please Enter correct Username or Password !')));
                                }

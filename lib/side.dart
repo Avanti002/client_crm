@@ -3,6 +3,7 @@ import 'package:quantbit_crm/accountsindex.dart';
 import 'package:quantbit_crm/pick_contact1.dart';
 import 'package:quantbit_crm/deal.dart';
 import 'package:quantbit_crm/home.dart';
+import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/leadindex.dart';
 import 'package:quantbit_crm/meeting1.dart';
 import 'package:quantbit_crm/task.dart';
@@ -16,12 +17,12 @@ class NavBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Avanti002'),
-            accountEmail: Text('iamavantipawar@gmail.com'),
+            accountName: Text(login.usernm),
+            accountEmail: Text(login.emailid),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                  'https://static.thenounproject.com/png/1041818-200.png',
                   fit: BoxFit.cover,
                   width: 90,
                   height: 90,
