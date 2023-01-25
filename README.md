@@ -1,6 +1,6 @@
 # quantbit_crm
 
-A new Flutter project.
+Quantbit_CRM ERPNext Flutter Application
 
 ## Getting Started
 
