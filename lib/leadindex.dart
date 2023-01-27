@@ -24,9 +24,8 @@ http.StreamedResponse response = await request.send();
 if (response.statusCode == 200) {
  await response.stream.bytesToString().then((value) {
   temp=value;
-  
-                  print(value);
-                  });
+  print(value);
+  });
   //print(await response.stream.bytesToString());
 
 }
