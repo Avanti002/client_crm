@@ -21,9 +21,9 @@ var email=login.emailid;
 var httpsUri = Uri(
     scheme: 'https',
     host: 'demo.erpdata.in',
-    path: '/api/resource/User');
+    path: '/api/resource/Lead');
 
-String link="https://demo.erpdata.in/api/resource/User";
+String link="https://demo.erpdata.in/api/resource/Lead";
 var res = await http
 .get(httpsUri,headers: {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
@@ -38,8 +38,9 @@ var rest=obj["data"] as List;
 
 for (var element in rest) {
   print(element);
+  lst.add(element);
 }
-list=rest.map<Data>((json)=>Data.fromJson(json)).toList();
+//list=rest.map<Data>((json)=>Data.fromJson(json)).toList();
 lst=rest;
 }
 return list;
@@ -106,8 +107,10 @@ void initState() {
                 ),
               ),
             ]),
-        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, index) {
-          return Text(lst.length.toString());
+        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
+          return Card(
+            child: ListTile(title: Text(lst[position].toString())),
+          );
         })),
         floatingActionButton:
             SpeedDial(animatedIcon: AnimatedIcons.add_event, children: [
