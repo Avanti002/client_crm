@@ -17,12 +17,9 @@ Future<List<Data>> fetchData() async {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 };
-var email=login.emailid;
-var httpsUri = Uri(
-    scheme: 'https',
-    host: 'demo.erpdata.in',
-    path: '/api/resource/Lead');
 
+var email=login.emailid;
+var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead');
 String link="https://demo.erpdata.in/api/resource/Lead";
 var res = await http
 .get(httpsUri,headers: {
@@ -33,14 +30,9 @@ var res = await http
 if (res.statusCode == 200) {
 var obj=json.decode(res.body);
 var rest=obj["data"] as List;
-
-//print(rest);
-
 for (var element in rest) {
-  print(element);
   lst.add(element);
 }
-//list=rest.map<Data>((json)=>Data.fromJson(json)).toList();
 lst=rest;
 }
 return list;
