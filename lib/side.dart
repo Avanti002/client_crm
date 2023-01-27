@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/accountsindex.dart';
+import 'package:quantbit_crm/opportunityindex.dart';
 import 'package:quantbit_crm/pick_contact1.dart';
 import 'package:quantbit_crm/deal.dart';
 import 'package:quantbit_crm/home.dart';
@@ -69,13 +69,13 @@ class NavBar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Accounts'),
+            leading: Icon(Icons.handshake_outlined),
+            title: Text('Opportunity'),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Accountindex(title: 'Accounts')));
+                      builder: (context) => Opportunityindex(title: 'Opportunity')));
             },
           ),
           //Divider(),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:quantbit_crm/accounts.dart';
+import 'package:quantbit_crm/opportunity.dart';
 import 'package:quantbit_crm/contact.dart';
 import 'package:quantbit_crm/side.dart';
 
-class Accountindex extends StatefulWidget {
-  const Accountindex({super.key, required this.title});
+class Opportunityindex extends StatefulWidget {
+  const Opportunityindex({super.key, required this.title});
   final String title;
 
   @override
-  State<Accountindex> createState() => _Accountindex();
+  State<Opportunityindex> createState() => _Opportunityindex();
 }
 
-class _Accountindex extends State<Accountindex> {
+class _Opportunityindex extends State<Opportunityindex> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _Accountindex extends State<Accountindex> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Accounts(
+                      builder: (context) => Opportunity(
                             title: '',
                           )),
                 );
