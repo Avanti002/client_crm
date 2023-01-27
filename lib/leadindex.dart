@@ -40,7 +40,7 @@ for (var element in rest) {
   print(element);
 }
 list=rest.map<Data>((json)=>Data.fromJson(json)).toList();
-lst=list;
+lst=rest;
 }
 return list;
 }
@@ -90,16 +90,16 @@ void initState() {
                   MaterialPageRoute(builder: (context) => NavBar()),
                 );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.menu,
               ),
             ),
             actions: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {},
-                  child: Icon(
+                  child: const Icon(
                     Icons.search,
                     size: 26.0,
                   ),
@@ -107,7 +107,7 @@ void initState() {
               ),
             ]),
         body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, index) {
-          return Text(lst[index]);
+          return Text(lst.length.toString());
         })),
         floatingActionButton:
             SpeedDial(animatedIcon: AnimatedIcons.add_event, children: [
