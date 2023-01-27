@@ -8,7 +8,7 @@
 PRODUCT_NAME = quantbit_crm
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.mrabhi.quantbit_crm
+PRODUCT_BUNDLE_IDENTIFIER = com.quantcrm.live
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
