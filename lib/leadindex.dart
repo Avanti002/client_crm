@@ -9,30 +9,40 @@ import 'package:quantbit_crm/login.dart' as login;
 
 var temp;
 var object;
-Future<Data> fetchData() async {
+List lst=[];
+
+Future<List<Data>> fetchData() async {
+  List<Data> list=[];
  var headers = {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 };
 var email=login.emailid;
-var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/User/$email'));
+var httpsUri = Uri(
+    scheme: 'https',
+    host: 'demo.erpdata.in',
+    path: '/api/resource/User');
 
-request.headers.addAll(headers);
+String link="https://demo.erpdata.in/api/resource/User";
+var res = await http
+.get(httpsUri,headers: {
+  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+});
 
-http.StreamedResponse response = await request.send();
+if (res.statusCode == 200) {
+var obj=json.decode(res.body);
+var rest=obj["data"] as List;
 
-if (response.statusCode == 200) {
- await response.stream.bytesToString().then((value) {
-  temp=value;
-  print(value);
-  });
-  //print(await response.stream.bytesToString());
+//print(rest);
 
+for (var element in rest) {
+  print(element);
 }
-else {
-  print(response.reasonPhrase);
+list=rest.map<Data>((json)=>Data.fromJson(json)).toList();
+lst=list;
 }
-return Data.fromJson(jsonDecode(request.body));
+return list;
 }
 
 class Data {
@@ -96,13 +106,9 @@ void initState() {
                 ),
               ),
             ]),
-        body: new Column(
-          children: <Widget>[
-            Text(temp),
-            // new Number(),
-            // new Keyboard(),
-          ],
-        ),
+        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, index) {
+          return Text(lst[index]);
+        })),
         floatingActionButton:
             SpeedDial(animatedIcon: AnimatedIcons.add_event, children: [
           SpeedDialChild(
