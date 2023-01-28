@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quantbit_crm/contact.dart';
 import 'package:quantbit_crm/lead.dart.';
 import 'package:quantbit_crm/pick_contact.dart';
 import 'package:quantbit_crm/pick_lead.dart';
@@ -105,7 +107,7 @@ void initState() {
             ]),
         body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
           return Card(
-            child: ListTile(title: Text('Contact Name : '+(lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z]'), ''))),
+            child: ListTile(title: Text((lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z]'), ''))),
             
           );
         })),
@@ -126,12 +128,12 @@ void initState() {
           ),
           SpeedDialChild(
             child: const Icon(Icons.person_add, color: Colors.white),
-            label: 'New Lead',
+            label: 'New Contact',
             backgroundColor: Colors.blue,
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FormScreen()),
+                MaterialPageRoute(builder: (context) => Contacts(title: 'Create Contact',)),
               );
             },
           ),

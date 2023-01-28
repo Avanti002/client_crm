@@ -104,7 +104,7 @@ void initState() {
             ]),
         body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
           return Card(
-            child: ListTile(title: Text('Company Name : '+(lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z]'), ''))),
+            child: ListTile(title: Text((lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z]'), ''))),
             
           );
         })),

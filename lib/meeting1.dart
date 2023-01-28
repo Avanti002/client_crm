@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:quantbit_crm/AddNewTask/CategoryCard.dart';
+import 'package:quantbit_crm/side.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({Key? key}) : super(key: key);
@@ -71,63 +72,63 @@ class _AddNewTaskState extends State<AddNewTask> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      home: Scaffold(
+        appBar: AppBar(
+            title: Text("Create new event"),
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NavBar()),
+                );
+              },
+              child: const Icon(
+                Icons.menu,
+              ),
+            ),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.search,
+                    size: 26.0,
+                  ),
+                ),
+              ),
+            ]),
+        body: SafeArea(
         child: Container(
-          color: Colors.blue,
+          color: Colors.white,
 
 
             child: Column(
               children: [
-                Container(
-                  padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(Icons.arrow_back,
-                            size: 30, color: Colors.white),
-                      ),
-                      SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "Create New Event",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                          color: Colors.white,
-                          fontSize: 20,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 20, right: 20, top: 10, bottom: 10),
                   child: TextFormField(
                     controller: _Titlecontroller,
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.black,
                     style: GoogleFonts.montserrat(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 15,
                     ),
                     decoration: InputDecoration(
                       labelText: "Subject",
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.black),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.black),
                       ),
-                      fillColor: Colors.white,
+                      fillColor: Colors.black,
                       labelStyle: GoogleFonts.montserrat(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 15,
                       ),
                     ),
@@ -143,9 +144,9 @@ class _AddNewTaskState extends State<AddNewTask> {
                       left: 20, right: 20, top: 10, bottom: 10),
                   child: TextFormField(
                     controller: _Datecontroller,
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.black,
                     style: GoogleFonts.montserrat(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 15,
                     ),
                     readOnly: true,
@@ -157,16 +158,16 @@ class _AddNewTaskState extends State<AddNewTask> {
                         },
                         child: Icon(
                           Icons.calendar_month_outlined,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.black),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.black),
                       ),
-                      fillColor: Colors.white,
+                      fillColor: Colors.black,
                       labelStyle: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontSize: 10,
@@ -174,21 +175,11 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 40),
-                  padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      )),
-                  child: Column(
+                Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 20),
+                        padding: const EdgeInsets.all(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -205,20 +196,20 @@ class _AddNewTaskState extends State<AddNewTask> {
                                     },
                                     child: Icon(
                                       Icons.alarm,
-                                      color: Colors.black26,
+                                      color: Colors.black,
                                     ),
                                   ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide:
-                                    BorderSide(color: Colors.black26),
+                                    BorderSide(color: Colors.black),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide:
-                                    BorderSide(color: Colors.black26),
+                                    BorderSide(color: Colors.black),
                                   ),
-                                  fillColor: Colors.black26,
+                                  fillColor: Colors.black,
                                   labelStyle: GoogleFonts.montserrat(
-                                    color: Colors.black26,
+                                    color: Colors.black,
                                     fontSize: 15,
                                   ),
                                 ),
@@ -239,20 +230,20 @@ class _AddNewTaskState extends State<AddNewTask> {
                                         },
                                         child: Icon(
                                           Icons.alarm,
-                                          color: Colors.black26,
+                                          color: Colors.black,
                                         ),
                                       ),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide:
-                                        BorderSide(color: Colors.black26),
+                                        BorderSide(color: Colors.black),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                        BorderSide(color: Colors.black26),
+                                        BorderSide(color: Colors.black),
                                       ),
-                                      fillColor: Colors.black26,
+                                      fillColor: Colors.black,
                                       labelStyle: GoogleFonts.montserrat(
-                                        color: Colors.black26,
+                                        color: Colors.black,
                                         fontSize: 15,
                                       ),
                                     ),
@@ -264,13 +255,13 @@ class _AddNewTaskState extends State<AddNewTask> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 20),
+                        padding: const EdgeInsets.all(20),
                         child:
                           TextFormField(
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
 
-                          cursorColor: Colors.black26,
+                          cursorColor: Colors.black,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
                             fontSize: 15,
@@ -278,14 +269,14 @@ class _AddNewTaskState extends State<AddNewTask> {
                           decoration: InputDecoration(
                             labelText: "Description",
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
-                            fillColor: Colors.black26,
+                            fillColor: Colors.black,
                             labelStyle: GoogleFonts.montserrat(
-                              color: Colors.black26,
+                              color: Colors.black,
                               fontSize: 15,
                             ),
                           ),
@@ -303,7 +294,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
 
-                          cursorColor: Colors.black26,
+                          cursorColor: Colors.black,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
                             fontSize: 15,
@@ -311,14 +302,14 @@ class _AddNewTaskState extends State<AddNewTask> {
                           decoration: InputDecoration(
                             labelText: "Meeting Link",
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
-                            fillColor: Colors.black26,
+                            fillColor: Colors.black,
                             labelStyle: GoogleFonts.montserrat(
-                              color: Colors.black26,
+                              color: Colors.black,
                               fontSize: 15,
                             ),
                           ),
@@ -363,12 +354,12 @@ class _AddNewTaskState extends State<AddNewTask> {
 
                     ],
                   ),
-                ),
+                
               ],
             ),
           ),
       )
-        );
+        ));
 
 
   }

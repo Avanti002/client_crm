@@ -8,6 +8,8 @@ import 'package:quantbit_crm/AddNewTask/AddNewTask.dart';
 import '../ProjectsPage/ProgressCard.dart';
 import 'package:quantbit_crm/side.dart';
 
+import 'login.dart';
+
 class TasksPage extends StatefulWidget {
   const TasksPage({
     Key? key,
@@ -30,7 +32,7 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('home'),
+        title: Text('Home'),
           leading: GestureDetector(
             onTap: () {
               Navigator.push(
@@ -48,7 +50,7 @@ class _TasksPageState extends State<TasksPage> {
               child: GestureDetector(
                 onTap: () {},
                 child: Icon(
-                  Icons.search,
+                  Icons.logout,
                   size: 26.0,
                 ),
               ),
