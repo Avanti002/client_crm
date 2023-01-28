@@ -42,9 +42,7 @@ class _Opportunity extends State<Opportunity> {
               Navigator.pop(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const contactindex(
-                      title: '',
-                    )),
+                    builder: (context) => conindex()),
               );
             },
             child: const Icon(Icons.arrow_back),

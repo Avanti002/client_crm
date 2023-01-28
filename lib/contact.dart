@@ -23,9 +23,7 @@ class _Contacts extends State<Contacts> {
               Navigator.pop(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const contactindex(
-                          title: '',
-                        )),
+                    builder: (context) => const conindex()),
               );
             },
             child: const Icon(Icons.arrow_back),

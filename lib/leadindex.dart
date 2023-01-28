@@ -19,13 +19,15 @@ Future<List<Data>> fetchData() async {
 };
 
 var email=login.emailid;
-var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead');
+var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
+
 String link="https://demo.erpdata.in/api/resource/Lead";
 var res = await http
 .get(httpsUri,headers: {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
+
 
 if (res.statusCode == 200) {
 var obj=json.decode(res.body);
@@ -39,18 +41,19 @@ return list;
 }
 
 class Data {
-  final String name;
+  final String company_name;
   final String data;
 
   const Data({
     required this.data,
-    required this.name,
+    required this.company_name,
+    
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
       data: json['data'],
-      name: json['name'],
+      company_name: json['company_name'],
     );
   }
 }
@@ -101,7 +104,8 @@ void initState() {
             ]),
         body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
           return Card(
-            child: ListTile(title: Text(lst[position].toString())),
+            child: ListTile(title: Text('Company Name : '+(lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z]'), ''))),
+            
           );
         })),
         floatingActionButton:

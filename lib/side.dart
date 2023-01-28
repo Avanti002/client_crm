@@ -8,6 +8,8 @@ import 'package:quantbit_crm/leadindex.dart';
 import 'package:quantbit_crm/meeting1.dart';
 import 'package:quantbit_crm/task.dart';
 
+import 'contactindex.dart';
+
 class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => contactindex(title: "Contact ")),
+                    builder: (context) => conindex()),
               );
             },
           ),
