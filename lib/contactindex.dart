@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:quantbit_crm/contact.dart';
-import 'package:quantbit_crm/lead.dart.';
 import 'package:quantbit_crm/pick_contact.dart';
-import 'package:quantbit_crm/pick_lead.dart';
 import 'package:quantbit_crm/side.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

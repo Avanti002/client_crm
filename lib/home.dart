@@ -2,13 +2,7 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
-import 'package:quantbit_crm/AddNewTask/AddNewTask.dart';
-
-import '../ProjectsPage/ProgressCard.dart';
 import 'package:quantbit_crm/side.dart';
-
-import 'login.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({

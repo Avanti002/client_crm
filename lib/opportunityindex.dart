@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:quantbit_crm/opportunity.dart';
-import 'package:quantbit_crm/contact.dart';
 import 'package:quantbit_crm/side.dart';
 
 class Opportunityindex extends StatefulWidget {
