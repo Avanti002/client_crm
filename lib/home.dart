@@ -22,13 +22,15 @@ class _TasksPageState extends State<TasksPage> {
   var hour = DateTime.now().hour;
   @override
 void initState() {
-  setState(() {if (hour < 12) {
+  setState(() {
+  if (hour<12) {
           greet='Morning';
   }
-  if (hour < 17) {
+  else if (hour < 17) {
         greet='Afternoon';
   }
-  greet='Evening';});
+  else{greet='Evening';}
+  });
   super.initState();
 }
   void _onDateChange(DateTime date) {

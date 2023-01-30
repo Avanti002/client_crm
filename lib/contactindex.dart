@@ -89,10 +89,9 @@ void initState() {
                 ),
               ),
             ]),
-        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
+        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context,position) {
           return Card(
-            child: ListTile(title: Text((lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z]'), ''))),
-            
+            child: ListTile(title: Text((lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z  \t]'), ''))), 
           );
         })),
         floatingActionButton:

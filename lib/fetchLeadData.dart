@@ -19,10 +19,7 @@ http.StreamedResponse response = await request.send();
 if (response.statusCode == 200) {
  await response.stream.bytesToString().then((value) {
   temp=value;
-                  print(value);
-                  });
-  //print(await response.stream.bytesToString());
-
+  });
 }
 else {
   print(response.reasonPhrase);
@@ -48,14 +45,14 @@ class Data {
 }
 
 
-class Test extends StatefulWidget {
-  const Test({super.key});
+class LeadData extends StatefulWidget {
+  const LeadData({super.key});
 
   @override
-  State<Test> createState() => _TestState();
+  State<LeadData> createState() => _LeadDataState();
 }
 
-class _TestState extends State<Test> {
+class _LeadDataState extends State<LeadData> {
   late Future<Data> futureData;
 
 

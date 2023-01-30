@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/test.dart';
 import 'home.dart';
 
 var loginStatus;
@@ -206,7 +207,7 @@ void initState() {
                                                     );
                                                     String usrnm=loginStatus.toString();
                                                     usrnm=usrnm.substring(55);
-                                                    usernm = usrnm.replaceAll(RegExp('[^A-Za-z]'), '');
+                                                    usernm = usrnm.replaceAll(RegExp('[^A-Za-z  \t]'), '');
                                                   
                                       }
                                       else
@@ -245,7 +246,7 @@ void initState() {
   onPressed: () {
      Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TasksPage(Goback: (int){},),)
+      MaterialPageRoute(builder: (context) => Test(),)
       );                                      
   },
   label: Text('Bypass',style:TextStyle(fontSize: 20)), 
