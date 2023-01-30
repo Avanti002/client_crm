@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_types_as_parameter_names
-
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_types_as_parameter_names, library_private_types_in_public_api
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -11,10 +10,11 @@ String sCode="";
 String usernm="";
 String emailid="";
 String password="";
+String mobaccess="0";
+String accessStatus="";
 class MyLogin extends StatefulWidget {
 const MyLogin({Key? key}) : super(key: key);
   @override
-  // ignore: library_private_types_in_public_api
   _MyLoginState createState() => _MyLoginState();
 }
 
@@ -22,6 +22,41 @@ class _MyLoginState extends State<MyLogin> {
   TextEditingController curlController = TextEditingController()..text="demo.erpdata.in";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  void usrMobAccess() async { 
+    try
+    {
+      String email=emailController.text;
+      var headers = {
+      'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+      'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+      };
+      var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/User?filters=[["name","=","$email"]]&fields=["mob_access"]'));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        await response.stream.bytesToString().then((value) {
+        mobaccess=value.toString();
+        usrLogin(curlController.text,emailController.text,passwordController.text);
+        if(mobaccess.substring(23,24)=="1")
+        { 
+          accessStatus="Granted";
+        }
+        else
+        {
+          accessStatus="Denied";
+        }
+        });
+      } 
+    else 
+    {
+      if (kDebugMode) {
+        print(response.reasonPhrase);
+      }
+    }
+    }catch(e){
+      throw Exception(e);
+    }
+}
   void usrLogin(String curl,String email,String pass) async { 
     try
     {
@@ -33,6 +68,7 @@ class _MyLoginState extends State<MyLogin> {
       await response.stream.bytesToString().then((value) {
       loginStatus=value;
       usrLogin(curl,email,pass);
+      //usrMobAccess();
       });
     } 
     else 
@@ -65,26 +101,16 @@ class _MyLoginState extends State<MyLogin> {
                          child: Column(
                            children: [
                             Image.network(
-                  'https://scontent.fpnq7-3.fna.fbcdn.net/v/t39.30808-6/298901972_439781191497646_6645786026494038575_n.png?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=vymLlBzEmVQAX889w05&_nc_ht=scontent.fpnq7-3.fna&oh=00_AfDJ5lCxNWDSBEGU39KLjABcNin_ZgdhizPWRHS3qbvrDw&oe=63D66393',
+                  'https://precog.com/wp-content/uploads/2021/07/ERP-Next-logo.png',
                   fit: BoxFit.cover,
-                  width: 80,
+                  width: 170,
                 ),
-                const SizedBox(
-                               height: 10, //<-- SEE HERE
-                             ),
-                             Image.network(
-                  'https://erpnext.com/files/erpnext-logo-blue-v2.png',
-                  fit: BoxFit.cover,
-                  width: 120,
-                  
-                ),
-                             const SizedBox(
-                               height: 40, //<-- SEE HERE
-                             ),
+                
+                               const SizedBox(
+                                 height: 20, //<-- SEE HERE
+                               ),
                              TextField(
                                style: const TextStyle(color: Colors.black),
-                             
-                               
                                controller:curlController,
                                decoration: InputDecoration(
 
@@ -101,7 +127,6 @@ class _MyLoginState extends State<MyLogin> {
                              ),
 
                              TextField(
-                              
                                style: const TextStyle(color: Colors.black),
                                controller: emailController,
                                decoration: InputDecoration(
@@ -138,57 +163,67 @@ class _MyLoginState extends State<MyLogin> {
                             child: ElevatedButton.icon(
                               
   onPressed: () {
-    usrLogin(curlController.text.toString(),emailController.text.toString(),passwordController.text.toString());
-                               Timer(const Duration(seconds: 4),() {
-                                 sCode=loginStatus.toString();
-                               });
-                               
+    if(emailController.text!="" && passwordController.text!="")
+    {
+                            usrMobAccess();
+                             Timer(const Duration(seconds: 4),() {
+                               sCode=loginStatus.toString();
+                             });  
                              Timer(const Duration(seconds: 4),() {
                                if(sCode!="null"){
-                               if(sCode.substring(12,21)=="Logged In")
-                               {
-                                             Navigator.push(
-                                             context,
-                                              MaterialPageRoute(builder: (context) => TasksPage(Goback:(int){} ),)
-                                             );
-                                             String usrnm=loginStatus.toString();
-                                             usrnm=usrnm.substring(55);
-                                             usernm = usrnm.replaceAll(RegExp('[^A-Za-z]'), '');
-                                             //print(usernm);
-                               }
-                               else
-                               {
-                                if (kDebugMode) {
-                                  print("wrong");
+                                  if(accessStatus=="Granted")
+                                  {
+                                      if(sCode.substring(12,21)=="Logged In")
+                                      {
+                                                    Navigator.push(
+                                                    context,
+                                                      MaterialPageRoute(builder: (context) => TasksPage(Goback: (int){},),)
+                                                    );
+                                                    String usrnm=loginStatus.toString();
+                                                    usrnm=usrnm.substring(55);
+                                                    usernm = usrnm.replaceAll(RegExp('[^A-Za-z]'), '');
+                                                  
+                                      }
+                                      else
+                                      {
+                                                    if (kDebugMode) {
+                                                      print("wrong");
+                                                    }
+                                      }
+                                }
+                                else
+                                {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Access Denied !')));
                                 }
                                }
-                               }
                                else{
-                                 
                                  ScaffoldMessenger.of(context).showSnackBar(
                                  const SnackBar(content: Text('Please Enter correct Username or Password !')));
                                }
-                               });
+                             });
+    }
+    else
+    {
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Email or Password Field Should not be Empty !')));
+    }
   },
-  
   label: Text('Login',style:TextStyle(fontSize: 20)), 
   icon: Icon( // <-- Icon
     Icons.login_rounded,
     size: 30.0,
   ),
-), 
-                            
-
-
-                         ),
-                           ],
-                         ),
-                       )
-                     ],
-                   ),
-                 ),
-        ],
+),
+  ),
+    ],
       ),
-    );
-  }
+        ),
+          ],
+            ), 
+              ),
+                ],
+                  ),
+                    );
+}
 }
