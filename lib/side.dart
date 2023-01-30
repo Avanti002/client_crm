@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/opportunityindex.dart';
-import 'package:quantbit_crm/pick_contact1.dart';
 import 'package:quantbit_crm/deal.dart';
 import 'package:quantbit_crm/home.dart';
 import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/leadindex.dart';
-import 'package:quantbit_crm/meeting1.dart';
 import 'package:quantbit_crm/task.dart';
 
 import 'contactindex.dart';
+import 'meeting1.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -55,7 +54,7 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => index()),
+                MaterialPageRoute(builder: (context) => Leadindex()),
               );
             },
           ),
@@ -66,7 +65,7 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => conindex()),
+                    builder: (context) => Contactindex()),
               );
             },
           ),

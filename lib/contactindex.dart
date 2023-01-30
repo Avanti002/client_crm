@@ -7,34 +7,21 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
 
-var temp;
-var object;
+
+String curl=login.custUrl;
 List lst=[];
 
 Future<List<Data>> fetchData() async {
-  List<Data> list=[];
- var headers = {
-  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
-  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
-};
-
-var email=login.emailid;
-var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Contact',query:'fields=["name"]');
-
-String link="https://demo.erpdata.in/api/resource/Lead";
+List<Data> list=[];
+var httpsUri = Uri(scheme: 'https',host: '$curl',path: '/api/resource/Contact',query:'fields=["name"]');
 var res = await http
 .get(httpsUri,headers: {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
-
-
 if (res.statusCode == 200) {
 var obj=json.decode(res.body);
 var rest=obj["data"] as List;
-for (var element in rest) {
-  lst.add(element);
-}
 lst=rest;
 }
 return list;
@@ -58,19 +45,19 @@ class Data {
   }
 }
 
-class conindex extends StatefulWidget {
-  const conindex({super.key});
+class Contactindex extends StatefulWidget {
+  const Contactindex({super.key});
   @override
   State<StatefulWidget> createState() {
-    return cindexState();
+    return ContactindexState();
   }
 }
 
-class cindexState extends State<conindex> {
+class ContactindexState extends State<Contactindex> {
   @override
 void initState() {
+  setState(() {fetchData();});
   super.initState();
-  fetchData();
 }
   @override
   Widget build(BuildContext context) {

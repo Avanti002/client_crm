@@ -12,6 +12,7 @@ String emailid="";
 String password="";
 String mobaccess="0";
 String accessStatus="";
+String custUrl="";
 class MyLogin extends StatefulWidget {
 const MyLogin({Key? key}) : super(key: key);
   @override
@@ -19,6 +20,11 @@ const MyLogin({Key? key}) : super(key: key);
 }
 
 class _MyLoginState extends State<MyLogin> {
+   @override
+void initState() {
+  setState(() {usrMobAccess();});
+  super.initState();
+}
   TextEditingController curlController = TextEditingController()..text="demo.erpdata.in";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -62,6 +68,8 @@ class _MyLoginState extends State<MyLogin> {
     {
       emailid=email;
       password=pass;
+      custUrl=curl;
+
     var request =http.Request('GET', Uri.parse('http://$curl/api/method/login?usr=$email&pwd=$pass'));
     http.StreamedResponse response = await request.send(); 
     if (response.statusCode == 200) {
@@ -216,6 +224,19 @@ class _MyLoginState extends State<MyLogin> {
   ),
 ),
   ),
+  ElevatedButton.icon(                          
+  onPressed: () {
+     Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TasksPage(Goback: (int){},),)
+      );                                      
+  },
+  label: Text('Bypass',style:TextStyle(fontSize: 20)), 
+  icon: Icon( // <-- Icon
+    Icons.login_rounded,
+    size: 30.0,
+  ),
+),
     ],
       ),
         ),

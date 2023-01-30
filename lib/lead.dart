@@ -47,7 +47,7 @@ class FormScreenState extends State<FormScreen> {
             onTap: () {
               Navigator.pop(
                 context,
-                MaterialPageRoute(builder: (context) => const index()),
+                MaterialPageRoute(builder: (context) => const Leadindex()),
               );
             },
             child: const Icon(Icons.arrow_back),
@@ -60,7 +60,7 @@ class FormScreenState extends State<FormScreen> {
                       Navigator.pop(
                           context,
                           MaterialPageRoute(
-                              builder: ((context) => const index())));
+                              builder: ((context) => const Leadindex())));
                       postlead(companyname, firstname, lastname, mobileno,
                           leadstatus, emailid, city, state);
                     },

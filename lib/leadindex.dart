@@ -12,29 +12,16 @@ var object;
 List lst=[];
 
 Future<List<Data>> fetchData() async {
-  List<Data> list=[];
- var headers = {
-  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
-  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
-};
-
-var email=login.emailid;
+List<Data> list=[];
 var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
-
-String link="https://demo.erpdata.in/api/resource/Lead";
 var res = await http
 .get(httpsUri,headers: {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
-
-
 if (res.statusCode == 200) {
 var obj=json.decode(res.body);
 var rest=obj["data"] as List;
-for (var element in rest) {
-  lst.add(element);
-}
 lst=rest;
 }
 return list;
@@ -58,19 +45,20 @@ class Data {
   }
 }
 
-class index extends StatefulWidget {
-  const index({super.key});
+class Leadindex extends StatefulWidget {
+  const Leadindex({super.key});
   @override
   State<StatefulWidget> createState() {
-    return indexState();
+    return LeadindexState();
   }
 }
 
-class indexState extends State<index> {
+class LeadindexState extends State<Leadindex> {
   @override
 void initState() {
+  setState(() {fetchData();});
   super.initState();
-  fetchData();
+  
 }
   @override
   Widget build(BuildContext context) {
