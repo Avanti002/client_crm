@@ -1,5 +1,5 @@
 name: quantbit_crm
-description: A new Flutter project.
+description: Quantbit CRM Flutter App project.
 publish_to: 'none' 
 version: 1.0.0+1
 environment:
@@ -17,7 +17,6 @@ dependencies:
   another_flushbar: ^1.12.29
   flutter_speed_dial:
   flutter_native_contact_picker: ^0.0.3
-  table_calendar:
   toggle_switch: ^2.0.1
   easy_dynamic_theme: ^2.2.0
   interval_time_picker: ^2.0.0+5
@@ -27,6 +26,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.4.56
   flushbar: ^1.10.4
   splashscreen: ^1.3.5
+  table_calendar: 
 
 dev_dependencies:
   flutter_test:

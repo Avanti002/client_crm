@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:quantbit_crm/side.dart';
+import 'package:table_calendar/table_calendar.dart';
 
+
+String greet="";
 class TasksPage extends StatefulWidget {
   const TasksPage({
     Key? key,
@@ -16,9 +19,21 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
   DateTime _selectedDate = DateTime.now();
+  var hour = DateTime.now().hour;
+  @override
+void initState() {
+  setState(() {if (hour < 12) {
+          greet='Morning';
+  }
+  if (hour < 17) {
+        greet='Afternoon';
+  }
+  greet='Evening';});
+  super.initState();
+}
   void _onDateChange(DateTime date) {
-    this.setState(() {
-      this._selectedDate = date;
+    setState(() {
+      _selectedDate = date;
     });
   }
 
@@ -56,19 +71,26 @@ class _TasksPageState extends State<TasksPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-
-                  SizedBox(height: 10),
+            SizedBox(height: 30),
+                  Text(
+                        'Good $greet',
+                        style: GoogleFonts.montserrat(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                  SizedBox(height: 60),
                   Row(
-
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-
+                      
                       Text(
-                        '${DateFormat('MMM, d').format(this._selectedDate)}',
+                        'Today : '+'${DateFormat('MMM,d').format(this._selectedDate)}',
                         style: GoogleFonts.montserrat(
                           color: Colors.black,
-                          fontSize: 25,
+                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -81,7 +103,13 @@ class _TasksPageState extends State<TasksPage> {
                     initialSelectedDate: this._selectedDate,
                     selectionColor: Colors.blue,
                     onDateChange: this._onDateChange,
-                  )
+                  ),SizedBox(height: 10),
+                  TableCalendar(
+                  firstDay: DateTime.utc(2000, 04, 18),
+                  lastDay: DateTime.utc(2030, 04, 18),
+                  focusedDay: DateTime.now(),
+                  ),
+                  
                 ],
               ),
       )

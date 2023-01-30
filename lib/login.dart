@@ -13,6 +13,7 @@ String password="";
 String mobaccess="0";
 String accessStatus="";
 String custUrl="";
+
 class MyLogin extends StatefulWidget {
 const MyLogin({Key? key}) : super(key: key);
   @override
@@ -20,9 +21,11 @@ const MyLogin({Key? key}) : super(key: key);
 }
 
 class _MyLoginState extends State<MyLogin> {
+  bool _passwordVisible=false;
    @override
 void initState() {
   setState(() {usrMobAccess();});
+  _passwordVisible = false;
   super.initState();
 }
   TextEditingController curlController = TextEditingController()..text="demo.erpdata.in";
@@ -149,12 +152,26 @@ void initState() {
                              const SizedBox(
                                height: 30,
                              ),
-                             TextField(
+                             TextFormField(
                                style: const TextStyle(),
-                               obscureText: true,
+                               obscureText: !_passwordVisible,
                                controller: passwordController,
                                decoration: InputDecoration(
                                    prefixIcon: const Icon(Icons.password), 
+                                   suffixIcon: IconButton(
+                                      icon: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        _passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                        color: Theme.of(context).primaryColorDark,
+                                        ),
+                                      onPressed: () {
+                                        
+                                        setState(() {
+                                            _passwordVisible = !_passwordVisible;
+                                        });
+                                      }),
                                    fillColor: Colors.grey.shade100,
                                    filled: true,
                                    hintText: "Password",
