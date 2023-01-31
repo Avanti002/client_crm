@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-void postData(String? firstname, String? lastname, String? accountname,
+void postContact(String? firstname, String? lastname, String? accountname,
     String? emailid, String? mobileno) async {
   var headers = {
     'Authorization': 'token 94133f5eab07810:5cf8dc02b0fb6ec',

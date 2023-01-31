@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/contactindex.dart';
 
+import 'package:quantbit_crm/post_contact.dart';
+
 class Contacts extends StatefulWidget {
   const Contacts({Key? key, required this.title}) : super(key: key);
 
@@ -11,6 +13,11 @@ class Contacts extends StatefulWidget {
 }
 
 class _Contacts extends State<Contacts> {
+  String? firstname;
+  String? lastname;
+  String? accountname;
+  String? emailid;
+  String? mobileno;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -22,8 +29,7 @@ class _Contacts extends State<Contacts> {
             onTap: () {
               Navigator.pop(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const Contactindex()),
+                MaterialPageRoute(builder: (context) => const Contactindex()),
               );
             },
             child: const Icon(Icons.arrow_back),
@@ -32,7 +38,13 @@ class _Contacts extends State<Contacts> {
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                    onTap: () {}, child: const Icon(Icons.check))),
+                    onTap: () {Navigator.pop(
+                      context,MaterialPageRoute(builder: (context)=>const Contactindex())
+                    );
+                      postContact(
+                          firstname, lastname, accountname, emailid, mobileno);
+                    },
+                    child: const Icon(Icons.check))),
           ]),
       body: ListView(
         children: <Widget>[
