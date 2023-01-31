@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/side.dart';
-
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/deal1.dart';
-
 class Deal extends StatefulWidget {
   const Deal({super.key});
   @override
@@ -17,19 +15,10 @@ class DealState extends State<Deal> {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
+        drawer: myDrawer(context),
           appBar: AppBar(
               title: Text("Deals"),
-              leading: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NavBar()),
-                  );
-                },
-                child: Icon(
-                  Icons.menu, // add custom icons also
-                ),
-              ),
+              
               actions: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(right: 20.0),

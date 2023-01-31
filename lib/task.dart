@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/side.dart';
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/task1.dart';
 import 'package:quantbit_crm/deal1.dart';
 
@@ -20,18 +20,10 @@ class simpleState extends State<simple>{
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
+          drawer: myDrawer(context),
           appBar: AppBar(
               title: Text("Tasks"),
-              leading: GestureDetector(
-                onTap: () {Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NavBar()),);
-                },
-                child: Icon(
-                  Icons.menu,  // add custom icons also
-                ),
-
-              ),
+              
               actions: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(right: 20.0),

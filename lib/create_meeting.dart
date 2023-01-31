@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:quantbit_crm/side.dart';
+import 'package:quantbit_crm/app_drawer.dart';
 
-class AddNewTask extends StatefulWidget {
-  const AddNewTask({Key? key}) : super(key: key);
+class CreateMeet extends StatefulWidget {
+  const CreateMeet({Key? key}) : super(key: key);
 
   @override
-  State<AddNewTask> createState() => _AddNewTaskState();
+  State<CreateMeet> createState() => _CreateMeetState();
 }
 
-class _AddNewTaskState extends State<AddNewTask> {
+class _CreateMeetState extends State<CreateMeet> {
   String? subject;
   late TextEditingController _Titlecontroller;
   late TextEditingController _Datecontroller;
@@ -74,19 +74,10 @@ class _AddNewTaskState extends State<AddNewTask> {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
+        drawer: myDrawer(context),
         appBar: AppBar(
             title: Text("Create new event"),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NavBar()),
-                );
-              },
-              child: const Icon(
-                Icons.menu,
-              ),
-            ),
+            
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),

@@ -2,7 +2,7 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:quantbit_crm/side.dart';
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 
@@ -44,17 +44,7 @@ void initState() {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NavBar()),
-              );
-            },
-            child: Icon(
-              Icons.menu, // add custom icons also
-            ),
-          ),
+          
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -114,7 +104,8 @@ void initState() {
                   
                 ],
               ),
-      )
+      ),
+      drawer: myDrawer(context),
                       );
   }
 }

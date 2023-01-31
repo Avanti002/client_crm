@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/opportunity.dart';
-import 'package:quantbit_crm/side.dart';
 
 class Opportunityindex extends StatefulWidget {
   const Opportunityindex({super.key, required this.title});
@@ -15,19 +15,10 @@ class _Opportunityindex extends State<Opportunityindex> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: myDrawer(context),
         appBar: AppBar(
             title: Text(widget.title),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(builder: (context) => NavBar()),
-                );
-              },
-              child: Icon(
-                Icons.menu,
-              ),
-            ),
+            
             actions: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: 20.0),

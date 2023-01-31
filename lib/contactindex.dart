@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/contact.dart';
 import 'package:quantbit_crm/pick_contact.dart';
-import 'package:quantbit_crm/side.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
@@ -64,19 +64,10 @@ void initState() {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
+        drawer: myDrawer(context),
         appBar: AppBar(
             title: Text("Contacts"),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NavBar()),
-                );
-              },
-              child: const Icon(
-                Icons.menu,
-              ),
-            ),
+            
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),

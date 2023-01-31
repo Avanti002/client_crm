@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/contact.dart';
-import 'package:quantbit_crm/side.dart';
 //import 'package:quantbit_crm/pick_contact.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 
@@ -25,19 +25,10 @@ class _contactindex extends State<contactindex> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: myDrawer(context),
         appBar: AppBar(
             title: Text(widget.title),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NavBar()),
-                );
-              },
-              child: Icon(
-                Icons.menu, // add custom icons also
-              ),
-            ),
+            
 
 
             actions: <Widget>[
