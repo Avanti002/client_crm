@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/contactindex.dart';
-import 'package:quantbit_crm/create_meeting.dart';
-import 'package:quantbit_crm/deal.dart';
+import 'package:quantbit_crm/create/create_event.dart';
+import 'package:quantbit_crm/index/contact_index.dart';
+import 'package:quantbit_crm/create/create_meeting.dart';
+import 'package:quantbit_crm/index/deal_index.dart';
 import 'package:quantbit_crm/home.dart';
-import 'package:quantbit_crm/leadindex.dart';
-import 'package:quantbit_crm/opportunityindex.dart';
-import 'package:quantbit_crm/task.dart';
+import 'package:quantbit_crm/index/lead_index.dart';
+import 'package:quantbit_crm/index/opportunity_index.dart';
+import 'package:quantbit_crm/index/task_index.dart';
 import 'package:quantbit_crm/login.dart' as login;
 
 Widget myDrawer(BuildContext context){
@@ -44,7 +45,7 @@ Widget myDrawer(BuildContext context){
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TasksPage(Goback: (int ) {  },)),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             },
           ),
@@ -89,7 +90,7 @@ Widget myDrawer(BuildContext context){
             selectedTileColor: Colors.blue[100],
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Deal()));
+                  context, MaterialPageRoute(builder: (context) => Dealindex()));
             },
           ),
           ListTile(
@@ -111,12 +112,20 @@ Widget myDrawer(BuildContext context){
             },
           ),
           ListTile(
+            title: Text('Events',style: TextStyle(fontWeight: FontWeight.bold)),
+            selectedTileColor: Colors.blue[100],
+            
+            leading: Icon(Icons.event,color: Colors.black),
+            onTap: () {Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => CreateEvent()));}
+          ),
+          ListTile(
             title: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold)),
             selectedTileColor: Colors.blue[100],
             leading: Icon(Icons.control_point_duplicate,color: Colors.black),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => simple()));
+                  context, MaterialPageRoute(builder: (context) => Taskindex()));
             },
           ),
           ListTile(

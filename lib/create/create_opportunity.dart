@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:quantbit_crm/contactindex.dart';
+import 'package:quantbit_crm/index/contact_index.dart';
 
 class Opportunity extends StatefulWidget {
   const Opportunity({Key? key, required this.title}) : super(key: key);

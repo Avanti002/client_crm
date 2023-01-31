@@ -1,23 +1,28 @@
+
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/app_drawer.dart';
-import 'package:quantbit_crm/deal1.dart';
-class Deal extends StatefulWidget {
-  const Deal({super.key});
+import 'package:quantbit_crm/create/create_task.dart';
+import 'package:quantbit_crm/create/create_deal.dart';
+
+
+class Taskindex extends StatefulWidget {
+  const Taskindex({super.key});
   @override
-  State<StatefulWidget> createState() {
-    return DealState();
+  State<StatefulWidget>createState() {
+    return TaskindexState();
   }
 }
+class TaskindexState extends State<Taskindex>{
 
-class DealState extends State<Deal> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
-        drawer: myDrawer(context),
+          drawer: myDrawer(context),
           appBar: AppBar(
-              title: Text("Deals"),
+              title: Text("Tasks"),
               
               actions: <Widget>[
                 Padding(
@@ -29,19 +34,21 @@ class DealState extends State<Deal> {
                       size: 26.0,
                     ),
                   ),
+
                 ),
               ]
 
-              //   iconTheme: IconThemeData(
-              //
-              //     color: Colors.black, // <-- SEE HERE
-              //   ),
-              //   centerTitle: true,
-              //   actions: [IconButton(
-              //
-              //       onPressed: () {}, icon:  Icon(Icons.menu))],
-              // title: const Text('Welcome to Flutter'),
-              ),
+
+            //   iconTheme: IconThemeData(
+            //
+            //     color: Colors.black, // <-- SEE HERE
+            //   ),
+            //   centerTitle: true,
+            //   actions: [IconButton(
+            //
+            //       onPressed: () {}, icon:  Icon(Icons.menu))],
+            // title: const Text('Welcome to Flutter'),
+          ),
           body: new Column(
             children: <Widget>[
               // new Number(),
@@ -49,15 +56,18 @@ class DealState extends State<Deal> {
             ],
           ),
           floatingActionButton: new FloatingActionButton(
+
               elevation: 0.0,
-              child: new Icon(Icons.add),
+              child: new Icon(Icons.add
+              ),
               backgroundColor: Colors.blue,
-              onPressed: () {
+              onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FormScreen()),
-                );
-              })),
+                  MaterialPageRoute(builder: (context) => CreateTask()),);
+              }
+          )
+      ),
       //       child: Column(
       //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       //         children: <Widget>[
@@ -69,7 +79,10 @@ class DealState extends State<Deal> {
       //
       // ),
 
+
       //  child: Text('Hello World'),
     );
+
+
   }
 }

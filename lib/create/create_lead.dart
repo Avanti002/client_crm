@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/lead_b.dart';
-import 'package:quantbit_crm/leadindex.dart';
+import 'package:quantbit_crm/backend/post_lead.dart';
+import 'package:quantbit_crm/index/lead_index.dart';
 
-class FormScreen extends StatefulWidget {
-  const FormScreen({Key? key}) : super(key: key);
+class CreateLead extends StatefulWidget {
+  const CreateLead({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return FormScreenState();
+    return CreateLeadState();
   }
 }
 
-class FormScreenState extends State<FormScreen> {
+class CreateLeadState extends State<CreateLead> {
   String dropdownvalue = 'Lead';
 
   String? companyname;

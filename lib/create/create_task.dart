@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:quantbit_crm/task.dart';
-import 'package:quantbit_crm/task_b.dart';
-//import 'dart.ffi' as float;
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:quantbit_crm/backend/post_task.dart';
+import 'package:quantbit_crm/index/task_index.dart';
 
-import 'deal.dart';
-
-// import 'package:syncfusion_flutter_calender/calender.dart';
-class Fon extends StatefulWidget {
-  const Fon({Key? key}) : super(key: key);
+class CreateTask extends StatefulWidget {
+  const CreateTask({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return FonState();
+    return CreateTaskState();
   }
 }
 
-class FonState extends State<Fon> {
+class CreateTaskState extends State<CreateTask> {
   String? subject;
   // String? project;
   // String? issue;
@@ -108,7 +103,7 @@ class FonState extends State<Fon> {
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(
-                  context, MaterialPageRoute(builder: (context) => simple()));
+                  context, MaterialPageRoute(builder: (context) => Taskindex()));
             },
             child: Icon(Icons.arrow_back),
           ),
@@ -118,7 +113,7 @@ class FonState extends State<Fon> {
                 child: GestureDetector(
                     onTap: () {
                   Navigator.pop(context,
-                  MaterialPageRoute(builder: (context)=> const simple()));
+                  MaterialPageRoute(builder: (context)=> const Taskindex()));
                   sendData(subject,status, priority,exp_start_date);
                 }, child: Icon(Icons.check))),
           ]),

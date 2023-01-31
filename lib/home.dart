@@ -7,17 +7,16 @@ import 'package:table_calendar/table_calendar.dart';
 
 
 String greet="";
-class TasksPage extends StatefulWidget {
-  const TasksPage({
+class Home extends StatefulWidget {
+  const Home({
     Key? key,
-    required this.Goback,
   }) : super(key: key);
-  final void Function(int) Goback;
+ 
   @override
-  State<TasksPage> createState() => _TasksPageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _TasksPageState extends State<TasksPage> {
+class _HomeState extends State<Home> {
   DateTime _selectedDate = DateTime.now();
   var hour = DateTime.now().hour;
   @override
@@ -109,47 +108,3 @@ void initState() {
                       );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:quantbit_crm/side.dart';
-//
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Welcome to Flutter',
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text("Home"),
-//           leading: GestureDetector(
-//             onTap: () {Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => NavBar()),);
-//              },
-//             child: Icon(
-//               Icons.menu,  // add custom icons also
-//             ),
-//           ),
-//           //   iconTheme: IconThemeData(
-//           //
-//           //     color: Colors.black, // <-- SEE HERE
-//           //   ),
-//           //   centerTitle: true,
-//           //   actions: [IconButton(
-//           //
-//           //       onPressed: () {}, icon:  Icon(Icons.menu))],
-//           // title: const Text('Welcome to Flutter'),
-//         ),
-//         body: const Center(
-//          //  child: Text('Hello World'),
-//         ),
-//       ),
-//     );
-//   }
-// }

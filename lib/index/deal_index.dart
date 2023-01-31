@@ -1,28 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/app_drawer.dart';
-import 'package:quantbit_crm/task1.dart';
-import 'package:quantbit_crm/deal1.dart';
-
-
-class simple extends StatefulWidget {
-  const simple({super.key});
+import 'package:quantbit_crm/create/create_deal.dart';
+class Dealindex extends StatefulWidget {
+  const Dealindex({super.key});
   @override
-  State<StatefulWidget>createState() {
-    return simpleState();
+  State<StatefulWidget> createState() {
+    return DealindexState();
   }
 }
-class simpleState extends State<simple>{
 
-
+class DealindexState extends State<Dealindex> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
-          drawer: myDrawer(context),
+        drawer: myDrawer(context),
           appBar: AppBar(
-              title: Text("Tasks"),
+              title: Text("Deals"),
               
               actions: <Widget>[
                 Padding(
@@ -34,21 +29,19 @@ class simpleState extends State<simple>{
                       size: 26.0,
                     ),
                   ),
-
                 ),
               ]
 
-
-            //   iconTheme: IconThemeData(
-            //
-            //     color: Colors.black, // <-- SEE HERE
-            //   ),
-            //   centerTitle: true,
-            //   actions: [IconButton(
-            //
-            //       onPressed: () {}, icon:  Icon(Icons.menu))],
-            // title: const Text('Welcome to Flutter'),
-          ),
+              //   iconTheme: IconThemeData(
+              //
+              //     color: Colors.black, // <-- SEE HERE
+              //   ),
+              //   centerTitle: true,
+              //   actions: [IconButton(
+              //
+              //       onPressed: () {}, icon:  Icon(Icons.menu))],
+              // title: const Text('Welcome to Flutter'),
+              ),
           body: new Column(
             children: <Widget>[
               // new Number(),
@@ -56,18 +49,15 @@ class simpleState extends State<simple>{
             ],
           ),
           floatingActionButton: new FloatingActionButton(
-
               elevation: 0.0,
-              child: new Icon(Icons.add
-              ),
+              child: new Icon(Icons.add),
               backgroundColor: Colors.blue,
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Fon()),);
-              }
-          )
-      ),
+                  MaterialPageRoute(builder: (context) => CreateDeal()),
+                );
+              })),
       //       child: Column(
       //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       //         children: <Widget>[
@@ -79,10 +69,7 @@ class simpleState extends State<simple>{
       //
       // ),
 
-
       //  child: Text('Hello World'),
     );
-
-
   }
 }

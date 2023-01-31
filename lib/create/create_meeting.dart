@@ -76,7 +76,7 @@ class _CreateMeetState extends State<CreateMeet> {
       home: Scaffold(
         drawer: myDrawer(context),
         appBar: AppBar(
-            title: Text("Create new event"),
+            title: Text("Create New Meet"),
             
             actions: <Widget>[
               Padding(

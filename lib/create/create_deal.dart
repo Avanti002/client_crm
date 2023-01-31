@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'deal.dart';
+import '/index/deal_index.dart';
 
 // import 'package:syncfusion_flutter_calender/calender.dart';
-class FormScreen extends StatefulWidget {
-  const FormScreen({Key? key}) : super(key: key);
+class CreateDeal extends StatefulWidget {
+  const CreateDeal({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return FormScreenState();
+    return CreateDealState();
   }
 }
 
-class FormScreenState extends State<FormScreen> {
+class CreateDealState extends State<CreateDeal> {
   TextEditingController dateinput = TextEditingController();
   String dropdownvalue = 'None';
 
@@ -91,7 +91,7 @@ class FormScreenState extends State<FormScreen> {
             onTap: () {
               Navigator.pop(
                 context,
-                MaterialPageRoute(builder: (context) => Deal() )
+                MaterialPageRoute(builder: (context) => Dealindex() )
               );
             },
             child: Icon(Icons.arrow_back),

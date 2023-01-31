@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/create/create_event.dart';
 import 'package:quantbit_crm/test.dart';
 import 'home.dart';
 
@@ -98,9 +99,9 @@ void initState() {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      
-      backgroundColor: Colors.white,
-      body: Stack(
+      body: Container(
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/login.png"))),
+        child: Stack(
         children: [
                  Container(
                    padding: EdgeInsets.only(
@@ -203,7 +204,7 @@ void initState() {
                                       {
                                                     Navigator.push(
                                                     context,
-                                                      MaterialPageRoute(builder: (context) => TasksPage(Goback: (int){},),)
+                                                      MaterialPageRoute(builder: (context) => Home(),)
                                                     );
                                                     String usrnm=loginStatus.toString();
                                                     usrnm=usrnm.substring(55);
@@ -246,7 +247,7 @@ void initState() {
   onPressed: () {
      Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Test(),)
+      MaterialPageRoute(builder: (context) => Home(),)
       );                                      
   },
   label: Text('Bypass',style:TextStyle(fontSize: 20)), 
@@ -262,6 +263,7 @@ void initState() {
             ), 
               ),
                 ],
+                  ),
                   ),
                     );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:quantbit_crm/app_drawer.dart';
-import 'package:quantbit_crm/opportunity.dart';
+import 'package:quantbit_crm/create/create_opportunity.dart';
 
 class Opportunityindex extends StatefulWidget {
   const Opportunityindex({super.key, required this.title});

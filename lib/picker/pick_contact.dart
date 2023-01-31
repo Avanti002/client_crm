@@ -4,13 +4,12 @@ import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart
 
 
 
-class Mpp extends StatefulWidget{
-  const Mpp({Key? key}) : super(key: key);
+class ContactPicker extends StatefulWidget {
   @override
-  MppState createState() => MppState();
+  ContactPickerState createState() => ContactPickerState();
 }
 
-class MppState extends State<Mpp> {
+class ContactPickerState extends State<ContactPicker> {
   final FlutterContactPicker _contactPicker = FlutterContactPicker();
   Contact? _contact;
 
@@ -21,18 +20,18 @@ class MppState extends State<Mpp> {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      home:  Scaffold(
-        appBar: AppBar(
-          title: Text('Contact Picker Example App'),
+    return new MaterialApp(
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Contact Picker Example App'),
         ),
-        body: Center(
-          child:  Column(
+        body: new Center(
+          child: new Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-               MaterialButton(
+              new MaterialButton(
                 color: Colors.blue,
-                child: Text("CLICK ME"),
+                child: new Text("CLICK ME"),
                 onPressed: () async {
                   Contact? contact = await _contactPicker.selectContact();
                   setState(() {
@@ -40,8 +39,8 @@ class MppState extends State<Mpp> {
                   });
                 },
               ),
-              Text(
-                _contact == null ? 'No contact selected.' : _contact.toString(),
+               new Text(
+                 _contact == null ? 'No contact selected.' : _contact.toString(),
               ),
             ],
           ),

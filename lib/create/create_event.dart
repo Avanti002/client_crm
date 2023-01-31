@@ -3,14 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 
-class CustomTableCalendar extends StatefulWidget {
-  const CustomTableCalendar({Key? key}) : super(key: key);
+class CreateEvent extends StatefulWidget {
+  const CreateEvent({Key? key}) : super(key: key);
 
   @override
-  _CustomTableCalendarState createState() => _CustomTableCalendarState();
+  _CreateEventState createState() => _CreateEventState();
 }
 
-class _CustomTableCalendarState extends State<CustomTableCalendar> {
+class _CreateEventState extends State<CreateEvent> {
   final todaysDate = DateTime.now();
   var _focusedCalendarDate = DateTime.now();
   final _initialCalendarDate = DateTime(2000);
@@ -152,7 +152,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calendar'),
+        title: const Text('Event'),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showAddEventDialog(),

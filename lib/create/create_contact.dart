@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/contactindex.dart';
+import 'package:quantbit_crm/index/contact_index.dart';
 
-import 'package:quantbit_crm/post_contact.dart';
+import 'package:quantbit_crm/backend/post_contact.dart';
 
-class Contacts extends StatefulWidget {
-  const Contacts({Key? key, required this.title}) : super(key: key);
+class CreateContact extends StatefulWidget {
+  const CreateContact({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<Contacts> createState() => _Contacts();
+  State<CreateContact> createState() => _CreateContactState();
 }
 
-class _Contacts extends State<Contacts> {
+class _CreateContactState extends State<CreateContact> {
   String? firstname;
   String? lastname;
   String? accountname;

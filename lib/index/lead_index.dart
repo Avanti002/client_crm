@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:quantbit_crm/app_drawer.dart';
-import 'package:quantbit_crm/contact.dart';
-import 'package:quantbit_crm/pick_contact.dart';
+import 'package:quantbit_crm/create/create_lead.dart.';
+import 'package:quantbit_crm/picker/pick_lead.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
-
 
 String curl=login.custUrl;
 List lst=[];
 
 Future<List<Data>> fetchData() async {
 List<Data> list=[];
-var httpsUri = Uri(scheme: 'https',host: '$curl',path: '/api/resource/Contact',query:'fields=["name"]');
+var httpsUri = Uri(scheme: 'https',host: '$curl',path: '/api/resource/Lead',query:'fields=["company_name"]');
 var res = await http
 .get(httpsUri,headers: {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
@@ -28,37 +27,40 @@ return list;
 }
 
 class Data {
-  final String name;
+  final String company_name;
   final String data;
 
   const Data({
     required this.data,
-    required this.name,
+    required this.company_name,
     
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
       data: json['data'],
-      name: json['name'],
+      company_name: json['company_name'],
     );
   }
 }
 
-class Contactindex extends StatefulWidget {
-  const Contactindex({super.key});
+class Leadindex extends StatefulWidget {
+  const Leadindex({super.key});
   @override
   State<StatefulWidget> createState() {
-    return ContactindexState();
+    return LeadindexState();
   }
 }
 
-class ContactindexState extends State<Contactindex> {
+class LeadindexState extends State<Leadindex> {
   @override
 void initState() {
   setState(() {fetchData();});
   super.initState();
+  
 }
+  int _selectedIndex = 0;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,7 +68,7 @@ void initState() {
       home: Scaffold(
         drawer: myDrawer(context),
         appBar: AppBar(
-            title: Text("Contacts"),
+            title: Text("Leads"),
             
             actions: <Widget>[
               Padding(
@@ -80,9 +82,32 @@ void initState() {
                 ),
               ),
             ]),
-        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context,position) {
+        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
           return Card(
-            child: ListTile(title: Text((lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z  \t]'), ''))), 
+            child: ListTile(title: Text((lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), ''
+            
+            )),selected: position == _selectedIndex,onTap: () {
+            setState(() {
+              _selectedIndex = position;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    scrollable: true,
+                    title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
+                     actions: [
+                      ElevatedButton(
+                          child: Text('Close'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                    ],
+                  );
+                });
+         
+               
+            });}),
+            
           );
         })),
         floatingActionButton:
@@ -95,19 +120,19 @@ void initState() {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Mp()),
+                MaterialPageRoute(builder: (context) => LeadPicker()),
               );
 
             },
           ),
           SpeedDialChild(
             child: const Icon(Icons.person_add, color: Colors.white),
-            label: 'New Contact',
+            label: 'New Lead',
             backgroundColor: Colors.blue,
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Contacts(title: 'Create Contact',)),
+                MaterialPageRoute(builder: (context) => CreateLead()),
               );
             },
           ),
