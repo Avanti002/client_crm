@@ -9,6 +9,7 @@ import 'package:quantbit_crm/index/lead_index.dart';
 import 'package:quantbit_crm/index/opportunity_index.dart';
 import 'package:quantbit_crm/index/task_index.dart';
 import 'package:quantbit_crm/login.dart' as login;
+import 'package:quantbit_crm/location_page.dart';
 
 Widget myDrawer(BuildContext context){
   return Drawer(
@@ -126,6 +127,15 @@ Widget myDrawer(BuildContext context){
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Taskindex()));
+            },
+          ),
+          ListTile(
+            title: Text('GeoLocation',style: TextStyle(fontWeight: FontWeight.bold)),
+            selectedTileColor: Colors.blue[100],
+            leading: Icon(Icons.control_point_duplicate,color: Colors.black),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => LocationPage()));
             },
           ),
           ListTile(
