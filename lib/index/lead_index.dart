@@ -6,9 +6,11 @@ import 'package:quantbit_crm/picker/pick_lead.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
+import 'package:quantbit_crm/test.dart';
 
 String curl=login.custUrl;
 List lst=[];
+String companyName="";
 
 Future<List<Data>> fetchData() async {
 List<Data> list=[];
@@ -25,6 +27,7 @@ lst=rest;
 }
 return list;
 }
+
 
 class Data {
   final String company_name;
@@ -89,24 +92,29 @@ void initState() {
             )),selected: position == _selectedIndex,onTap: () {
             setState(() {
               _selectedIndex = position;
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    scrollable: true,
-                    title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
-                     actions: [
-                      ElevatedButton(
-                          child: Text('Close'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          })
-                    ],
-                  );
-                });
-         
-               
-            });}),
+              companyName=(lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
+              // showDialog(
+              //   context: context,
+              //   builder: (BuildContext context) {
+              //     return AlertDialog(
+              //       scrollable: true,
+              //       title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
+              //        actions: [
+              //         ElevatedButton(
+              //             child: Text('Close'),
+              //             onPressed: () {
+              //               Navigator.pop(context);
+              //             })
+              //       ],
+              //     );
+              //   }); 
+            }
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Test(),)
+              );
+            }),
             
           );
         })),
