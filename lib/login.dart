@@ -100,7 +100,7 @@ void initState() {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/login.png"))),
+       // decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/login.png"))),
         child: Stack(
         children: [
                  Container(
