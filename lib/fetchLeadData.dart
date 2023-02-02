@@ -3,8 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/test.dart' as tst;
 
 var temp;
+
+var c_name=tst.cName;
+String leadind="";
 Future<Data> fetchData() async {
  var headers = {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
@@ -19,6 +23,7 @@ http.StreamedResponse response = await request.send();
 if (response.statusCode == 200) {
  await response.stream.bytesToString().then((value) {
   temp=value;
+  leadind=temp;
   });
 }
 else {
@@ -80,7 +85,7 @@ class _LeadDataState extends State<LeadData> {
               if (snapshot.hasData) {
                 return Text(snapshot.data!.data.toString());
               } else if (snapshot.hasError) {
-                return Text(temp);
+                return Text(temp.toString().substring(19));
               }
 
               // By default, show a loading spinner.
