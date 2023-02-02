@@ -127,6 +127,7 @@ class _TestState extends State<Test> {
                 //return Text(temp1);
                 return ElevatedButton.icon(
                   onPressed: () {
+                    leadind=temp.toString().substring(18).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
                     Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => UpdateLead(),)

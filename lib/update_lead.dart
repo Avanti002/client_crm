@@ -1,12 +1,63 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/backend/post_lead.dart';
 import 'package:quantbit_crm/index/lead_index.dart';
 import 'package:quantbit_crm/test.dart' as tst;
+import 'package:http/http.dart' as http;
 
 
+
+var leadname=tst.leadind;
 var leaddata=tst.temp1;
+var temp2;
+
+Future<Data> fetchname() async {
+  var headers = {
+    'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+  };
+  var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/Lead?filters=[["name","=","$leadname"]]&fields=["first_name"]'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    await response.stream.bytesToString().then((value) {
+      temp2=value;
+
+      // temp1=value;
+      //
+      // cName=li.companyName;
+      // leadind=temp.toString().substring(18).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+    });
+  }
+  else {
+    print(response.reasonPhrase);
+  }
+  return Data.fromJson(jsonDecode(request.body));
+}
+class Data {
+  final String name;
+  final String data;
+
+  const Data({
+    required this.data,
+    required this.name,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      data: json['data'],
+      name: json['name'],
+    );
+  }
+}
+
 class UpdateLead extends StatefulWidget {
   const UpdateLead({Key? key}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() {
@@ -15,6 +66,15 @@ class UpdateLead extends StatefulWidget {
 }
 
 class UpdateLeadState extends State<UpdateLead> {
+  @override
+  void initState() {
+    setState(() {
+      fetchname();
+    });
+    print(temp2);
+    super.initState();
+  }
+  TextEditingController fname = TextEditingController()..text=temp2.toString();
   String dropdownvalue = 'Lead';
 
   String? companyname;
@@ -92,14 +152,12 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   TextFormField(
+                    controller: fname,
                       decoration: const InputDecoration(
                           labelText: 'First Name',
+
                           icon: Icon(Icons.account_circle)),
-                      onChanged: (value) {
-                        setState(() {
-                          firstname = value;
-                        });
-                      },
+
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';

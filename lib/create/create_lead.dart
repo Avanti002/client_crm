@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/backend/post_lead.dart';
+import 'package:quantbit_crm/index/lead_index.dart' as tmp;
 import 'package:quantbit_crm/index/lead_index.dart';
 
+
+
+List xyz=[];
 class CreateLead extends StatefulWidget {
   const CreateLead({Key? key}) : super(key: key);
 
@@ -12,6 +16,7 @@ class CreateLead extends StatefulWidget {
 }
 
 class CreateLeadState extends State<CreateLead> {
+
   String dropdownvalue = 'Lead';
 
   String? companyname;
@@ -37,6 +42,21 @@ class CreateLeadState extends State<CreateLead> {
   ];
 
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int len=(tmp.lst).length;
+    for(int i=0;i<len;i++)
+      {
+        var temp;
+        temp=tmp.lst[i].toString();
+        xyz.add(temp);
+      }
+    print(xyz);
+
+  }
 
   @override
   Widget build(BuildContext context) {
