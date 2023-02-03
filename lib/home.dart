@@ -4,9 +4,30 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
 String greet="";
+List lst=[];
+
+class Data {
+  final String company_name;
+  final String data;
+
+  const Data({
+    required this.data,
+    required this.company_name,
+    
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      data: json['data'],
+      company_name: json['company_name'],
+    );
+  }
+}
 class Home extends StatefulWidget {
   const Home({
     Key? key,
@@ -19,9 +40,25 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   DateTime _selectedDate = DateTime.now();
   var hour = DateTime.now().hour;
+  Future<List<Data>> fetchData() async {
+List<Data> list=[];
+var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
+var res = await http
+.get(httpsUri,headers: {
+  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+});
+if (res.statusCode == 200) {
+lst=json.decode(res.body)["data"] as List;
+fetchData();
+}
+return list;
+}
+
   @override
 void initState() {
   setState(() {
+    fetchData();
   if (hour<12) {
           greet='Morning';
   }

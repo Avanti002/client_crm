@@ -7,23 +7,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/test.dart';
+import 'package:quantbit_crm/home.dart' as home;
 
 String curl=login.custUrl;
-List lst=[];
+List lst1=[];
 String companyName="";
 
 Future<List<Data>> fetchData() async {
 List<Data> list=[];
-var httpsUri = Uri(scheme: 'https',host: '$curl',path: '/api/resource/Lead',query:'fields=["company_name"]');
+var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
 var res = await http
 .get(httpsUri,headers: {
   'Authorization': 'token da8dde973368af3:f584b09f290bab9',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
 if (res.statusCode == 200) {
-var obj=json.decode(res.body);
-var rest=obj["data"] as List;
-lst=rest;
+lst1=json.decode(res.body)["data"] as List;
+fetchData();
 }
 return list;
 }
@@ -85,14 +85,14 @@ void initState() {
                 ),
               ),
             ]),
-        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context, position) {
+        body: ListView.builder(itemCount: home.lst.length,itemBuilder: ((context, position) {
           return Card(
-            child: ListTile(title: Text((lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), ''
+            child: ListTile(title: Text((home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), ''
             
             )),selected: position == _selectedIndex,onTap: () {
             setState(() {
               _selectedIndex = position;
-              companyName=(lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
+              companyName=(home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
               // showDialog(
               //   context: context,
               //   builder: (BuildContext context) {
