@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:quantbit_crm/service_locator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Email extends StatefulWidget {
-  const Email({super.key});
+class ContactServices extends StatefulWidget {
+  const ContactServices({super.key});
 
   @override
-  EmailState createState() => EmailState();
+  ContactServicesState createState() => ContactServicesState();
 }
 
-class EmailState extends State<Email> {
+class ContactServicesState extends State<ContactServices> {
+  
   final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
   final String number = "8308020899";
