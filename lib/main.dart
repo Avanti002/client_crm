@@ -1,7 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:quantbit_crm/service_locator.dart';
 import 'login.dart';
+
 void main() {
+  setupLocator();
   runApp(const MyApp());
 }
 
