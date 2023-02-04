@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quantbit_crm/apiFetch.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/create/create_lead.dart.';
 import 'package:quantbit_crm/picker/pick_lead.dart';
@@ -8,12 +9,14 @@ import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/test.dart';
 import 'package:quantbit_crm/home.dart' as home;
+import 'package:quantbit_crm/apiFetch.dart' as api;
 
 String curl=login.custUrl;
 List lst1=[];
 String companyName="";
+String leadind="";
 
-Future<List<Data>> fetchData() async {
+Future<List<Data>> fetchCNameList() async {
 List<Data> list=[];
 var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
 var res = await http
@@ -23,9 +26,32 @@ var res = await http
 });
 if (res.statusCode == 200) {
 lst1=json.decode(res.body)["data"] as List;
-fetchData();
+fetchCNameList();
 }
 return list;
+}
+
+Future<Data> fetchCname() async {
+ var headers = {
+  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+};
+var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/Lead?filters=[["company_name","=","$companyName"]]'));
+
+request.headers.addAll(headers);
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+ await response.stream.bytesToString().then((value) {
+  temp=value;
+  leadind=temp.toString().substring(18).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+  });
+}
+else {
+  print(response.reasonPhrase);
+}
+return Data.fromJson(jsonDecode(request.body));
 }
 
 
@@ -58,7 +84,10 @@ class Leadindex extends StatefulWidget {
 class LeadindexState extends State<Leadindex> {
   @override
 void initState() {
-  setState(() {fetchData();});
+  setState(() {
+    fetchCNameList();
+    api.fetchLeadind();
+  });
   super.initState();
   
 }
@@ -91,8 +120,10 @@ void initState() {
             
             )),selected: position == _selectedIndex,onTap: () {
             setState(() {
+              
               _selectedIndex = position;
               companyName=(home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
+              fetchCname();
               // showDialog(
               //   context: context,
               //   builder: (BuildContext context) {
@@ -112,7 +143,7 @@ void initState() {
             );
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Test(),)
+              MaterialPageRoute(builder: (context) => ApiFetch(),)
               );
             }),
             
