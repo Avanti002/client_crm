@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +8,8 @@ import 'package:quantbit_crm/app_drawer.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:url_launcher/url_launcher.dart';
 
 
 String greet="";
@@ -26,6 +30,22 @@ class Data {
       data: json['data'],
       company_name: json['company_name'],
     );
+  }
+}
+whatsapp() async{
+   var contact = "+917888187242";
+   var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
+   var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+   
+   try{
+      if(Platform.isIOS){
+         await launchUrl(Uri.parse(iosUrl));
+      }
+      else{
+         await launchUrl(Uri.parse(androidUrl));
+      }
+   } on Exception{
+     Text('WhatsApp is not installed.');
   }
 }
 class Home extends StatefulWidget {
@@ -137,7 +157,7 @@ void initState() {
                   lastDay: DateTime.utc(2030, 04, 18),
                   focusedDay: DateTime.now(),
                   ),
-                  
+                  ElevatedButton(onPressed: (){whatsapp();},child:Text('Whatsapp')),
                 ],
               ),
       ),
