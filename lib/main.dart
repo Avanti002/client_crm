@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/service_locator.dart';
+import 'package:quantbit_crm/face_detection/locator.dart';
 import 'login.dart';
 
 void main() {
   setupLocator();
+  setupServices();
   runApp(const MyApp());
 }
 

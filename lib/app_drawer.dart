@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/create/create_event.dart';
+import 'package:quantbit_crm/face_detection/attendance.dart';
 import 'package:quantbit_crm/index/contact_index.dart';
 import 'package:quantbit_crm/create/create_meeting.dart';
 import 'package:quantbit_crm/index/deal_index.dart';
@@ -136,6 +137,15 @@ Widget myDrawer(BuildContext context){
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => LocationPage()));
+            },
+          ),
+          ListTile(
+            title: Text('Attendance',style: TextStyle(fontWeight: FontWeight.bold)),
+            selectedTileColor: Colors.blue[100],
+            leading: Icon(Icons.verified_user,color: Colors.black),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AttendancePage()));
             },
           ),
           ListTile(
