@@ -58,7 +58,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var _focusedCalendarDate = DateTime.now();
+  DateTime? selectedCalendarDate;
   DateTime _selectedDate = DateTime.now();
+  final todaysDate = DateTime.now();
+  final _initialCalendarDate = DateTime(2000);
+  final _lastCalendarDate = DateTime(2050);
+  final titleController = TextEditingController();
+  final descpController = TextEditingController();
+  late  TextEditingController _StartTime;
+  late TextEditingController _EndTime;
+  late Map<DateTime, List<MyEvents>> mySelectedEvents;
   var hour = DateTime.now().hour;
   Future<List<Data>> fetchData() async {
 List<Data> list=[];
@@ -77,6 +87,8 @@ return list;
 
   @override
 void initState() {
+  selectedCalendarDate = _focusedCalendarDate;
+  mySelectedEvents = {};
   setState(() {
     fetchData();
   if (hour<12) {
@@ -88,11 +100,127 @@ void initState() {
   else{greet='Evening';}
   });
   super.initState();
+  _StartTime = new TextEditingController(
+        text: '${DateFormat.jm().format(DateTime.now())}');
+    _EndTime = new TextEditingController(
+        text: '${DateFormat.jm().format(DateTime.now().add(
+          Duration(hours: 1),
+        ))}');
 }
+@override
+  void dispose() {
+    titleController.dispose();
+    descpController.dispose();
+    super.dispose();
+  }
+
+ List<MyEvents> _listOfDayEvents(DateTime dateTime) {
+    return mySelectedEvents[dateTime] ?? [];
+  }
+  _showAddEventDialog() async {
+    await showDialog(
+        context: context,
+        builder: (context) =>Expanded(
+        child:AlertDialog(
+              title: const Text('New Event'),
+              content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    buildTextField(
+                        controller: titleController, hint: 'Enter Title'),
+                    const SizedBox(
+                      height: 20.0,
+                      width:20.0,
+                    ),
+                    buildTextField(
+                        controller: descpController, hint: 'Enter Description'),
+                    const SizedBox(
+                      height: 20.0,
+                      width:20.0,
+                    ),
+                    buildTextField(
+                        controller: descpController, hint: 'Enter meeting link'),
+
+
+                  ],
+                ),
+
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (titleController.text.isEmpty &&
+                        descpController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please enter title & description'),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                      //Navigator.pop(context);
+                      return;
+                    } else {
+                      setState(() {
+                        if (mySelectedEvents[selectedCalendarDate] != null) {
+                          mySelectedEvents[selectedCalendarDate]?.add(MyEvents(
+                              eventTitle: titleController.text,
+                              eventDescp: descpController.text));
+                        } else {
+                          mySelectedEvents[selectedCalendarDate!] = [
+                            MyEvents(
+                                eventTitle: titleController.text,
+                                eventDescp: descpController.text)
+                          ];
+                        }
+                      });
+
+                      titleController.clear();
+                      descpController.clear();
+
+                      Navigator.pop(context);
+                      return;
+                    }
+                  },
+                  child: const Text('Add'),
+                ),
+              ],
+            ))
+    );
+  }
   void _onDateChange(DateTime date) {
     setState(() {
       _selectedDate = date;
     });
+  }
+
+  Widget buildTextField(
+      {String? hint, required TextEditingController controller}) {
+    return TextField(
+      controller: controller,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        labelText: hint ?? '',
+        focusedBorder: OutlineInputBorder(
+          borderSide:
+              BorderSide(color: Color.fromARGB(255, 177, 128, 200), width: 1.5),
+          borderRadius: BorderRadius.circular(
+            10.0,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide:
+              BorderSide(color: Color.fromARGB(255, 51, 7, 72), width: 1.5),
+          borderRadius: BorderRadius.circular(
+            10.0,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -102,15 +230,27 @@ void initState() {
         title: Text('Home'),
           
           actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.logout,
-                  size: 26.0,
-                ),
-              ),
+            // Padding(
+            //   padding: EdgeInsets.only(right: 20.0),
+            //   child: GestureDetector(
+            //     onTap: () {},
+            //     child: Icon(
+            //       Icons.logout,
+            //       size: 26.0,
+            //     ),
+            //   ),
+            // ),
+            PopupMenuButton(
+              onSelected: handleClick,
+              itemBuilder: (BuildContext context) {
+              return {'Logout','Add Event'}.map((String choice)
+              {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            }
             ),
           ],
       ),
@@ -120,48 +260,184 @@ void initState() {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 30),
-                  Text(
+                  
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                        Text(
                         'Good $greet',
+                        
                         style: GoogleFonts.montserrat(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
+                          
                         ),
                       ),
-                  SizedBox(height: 60),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      
-                      Text(
-                        'Today : '+'${DateFormat('MMM,d').format(this._selectedDate)}',
-                        style: GoogleFonts.montserrat(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      SizedBox(width:20),
 
-                    ],
-                  ),
+                      if (greet=="Morning")
+                      
+                        Icon(Icons.wb_twilight)
+                      
+                      else if(greet=='Afternoon')
+                      
+                          Icon(Icons.wb_sunny_outlined)
+
+                       else if(greet=='Evening')
+
+                        Icon(Icons.nightlight_outlined),
+                      
+                       
+
+                        
+                        
+                        
+                        ],),
+                      
+                
+                  
                   SizedBox(height: 25),
-                  DatePicker(
-                    DateTime.now(),
-                    initialSelectedDate: this._selectedDate,
-                    selectionColor: Colors.blue,
-                    onDateChange: this._onDateChange,
-                  ),SizedBox(height: 10),
-                  TableCalendar(
-                  firstDay: DateTime.utc(2000, 04, 18),
-                  lastDay: DateTime.utc(2030, 04, 18),
-                  focusedDay: DateTime.now(),
+                  SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
+              margin: const EdgeInsets.all(8.0),
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                
+              ),
+              child: TableCalendar(
+                focusedDay: _focusedCalendarDate,
+                // today's date
+                firstDay: _initialCalendarDate,
+                // earliest possible date
+                lastDay: _lastCalendarDate,
+                // latest allowed date
+                calendarFormat: CalendarFormat.month,
+                // default view when displayed
+                // default is Saturday & Sunday but can be set to any day.
+                // instead of day number can be mentioned as well.
+                weekendDays: const [DateTime.sunday, 7],
+                // default is Sunday but can be changed according to locale
+                startingDayOfWeek: StartingDayOfWeek.sunday,
+                // height between the day row and 1st date row, default is 16.0
+                daysOfWeekHeight: 40.0,
+                // height between the date rows, default is 52.0
+                rowHeight: 60.0,
+                // this property needs to be added if we want to show events
+                eventLoader: _listOfDayEvents,
+                // Calendar Header Styling
+                headerStyle: const HeaderStyle(
+                  titleTextStyle: TextStyle(
+                      color: Color.fromARGB(255, 244, 242, 245),
+                      fontSize: 20.0),
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 89, 124, 228),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10))),
+                  
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left,
+                    color: Color.fromARGB(255, 243, 239, 239),
+                    size: 28,
                   ),
-                  ElevatedButton(onPressed: (){whatsapp();},child:Text('Whatsapp')),
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right,
+                    color: Color.fromARGB(255, 243, 239, 239),
+                    size: 28,
+                  ),
+                ),
+                // Calendar Days Styling
+                daysOfWeekStyle: const DaysOfWeekStyle(
+                  // Weekend days color (Sat,Sun)
+                  weekendStyle:
+                      TextStyle(color: Color.fromARGB(255, 217, 28, 22)),
+                ),
+                // Calendar Dates styling
+                calendarStyle: const CalendarStyle(
+                  // Weekend dates color (Sat & Sun Column)
+                  weekendTextStyle:
+                      TextStyle(color: Color.fromARGB(255, 217, 28, 22)),
+                  // highlighted color for today
+                  todayDecoration: BoxDecoration(
+                    color: Colors.grey,
+                    shape: BoxShape.circle,
+                  ),
+                  // highlighted color for selected day
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  markerDecoration: BoxDecoration(
+                      color: Color.fromARGB(255, 255, 10, 2),
+                      shape: BoxShape.circle),
+                ),
+                selectedDayPredicate: (currentSelectedDate) {
+                  // as per the documentation 'selectedDayPredicate' needs to determine
+                  // current selected day
+                  return (isSameDay(
+                      selectedCalendarDate!, currentSelectedDate));
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  // as per the documentation
+                  if (!isSameDay(selectedCalendarDate, selectedDay)) {
+                    setState(() {
+                      selectedCalendarDate = selectedDay;
+                      _focusedCalendarDate = focusedDay;
+                    });
+                  }
+                },
+              ),
+            ),
+            ..._listOfDayEvents(selectedCalendarDate!).map(
+              (myEvents) => ListTile(
+                leading: const Icon(
+                  Icons.done,
+                  color: Color.fromARGB(255, 51, 7, 72),
+                ),
+                title:
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child:
+                  Text('Event Title:   ${myEvents.eventTitle}'),
+                ),
+                subtitle: Text('Description:   ${myEvents.eventDescp}'),
+
+              ),
+            ),
+          ],
+        ),
+      ),             
                 ],
               ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){whatsapp();},child:Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/768px-WhatsApp.svg.png')),
       drawer: myDrawer(context),
                       );
   }
+
+  void handleClick(String value) {
+    switch (value){
+      case 'Logout':
+
+      break;
+      case 'Add Event':
+      _showAddEventDialog();
+      break;
+    }
+  }
+}
+class MyEvents {
+  final String eventTitle;
+  final String eventDescp;
+
+  MyEvents({required this.eventTitle, required this.eventDescp});
+
+  @override
+  String toString() => eventTitle;
 }
