@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/contact_services.dart';
 import 'dart:convert';
 import 'package:quantbit_crm/index/lead_index.dart' as lead;
 import 'package:quantbit_crm/accessToken.dart' as at;
+import 'package:quantbit_crm/service_locator.dart';
+import 'package:quantbit_crm/home.dart';
+
+
+
 
 String accessToken=at.tokenAccess;
 String first_name="";
@@ -63,7 +69,7 @@ class Data {
   const Data({
     required this.data,
     required this.company_name,
-    
+
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -82,6 +88,7 @@ class UpdateLead extends StatefulWidget {
 }
 
 class UpdateLeadState extends State<UpdateLead> {
+  final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
   TextEditingController companyNamecontroller = TextEditingController()..text=company_name;
   TextEditingController firstnamecontroller=TextEditingController()..text=first_name;
 TextEditingController emailidcontroller=TextEditingController()..text=email_id;
@@ -98,7 +105,7 @@ void initState() {
     fetchLeadind();
     });
   super.initState();
-  
+
 }
 @override
   Widget build(BuildContext context) {
@@ -108,28 +115,32 @@ void initState() {
         drawer: myDrawer(context),
         appBar: AppBar(
             title: Text("Update Lead"),
-            
+
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {},
                   child: const Icon(
-                    Icons.search,
+                    Icons.check,
                     size: 26.0,
                   ),
                 ),
               ),
             ]),
-        body: 
+        body:
+        Padding(padding: EdgeInsets.all(20),
+              child: 
           Column(
             children:<Widget>[
+              
+              SizedBox(height:25),
               TextFormField(
                 controller: companyNamecontroller,
                       decoration: const InputDecoration(
                           labelText: 'Company Name', icon: Icon(Icons.factory)),
                       onChanged: ((value) {
-                        
+
                       }),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -143,7 +154,7 @@ void initState() {
                           labelText: 'First Name',
                           icon: Icon(Icons.account_circle)),
                       onChanged: (value) {
-                        
+
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -157,7 +168,7 @@ void initState() {
                           labelText: 'Last Name',
                           icon: Icon(Icons.account_circle)),
                       onChanged: (value) {
-                        
+
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -170,7 +181,7 @@ void initState() {
                       decoration: const InputDecoration(
                           labelText: 'Mobile No.', icon: Icon(Icons.phone)),
                       onChanged: (value) {
-                        
+
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -179,7 +190,7 @@ void initState() {
                         return null;
                       }),
                   DropdownButtonFormField(
-                
+
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person_outline_outlined),
                       labelText: 'Lead Status',
@@ -195,7 +206,7 @@ void initState() {
                     onChanged: (
                         value,
                         ) {
-                      
+
                     },
                   ),
                   TextFormField(
@@ -203,7 +214,7 @@ void initState() {
                       decoration: const InputDecoration(
                           labelText: 'Email Id', icon: Icon(Icons.email)),
                       onChanged: (value) {
-                        
+
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -260,11 +271,28 @@ void initState() {
                       //   }
                       //   return null;
                       //
-                      ),  
+                      ),
+              SizedBox(
+                height: 40,
+              ),
+              
             ]
-            
+
           ),
-        
+          ),
+        floatingActionButton: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FloatingActionButton(onPressed: (){whatsapp(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/4494/4494494.png')),
+                    SizedBox(width: 30,),
+                    FloatingActionButton(onPressed: (){_service.call(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/724/724664.png')),
+                    SizedBox(width: 30,),
+                    FloatingActionButton(onPressed: (){_service.sendSms(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/234/234129.png')),
+                    SizedBox(width: 30,),
+                    FloatingActionButton(onPressed: (){ _service.sendEmail(email_id);},child:Image.network('https://cdn-icons-png.flaticon.com/512/2913/2913990.png')),
+                  ],),
+              ),
         ),
       );
   }

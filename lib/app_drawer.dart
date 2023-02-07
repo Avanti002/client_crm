@@ -75,7 +75,7 @@ Widget myDrawer(BuildContext context){
             },
           ),
           ListTile(
-            leading: Icon(Icons.handshake_outlined,color: Colors.black),
+            leading: Icon(Icons.handshake,color: Colors.black),
             title: Text('Opportunity',style: TextStyle(fontWeight: FontWeight.bold)),
             selectedTileColor: Colors.blue[100],
             onTap: () {
@@ -86,15 +86,15 @@ Widget myDrawer(BuildContext context){
             },
           ),
           //Divider(),
-          ListTile(
-            leading: Icon(Icons.how_to_reg,color: Colors.black),
-            title: Text('Deals',style: TextStyle(fontWeight: FontWeight.bold)),
-            selectedTileColor: Colors.blue[100],
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Dealindex()));
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.how_to_reg,color: Colors.black),
+          //   title: Text('Deals',style: TextStyle(fontWeight: FontWeight.bold)),
+          //   selectedTileColor: Colors.blue[100],
+          //   onTap: () {
+          //     Navigator.push(
+          //         context, MaterialPageRoute(builder: (context) => Dealindex()));
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.call_sharp,color: Colors.black),
             title: Text('Calls',style: TextStyle(fontWeight: FontWeight.bold)),
@@ -113,14 +113,14 @@ Widget myDrawer(BuildContext context){
                       builder: (context) => CreateMeet()));
             },
           ),
-          ListTile(
-            title: Text('Events',style: TextStyle(fontWeight: FontWeight.bold)),
-            selectedTileColor: Colors.blue[100],
+          // ListTile(
+          //   title: Text('Events',style: TextStyle(fontWeight: FontWeight.bold)),
+          //   selectedTileColor: Colors.blue[100],
             
-            leading: Icon(Icons.event,color: Colors.black),
-            onTap: () {Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => CreateEvent()));}
-          ),
+          //   leading: Icon(Icons.event,color: Colors.black),
+          //   onTap: () {Navigator.push(
+          //         context, MaterialPageRoute(builder: (context) => CreateEvent()));}
+          // ),
           ListTile(
             title: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold)),
             selectedTileColor: Colors.blue[100],
@@ -133,7 +133,7 @@ Widget myDrawer(BuildContext context){
           ListTile(
             title: Text('GeoLocation',style: TextStyle(fontWeight: FontWeight.bold)),
             selectedTileColor: Colors.blue[100],
-            leading: Icon(Icons.control_point_duplicate,color: Colors.black),
+            leading: Icon(Icons.location_on,color: Colors.black),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => LocationPage()));

@@ -12,10 +12,10 @@ class ContactServices extends StatefulWidget {
 
 class ContactServicesState extends State<ContactServices> {
   
+  
   final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
-
-  final String number = "8308020899";
-  final String email = "sohampawar7575@gmail.com";
+  final String number = "";
+  final String email = "";
 
   @override
   Widget build(BuildContext context) {

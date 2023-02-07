@@ -31,8 +31,8 @@ class Data {
     );
   }
 }
-whatsapp() async{
-   var contact = "+917888187242";
+whatsapp(String contact) async{
+   //var contact = "+917888187242";
    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
    
@@ -415,7 +415,7 @@ void initState() {
                 ],
               ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){whatsapp();},child:Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/768px-WhatsApp.svg.png')),
+      //floatingActionButton: FloatingActionButton(onPressed: (){whatsapp();},child:Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/768px-WhatsApp.svg.png')),
       drawer: myDrawer(context),
                       );
   }
