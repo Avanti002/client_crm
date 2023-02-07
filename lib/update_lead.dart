@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:quantbit_crm/contact_services.dart';
+
 import 'dart:convert';
 import 'package:quantbit_crm/index/lead_index.dart' as lead;
 import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:quantbit_crm/service_locator.dart';
 import 'package:quantbit_crm/home.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 
@@ -295,5 +296,35 @@ void initState() {
               ),
         ),
       );
+  }
+}
+
+
+
+
+
+class CallsAndMessagesService {
+  Future<void> call(String number) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: number,
+    );
+    await launchUrl(launchUri);
+  }
+
+  Future<void> sendSms(String number) async {
+    final Uri launchUri = Uri(
+      scheme: 'sms',
+      path: number,
+    );
+    await launchUrl(launchUri);
+  }
+
+  Future<void> sendEmail(String email) async {
+    final Uri launchUri = Uri(
+      scheme: "mailto",
+      path: email,
+    );
+    await launchUrl(launchUri);
   }
 }

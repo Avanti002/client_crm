@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/index/contact_index.dart';
 import 'package:quantbit_crm/backend/post_contact.dart';
-
+import 'package:quantbit_crm/index/contact_index.dart';
 
 class CreateContact extends StatefulWidget {
   const CreateContact({Key? key, required this.title}) : super(key: key);
@@ -15,7 +14,7 @@ class CreateContact extends StatefulWidget {
 class _CreateContactState extends State<CreateContact> {
   String? firstname;
   String? lastname;
-  String? accountname;
+  String? companyname;
   String? emailid;
   String? mobileno;
   final _formKey = GlobalKey<FormState>();
@@ -24,7 +23,7 @@ class _CreateContactState extends State<CreateContact> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(widget.title),
+          title: Text('contact'),
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(
@@ -38,11 +37,13 @@ class _CreateContactState extends State<CreateContact> {
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                    onTap: () {Navigator.pop(
-                      context,MaterialPageRoute(builder: (context)=>const Contactindex())
-                    );
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Contactindex()));
                       postContact(
-                          firstname, lastname, accountname, emailid, mobileno);
+                          firstname, lastname, companyname, emailid, mobileno);
                     },
                     child: const Icon(Icons.check))),
           ]),
@@ -57,6 +58,11 @@ class _CreateContactState extends State<CreateContact> {
                   TextFormField(
                       decoration: const InputDecoration(
                           labelText: 'First Name', icon: Icon(Icons.person)),
+                      onChanged: (value) {
+                        setState(() {
+                          firstname = value;
+                        });
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
@@ -66,6 +72,11 @@ class _CreateContactState extends State<CreateContact> {
                   TextFormField(
                       decoration: const InputDecoration(
                           labelText: 'Last Name', icon: Icon(Icons.person)),
+                      onChanged: (value) {
+                        setState(() {
+                          lastname = value;
+                        });
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
@@ -74,8 +85,13 @@ class _CreateContactState extends State<CreateContact> {
                       }),
                   TextFormField(
                       decoration: const InputDecoration(
-                          labelText: 'Account Name',
+                          labelText: 'Company Name',
                           icon: Icon(Icons.account_box)),
+                      onChanged: (value) {
+                        setState(() {
+                          companyname = value;
+                        });
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
@@ -85,6 +101,11 @@ class _CreateContactState extends State<CreateContact> {
                   TextFormField(
                       decoration: const InputDecoration(
                           labelText: 'Email Id', icon: Icon(Icons.email)),
+                      onChanged: (value) {
+                        setState(() {
+                          emailid = value;
+                        });
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
@@ -95,6 +116,11 @@ class _CreateContactState extends State<CreateContact> {
                       decoration: const InputDecoration(
                           labelText: 'Mobile No.',
                           icon: Icon(Icons.phone_android_sharp)),
+                      onChanged: (value) {
+                        setState(() {
+                          mobileno = mobileno;
+                        });
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some number';
