@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/accessToken.dart' as at;
 
-
+String accessToken=at.tokenAccess;
 void postlead(
     String? companyname,
     String? firstname,
@@ -12,7 +13,7 @@ void postlead(
     String? state,
     ) async {
   var headers = {
-    'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+    'Authorization': '$accessToken',
     'Content-Type': 'text/plain',
     'Cookie':
     'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='

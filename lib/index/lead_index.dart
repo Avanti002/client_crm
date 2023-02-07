@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:quantbit_crm/apiFetch.dart';
+import 'package:quantbit_crm/update_lead.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/create/create_lead.dart.';
 import 'package:quantbit_crm/picker/pick_lead.dart';
@@ -9,19 +9,22 @@ import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/test.dart';
 import 'package:quantbit_crm/home.dart' as home;
-import 'package:quantbit_crm/apiFetch.dart' as api;
+import 'package:quantbit_crm/update_lead.dart' as api;
+import 'package:quantbit_crm/accessToken.dart' as at;
 
+String accessToken=at.tokenAccess;
 String curl=login.custUrl;
 List lst1=[];
 String companyName="";
 String leadind="";
+String temp="";
 
 Future<List<Data>> fetchCNameList() async {
 List<Data> list=[];
 var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
 var res = await http
 .get(httpsUri,headers: {
-  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+  'Authorization': '$accessToken',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
 if (res.statusCode == 200) {
@@ -143,7 +146,7 @@ void initState() {
             );
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ApiFetch(),)
+              MaterialPageRoute(builder: (context) => UpdateLead(),)
               );
             }),
             

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quantbit_crm/accessToken.dart';
 import 'package:quantbit_crm/service_locator.dart';
 import 'package:quantbit_crm/face_detection/locator.dart';
 import 'package:quantbit_crm/tokenTest.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyLogin(),
+      home: const AccessToken(),
     );
   }
 }

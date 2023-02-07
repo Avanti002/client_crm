@@ -1,91 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:quantbit_crm/backend/post_lead.dart';
-import 'package:quantbit_crm/index/lead_index.dart';
-import 'package:quantbit_crm/test.dart' as tst;
+import 'package:quantbit_crm/app_drawer.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:quantbit_crm/index/lead_index.dart' as lead;
+import 'package:quantbit_crm/accessToken.dart' as at;
 
+String accessToken=at.tokenAccess;
+String first_name="";
+String company_name="";
+String email_id="";
+String last_name="";
+String state="";
+String status="";
+String city="";
+String mobile_no="";
+String lead_owner="";
 
-
-var leadname=tst.leadind;
-var leaddata=tst.temp1;
-var temp2;
-
-Future<Data> fetchname() async {
-  var headers = {
-    'Authorization': 'token da8dde973368af3:f584b09f290bab9',
-    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
-  };
-  var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/Lead?filters=[["name","=","$leadname"]]&fields=["first_name"]'));
-
-  request.headers.addAll(headers);
-
-  http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-    await response.stream.bytesToString().then((value) {
-      temp2=value;
-
-      // temp1=value;
-      //
-      // cName=li.companyName;
-      // leadind=temp.toString().substring(18).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
-    });
-  }
-  else {
-    print(response.reasonPhrase);
-  }
-  return Data.fromJson(jsonDecode(request.body));
-}
-class Data {
-  final String name;
-  final String data;
-
-  const Data({
-    required this.data,
-    required this.name,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
-      data: json['data'],
-      name: json['name'],
-    );
-  }
-}
-
-class UpdateLead extends StatefulWidget {
-  const UpdateLead({Key? key}) : super(key: key);
-
-
-  @override
-  State<StatefulWidget> createState() {
-    return UpdateLeadState();
-  }
-}
-
-class UpdateLeadState extends State<UpdateLead> {
-  @override
-  void initState() {
-    setState(() {
-      fetchname();
-    });
-    print(temp2);
-    super.initState();
-  }
-  TextEditingController fname = TextEditingController()..text=temp2.toString();
-  String dropdownvalue = 'Lead';
-
-  String? companyname;
-  String? firstname;
-  String? lastname;
-  String? mobileno;
-  String? leadstatus;
-  String? emailid;
-  String? city;
-  String? state;
-
+String dropdownvalue = 'Lead';
 
   var items = [
     'Lead',
@@ -99,51 +30,106 @@ class UpdateLeadState extends State<UpdateLead> {
     'Do Not Contact',
   ];
 
-  final _formKey = GlobalKey<FormState>();
 
+Future<List<Data>> fetchLeadind() async {
+List<Data> list=[];
+var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead/${lead.leadind}');
+var res = await http
+.get(httpsUri,headers: {
+  'Authorization': '$accessToken',
+  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+});
+if (res.statusCode == 200) {
+  //name==json.decode(res.body)["data"]["name"];
+  first_name=(json.decode(res.body)["data"]["first_name"]).toString();
+  last_name=(json.decode(res.body)["data"]["last_name"]).toString();
+  company_name=(json.decode(res.body)["data"]["company_name"]).toString();
+  email_id=(json.decode(res.body)["data"]["email_id"]).toString();
+  state=(json.decode(res.body)["data"]["state"]).toString();
+  status=(json.decode(res.body)["data"]["status"]).toString();
+  city=(json.decode(res.body)["data"]["city"]).toString();
+  mobile_no=(json.decode(res.body)["data"]["mobile_no"]).toString();
+  lead_owner=(json.decode(res.body)["data"]["lead_owner"]).toString();
+  fetchLeadind();
+}
+return list;
+}
+
+
+class Data {
+  final String company_name;
+  final String data;
+
+  const Data({
+    required this.data,
+    required this.company_name,
+    
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      data: json['data'],
+      company_name: json['company_name'],
+    );
+  }
+}
+class UpdateLead extends StatefulWidget {
+  const UpdateLead({super.key});
   @override
+  State<StatefulWidget> createState() {
+    return UpdateLeadState();
+  }
+}
+
+class UpdateLeadState extends State<UpdateLead> {
+  TextEditingController companyNamecontroller = TextEditingController()..text=company_name;
+  TextEditingController firstnamecontroller=TextEditingController()..text=first_name;
+TextEditingController emailidcontroller=TextEditingController()..text=email_id;
+TextEditingController lastnamecontroller=TextEditingController()..text=last_name;
+TextEditingController statecontroller=TextEditingController()..text=state;
+TextEditingController statuscontroller=TextEditingController()..text=status;
+TextEditingController citycontroller=TextEditingController()..text=city;
+TextEditingController mobilenocontroller=TextEditingController()..text=mobile_no;
+TextEditingController leadownercontroller=TextEditingController()..text=lead_owner;
+  @override
+void initState() {
+  setState(() {
+    lead.fetchCname();
+    fetchLeadind();
+    });
+  super.initState();
+  
+}
+@override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text('Create Lead'),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(
-                context,
-                MaterialPageRoute(builder: (context) => const Leadindex()),
-              );
-            },
-            child: const Icon(Icons.arrow_back),
-          ),
-          actions: <Widget>[
-            Padding(
+    return MaterialApp(
+      title: 'Update Lead',
+      home: Scaffold(
+        drawer: myDrawer(context),
+        appBar: AppBar(
+            title: Text("Update Lead"),
+            
+            actions: <Widget>[
+              Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => const Leadindex())));
-                      postlead(companyname, firstname, lastname, mobileno,
-                          leadstatus, emailid, city, state);
-                    },
-                    child: const Icon(Icons.check))),
-          ]),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.search,
+                    size: 26.0,
+                  ),
+                ),
+              ),
+            ]),
+        body: 
+          Column(
+            children:<Widget>[
+              TextFormField(
+                controller: companyNamecontroller,
                       decoration: const InputDecoration(
                           labelText: 'Company Name', icon: Icon(Icons.factory)),
                       onChanged: ((value) {
-                        setState(() {
-                          companyname = value;
-                        });
+                        
                       }),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -152,26 +138,12 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   TextFormField(
-                    controller: fname,
+                    controller: firstnamecontroller,
                       decoration: const InputDecoration(
                           labelText: 'First Name',
-
-                          icon: Icon(Icons.account_circle)),
-
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      }),
-                  TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: 'Last Name',
                           icon: Icon(Icons.account_circle)),
                       onChanged: (value) {
-                        setState(() {
-                          lastname = value;
-                        });
+                        
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -180,12 +152,25 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   TextFormField(
+                    controller: lastnamecontroller,
+                      decoration: const InputDecoration(
+                          labelText: 'Last Name',
+                          icon: Icon(Icons.account_circle)),
+                      onChanged: (value) {
+                        
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      }),
+                  TextFormField(
+                    controller: mobilenocontroller,
                       decoration: const InputDecoration(
                           labelText: 'Mobile No.', icon: Icon(Icons.phone)),
                       onChanged: (value) {
-                        setState(() {
-                          mobileno = value;
-                        });
+                        
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -194,6 +179,7 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   DropdownButtonFormField(
+                
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person_outline_outlined),
                       labelText: 'Lead Status',
@@ -209,19 +195,15 @@ class UpdateLeadState extends State<UpdateLead> {
                     onChanged: (
                         value,
                         ) {
-                      setState(() {
-                        dropdownvalue = value!;
-                        leadstatus = dropdownvalue;
-                      });
+                      
                     },
                   ),
                   TextFormField(
+                    controller: emailidcontroller,
                       decoration: const InputDecoration(
                           labelText: 'Email Id', icon: Icon(Icons.email)),
                       onChanged: (value) {
-                        setState(() {
-                          emailid = value;
-                        });
+                        
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -230,6 +212,7 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   TextFormField(
+                    controller:citycontroller,
                       decoration: const InputDecoration(
                           labelText: 'city', icon: Icon(Icons.location_city)),
                       onChanged: (value) {
@@ -244,6 +227,7 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   TextFormField(
+                    controller: statecontroller,
                     // onSaved: (val) => _cardDetails.cardHolderName = val,
                       decoration: const InputDecoration(
                           labelText: 'State',
@@ -260,29 +244,28 @@ class UpdateLeadState extends State<UpdateLead> {
                         return null;
                       }),
                   TextFormField(
+                    controller: leadownercontroller,
                     // onSaved: (val) => _cardDetails.cardHolderName = val,
-                    decoration: const InputDecoration(
-                        labelText: 'Lead Owner',
-                        icon: Icon(Icons.account_circle)),
-                    // onChanged: (value) {
-                    //   setState(() {
-                    //     leadowner = value;
-                    //   });
-                    // },
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Please enter some text';
-                    //   }
-                    //   return null;
-                    //
-                  ),
-                  Text(leaddata),
-                ],
-              ),
-            ),
+                      decoration: const InputDecoration(
+                          labelText: 'Lead Owner',
+                          icon: Icon(Icons.account_circle)),
+                      // onChanged: (value) {
+                      //   setState(() {
+                      //     leadowner = value;
+                      //   });
+                      // },
+                      // validator: (value) {
+                      //   if (value!.isEmpty) {
+                      //     return 'Please enter some text';
+                      //   }
+                      //   return null;
+                      //
+                      ),  
+            ]
+            
           ),
-        ],
-      ),
-    );
+        
+        ),
+      );
   }
 }

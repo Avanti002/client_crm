@@ -6,8 +6,9 @@ import 'package:quantbit_crm/picker/pick_contact.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/login.dart' as login;
+import 'package:quantbit_crm/accessToken.dart' as at;
 
-
+String accessToken=at.tokenAccess;
 String curl=login.custUrl;
 List lst=[];
 
@@ -16,7 +17,7 @@ List<Data> list=[];
 var httpsUri = Uri(scheme: 'https',host: '$curl',path: '/api/resource/Contact',query:'fields=["name"]');
 var res = await http
 .get(httpsUri,headers: {
-  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+  'Authorization': '$accessToken',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
 if (res.statusCode == 200) {

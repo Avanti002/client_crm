@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,10 +7,10 @@ import 'package:quantbit_crm/app_drawer.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:url_launcher/url_launcher.dart';
 
-
+String accessToken=at.tokenAccess;
 String greet="";
 List lst=[];
 
@@ -75,7 +74,7 @@ List<Data> list=[];
 var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
 var res = await http
 .get(httpsUri,headers: {
-  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+  'Authorization': '$accessToken',
   'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 });
 if (res.statusCode == 200) {

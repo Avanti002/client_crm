@@ -3,9 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:quantbit_crm/create/create_event.dart';
-import 'package:quantbit_crm/test.dart';
 import 'home.dart';
+import 'package:quantbit_crm/accessToken.dart' as at;
 
 var loginStatus;
 String sCode="";
@@ -15,6 +14,7 @@ String password="";
 String mobaccess="0";
 String accessStatus="";
 String custUrl="";
+String accessToken=at.tokenAccess;
 
 class MyLogin extends StatefulWidget {
 const MyLogin({Key? key}) : super(key: key);
@@ -37,11 +37,12 @@ void initState() {
     try
     {
       String email=emailController.text;
+      String cUrl=curlController.text;
       var headers = {
-      'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+      'Authorization': '$accessToken',
       'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
       };
-      var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/User?filters=[["name","=","$email"]]&fields=["mob_access"]'));
+      var request = http.Request('GET', Uri.parse('https://$cUrl/api/resource/User?filters=[["name","=","$email"]]&fields=["mob_access"]'));
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
