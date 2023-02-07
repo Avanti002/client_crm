@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quantbit_crm/service_locator.dart';
 import 'package:quantbit_crm/face_detection/locator.dart';
 import 'package:quantbit_crm/tokenTest.dart';
-import 'login.dart';
+import 'package:quantbit_crm/login.dart';
 
 void main() {
   setupLocator();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const TokenTest(),
+      home: const MyLogin(),
     );
   }
 }
