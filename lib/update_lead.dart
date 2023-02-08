@@ -184,7 +184,7 @@ dropdownvalue;
           Column(
             children:<Widget>[
               
-              SizedBox(height:25),
+              //SizedBox(height:25),
               TextFormField(
                 readOnly:true,
                 controller: companyNamecontroller,
@@ -388,4 +388,5 @@ class CallsAndMessagesService {
     );
     await launchUrl(launchUri);
   }
+
 }

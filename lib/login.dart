@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, avoid_types_as_parameter_names, library_private_types_in_public_api
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -15,6 +17,8 @@ String mobaccess="0";
 String accessStatus="";
 String custUrl="";
 String accessToken=at.tokenAccess;
+List lst1=[];
+
 
 class MyLogin extends StatefulWidget {
 const MyLogin({Key? key}) : super(key: key);
@@ -23,10 +27,12 @@ const MyLogin({Key? key}) : super(key: key);
 }
 
 class _MyLoginState extends State<MyLogin> {
+
   bool _passwordVisible=false;
    @override
 void initState() {
-  setState(() {usrMobAccess();});
+  setState(() {usrMobAccess();
+ });
   _passwordVisible = false;
   super.initState();
 }

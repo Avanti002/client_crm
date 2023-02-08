@@ -14,6 +14,7 @@ String accessToken=at.tokenAccess;
 String greet="";
 List lst=[];
 
+
 class Data {
   final String company_name;
   final String data;
@@ -31,6 +32,7 @@ class Data {
     );
   }
 }
+
 whatsapp(String contact) async{
    //var contact = "+917888187242";
    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
@@ -84,12 +86,14 @@ fetchData();
 return list;
 }
 
+
   @override
 void initState() {
   selectedCalendarDate = _focusedCalendarDate;
   mySelectedEvents = {};
   setState(() {
     fetchData();
+
   if (hour<12) {
           greet='Morning';
   }
