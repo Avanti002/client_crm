@@ -11,6 +11,7 @@ import 'package:quantbit_crm/test.dart';
 import 'package:quantbit_crm/home.dart' as home;
 import 'package:quantbit_crm/update_lead.dart' as api;
 import 'package:quantbit_crm/accessToken.dart' as at;
+import 'package:quantbit_crm/update_lead.dart' as ul;
 
 String accessToken=at.tokenAccess;
 String curl=login.custUrl;
@@ -90,6 +91,7 @@ void initState() {
   setState(() {
     fetchCNameList();
     api.fetchLeadind();
+    ul.fetchLeadind();
   });
   super.initState();
   
@@ -117,41 +119,49 @@ void initState() {
                 ),
               ),
             ]),
-        body: ListView.builder(itemCount: home.lst.length,itemBuilder: ((context, position) {
-          return Card(
-            child: ListTile(title: Text((home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), ''
-            
-            )),selected: position == _selectedIndex,onTap: () {
-            setState(() {
+        body: RefreshIndicator(
+          onRefresh:() {
+          return Future.delayed(
+          Duration(seconds: 1),
+          () {setState(() {home.lst;});                  
+          });
+          },
+          child: ListView.builder(itemCount: home.lst.length,itemBuilder: ((context, position) {
+            return Card(
+              child: ListTile(title: Text((home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), ''
               
-              _selectedIndex = position;
-              companyName=(home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
-              fetchCname();
-              // showDialog(
-              //   context: context,
-              //   builder: (BuildContext context) {
-              //     return AlertDialog(
-              //       scrollable: true,
-              //       title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
-              //        actions: [
-              //         ElevatedButton(
-              //             child: Text('Close'),
-              //             onPressed: () {
-              //               Navigator.pop(context);
-              //             })
-              //       ],
-              //     );
-              //   }); 
-            }
-            );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UpdateLead(),)
+              )),selected: position == _selectedIndex,onTap: () {
+              setState(() {
+                
+                _selectedIndex = position;
+                companyName=(home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
+                fetchCname();
+                // showDialog(
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //     return AlertDialog(
+                //       scrollable: true,
+                //       title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
+                //        actions: [
+                //         ElevatedButton(
+                //             child: Text('Close'),
+                //             onPressed: () {
+                //               Navigator.pop(context);
+                //             })
+                //       ],
+                //     );
+                //   }); 
+              }
               );
-            }),
-            
-          );
-        })),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UpdateLead(),)
+                );
+              }),
+              
+            );
+          })),
+        ),
         floatingActionButton:
             SpeedDial(animatedIcon: AnimatedIcons.add_event, children: [
           SpeedDialChild(
