@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:quantbit_crm/app_drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 
 class CreateMeet extends StatefulWidget {
   const CreateMeet({Key? key}) : super(key: key);
@@ -344,10 +347,16 @@ class _CreateMeetState extends State<CreateMeet> {
 
                     ],
                   ),
+                new InkWell(
+                    child: new Text('Open Browser'),
+                    onTap: () => launch('https://meet.google.com/?hs=197&pli=1&authuser=0')
+                ),
                 
               ],
             ),
+
           ),
+
       )
         ));
 
