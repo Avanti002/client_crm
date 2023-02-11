@@ -27,6 +27,8 @@ dependencies:
   image: ^3.0.2
   sqflite: ^2.0.2
   auto_reload: ^1.1.0
+  call_log: ^4.0.0
+  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:

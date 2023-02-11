@@ -1,4 +1,6 @@
+import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
+import 'package:quantbit_crm/CallLog.dart';
 import 'package:quantbit_crm/create/create_event.dart';
 import 'package:quantbit_crm/face_detection/attendance.dart';
 import 'package:quantbit_crm/index/contact_index.dart';
@@ -106,7 +108,10 @@ Widget myDrawer(BuildContext context) {
           title: const Text('Calls',
               style: TextStyle(fontWeight: FontWeight.bold)),
           selectedTileColor: Colors.blue[100],
-          onTap: () => null,
+          onTap: () {
+             Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CallLogs()));
+          }
         ),
         // Divider(),
         ListTile(
