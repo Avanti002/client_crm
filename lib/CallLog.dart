@@ -72,7 +72,7 @@ class _CallLogsState extends State<CallLogs> {
                       ]),
                       const SizedBox(height: 5),
                       Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.only(top: 8),
                         child: Row(
                           children: [
                             Column(
