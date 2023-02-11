@@ -157,7 +157,7 @@ dropdownvalue;
       home: Scaffold(
         drawer: myDrawer(context),
         appBar: AppBar(
-            title: Text("Update Lead"),
+            title: const Text("Update Lead"),
 
             actions: <Widget>[
               Padding(
@@ -179,7 +179,7 @@ dropdownvalue;
               ),
             ]),
         body:
-        Padding(padding: EdgeInsets.all(20),
+        Padding(padding: const EdgeInsets.all(20),
               child: 
           Column(
             children:<Widget>[
@@ -334,7 +334,7 @@ dropdownvalue;
                       //   return null;
                       //
                       ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               
@@ -347,11 +347,11 @@ dropdownvalue;
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FloatingActionButton(onPressed: (){whatsapp(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/4494/4494494.png')),
-                    SizedBox(width: 30,),
+                    const SizedBox(width: 30,),
                     FloatingActionButton(onPressed: (){_service.call(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/724/724664.png')),
-                    SizedBox(width: 30,),
+                    const SizedBox(width: 30,),
                     FloatingActionButton(onPressed: (){_service.sendSms(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/234/234129.png')),
-                    SizedBox(width: 30,),
+                    const SizedBox(width: 30,),
                     FloatingActionButton(onPressed: (){ _service.sendEmail(email_id);},child:Image.network('https://cdn-icons-png.flaticon.com/512/2913/2913990.png')),
                   ],),
               ),

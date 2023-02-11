@@ -51,10 +51,10 @@ class CallLog {
     //NOTE: Since we are accepting date params both as timestamps and DateTime objects
     // we need to determine which one to use
     int? _dateFrom = dateFrom;
-    _dateFrom ??= dateTimeFrom?.minute;
+    _dateFrom ??= dateTimeFrom?.month;
 
     int? _dateTo = dateTo;
-    _dateTo ??= dateTimeTo?.minute;
+    _dateTo ??= dateTimeTo?.month;
 
     final Map<String, String?> params = <String, String?>{
       'dateFrom': _dateFrom?.toString(),

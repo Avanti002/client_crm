@@ -25,14 +25,14 @@ class _CreateMeetState extends State<CreateMeet> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _Titlecontroller = new TextEditingController();
-    _Datecontroller = new TextEditingController(
+    _Titlecontroller =  TextEditingController();
+    _Datecontroller =  TextEditingController(
         text: '${DateFormat('EEE, MMM d, ' 'yy').format(this.SelectedDate)}');
-    _StartTime = new TextEditingController(
+    _StartTime = TextEditingController(
         text: '${DateFormat.jm().format(DateTime.now())}');
-    _EndTime = new TextEditingController(
+    _EndTime = TextEditingController(
         text: '${DateFormat.jm().format(DateTime.now().add(
-          Duration(hours: 1),
+          const Duration(hours: 1),
         ))}');
   }
 
@@ -79,7 +79,7 @@ class _CreateMeetState extends State<CreateMeet> {
       home: Scaffold(
         drawer: myDrawer(context),
         appBar: AppBar(
-            title: Text("Create New Meet"),
+            title: const Text("Create New Meet"),
             
             actions: <Widget>[
               Padding(
@@ -113,10 +113,10 @@ class _CreateMeetState extends State<CreateMeet> {
                     ),
                     decoration: InputDecoration(
                       labelText: "Subject",
-                      enabledBorder: UnderlineInputBorder(
+                      enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                       ),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                       ),
                       fillColor: Colors.black,
@@ -149,15 +149,15 @@ class _CreateMeetState extends State<CreateMeet> {
                         onTap: () {
                           _selectDate(context);
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.calendar_month_outlined,
                           color: Colors.black,
                         ),
                       ),
-                      enabledBorder: UnderlineInputBorder(
+                      enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                       ),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                       ),
                       fillColor: Colors.black,
@@ -176,7 +176,7 @@ class _CreateMeetState extends State<CreateMeet> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
+                            SizedBox(
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
                                 readOnly: true,
@@ -187,16 +187,16 @@ class _CreateMeetState extends State<CreateMeet> {
                                     onTap: () {
                                       _selectTime(context, "StartTime");
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.alarm,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  enabledBorder: UnderlineInputBorder(
+                                  enabledBorder: const UnderlineInputBorder(
                                     borderSide:
                                     BorderSide(color: Colors.black),
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
+                                  focusedBorder: const UnderlineInputBorder(
                                     borderSide:
                                     BorderSide(color: Colors.black),
                                   ),
@@ -210,7 +210,7 @@ class _CreateMeetState extends State<CreateMeet> {
                             ),
                             Column(
                               children: [
-                                Container(
+                                SizedBox(
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   child: TextField(
                                     readOnly: true,
@@ -221,16 +221,16 @@ class _CreateMeetState extends State<CreateMeet> {
                                         onTap: () {
                                           _selectTime(context, "EndTime");
                                         },
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.alarm,
                                           color: Colors.black,
                                         ),
                                       ),
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: const UnderlineInputBorder(
                                         borderSide:
                                         BorderSide(color: Colors.black),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: const UnderlineInputBorder(
                                         borderSide:
                                         BorderSide(color: Colors.black),
                                       ),
@@ -261,10 +261,10 @@ class _CreateMeetState extends State<CreateMeet> {
                           ),
                           decoration: InputDecoration(
                             labelText: "Description",
-                            enabledBorder: UnderlineInputBorder(
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                             ),
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                             ),
                             fillColor: Colors.black,
@@ -274,19 +274,14 @@ class _CreateMeetState extends State<CreateMeet> {
                             ),
                           ),
                         ),
-
-
-
                        ),
                       Container(
-                        padding: EdgeInsets.all(15),
-
+                        padding: const EdgeInsets.all(15),
                         alignment: Alignment.center,
                         child:
                         TextFormField(
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
-
                           cursorColor: Colors.black,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
@@ -294,10 +289,10 @@ class _CreateMeetState extends State<CreateMeet> {
                           ),
                           decoration: InputDecoration(
                             labelText: "Meeting Link",
-                            enabledBorder: UnderlineInputBorder(
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                             ),
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                             ),
                             fillColor: Colors.black,
@@ -307,18 +302,16 @@ class _CreateMeetState extends State<CreateMeet> {
                             ),
                           ),
                         ),
-
-
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 101,
                       ),
                       Center(
-                        child:new ElevatedButton(
-                            onPressed: ()=>{
-
+                        child:ElevatedButton(
+                            onPressed: (){
+                              
                             },
-                            child:new Text('Create Meeting'),
+                            child:const Text('Create Meeting'),
                           ),
 
                       ),
@@ -347,8 +340,8 @@ class _CreateMeetState extends State<CreateMeet> {
 
                     ],
                   ),
-                new InkWell(
-                    child: new Text('Open Browser'),
+                 InkWell(
+                    child:  const Text('Open Browser'),
                     onTap: () => launch('https://meet.google.com/?hs=197&pli=1&authuser=0')
                 ),
                 
