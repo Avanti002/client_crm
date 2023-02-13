@@ -10,44 +10,35 @@ import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:quantbit_crm/index/opportunity_index.dart';
 import 'package:quantbit_crm/service_locator.dart';
 import 'package:quantbit_crm/home.dart';
-
-String temp = oppo.tech;
-String accessToken = at.tokenAccess;
-String opportunity_from = "";
-String party = "";
-String title = "";
-String opportunity_type = "";
-String sales_stage = "";
-String status = "";
-String expected_closing = "";
-String probability = "";
+String temp=oppo.tech;
+String accessToken=at.tokenAccess;
+String opportunity_from="";
+String party="";
+String title="";
+String opportunity_type="";
+String sales_stage="";
+String status="";
+ String expected_closing="";
+ String probability="";
 Future<List<Data>> fetchOppoind() async {
-  List<Data> list = [];
-  var httpsUri = Uri(
-      scheme: 'https',
-      host: 'demo.erpdata.in',
-      path: '/api/resource/Opportunity/${oppo.oppoind}');
-  var res = await http.get(httpsUri, headers: {
+  List<Data> list=[];
+  var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Opportunity/${oppo.oppoind}');
+  var res = await http
+      .get(httpsUri,headers: {
     'Authorization': '$accessToken',
-    'Cookie':
-        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   });
   if (res.statusCode == 200) {
     //name==json.decode(res.body)["data"]["name"];
-    opportunity_from =
-        (json.decode(res.body)["data"]["opportunity_from"].toString());
-    title = (json.decode(res.body)["data"]["title"]).toString();
-    party = (json.decode(res.body)["data"]["party_name"]).toString();
-    sales_stage = (json.decode(res.body)["data"]["sales_stage"]);
-    opportunity_type = (json.decode(res.body)["data"]["opportunity_type"]);
-   
+    opportunity_from=(json.decode(res.body)["data"]["opportunity_from"]);
+    title=(json.decode(res.body)["data"]["title"]).toString();
+    party=(json.decode(res.body)["data"]["party_name"]).toString();
     print(opportunity_from);
-    //print(temp);
+     //print(temp);
     fetchOppoind();
   }
   return list;
 }
-
 class Data {
   final String name;
   final String data;
@@ -55,6 +46,7 @@ class Data {
   const Data({
     required this.data,
     required this.name,
+
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -64,18 +56,13 @@ class Data {
     );
   }
 }
-
 Future<List<Data>> updateOppo() async {
-  List<Data> list = [];
+  List<Data> list=[];
   var headers = {
     'Authorization': '$accessToken',
-    'Cookie':
-        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   };
-  var request = http.Request(
-      'PUT',
-      Uri.parse(
-          'https://demo.erpdata.in/api/resource/Opportunity/${oppo.oppoind}?status=$status'));
+  var request = http.Request('PUT', Uri.parse('https://demo.erpdata.in/api/resource/Opportunity/${oppo.oppoind}?status=$status'));
 
   request.headers.addAll(headers);
 
@@ -83,11 +70,15 @@ Future<List<Data>> updateOppo() async {
 
   if (response.statusCode == 200) {
     print(await response.stream.bytesToString());
-  } else {
+
+  }
+  else {
     print(response.reasonPhrase);
   }
   return list;
 }
+
+
 
 class DisplayOppo extends StatefulWidget {
   const DisplayOppo({Key? key, required this.title}) : super(key: key);
@@ -100,24 +91,20 @@ class DisplayOppo extends StatefulWidget {
 
 class _DisplayOppo extends State<DisplayOppo> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController opportunity_fromcontroller = TextEditingController()
-    ..text = "";
-  TextEditingController partycontroller = TextEditingController()..text = "";
-  TextEditingController titlecontroller = TextEditingController()..text = "";
-  TextEditingController opportunity_typecontroller = TextEditingController()
-    ..text = "";
-  TextEditingController sales_stagecontroller = TextEditingController()
-    ..text = "";
-  TextEditingController statuscontroller = TextEditingController()..text = "";
-  TextEditingController expected_closingcontroller = TextEditingController()
-    ..text = "";
-  TextEditingController probabilitycontroller = TextEditingController()
-    ..text = "";
+  TextEditingController opportunity_fromcontroller = TextEditingController()..text="";
+  TextEditingController partycontroller=TextEditingController()..text="";
+  TextEditingController titlecontroller=TextEditingController()..text="";
+  TextEditingController opportunity_typecontroller=TextEditingController()..text="";
+  TextEditingController sales_stagecontroller=TextEditingController()..text="";
+  TextEditingController statuscontroller=TextEditingController()..text="";
+  TextEditingController expected_closingcontroller=TextEditingController()..text="";
+  TextEditingController probabilitycontroller=TextEditingController()..text="";
 
-  TextEditingController dateinput = TextEditingController()..text = "";
+  TextEditingController dateinput = TextEditingController()..text="";
 
   String dropdownvalue = 'Open';
   var items = [
+
     'Open',
     'Quotaion',
     'Converted',
@@ -129,18 +116,15 @@ class _DisplayOppo extends State<DisplayOppo> {
 
   @override
   void initState() {
-    setState(() {
-      oppo.fetchOpponame();
-      opportunity_fromcontroller = TextEditingController()
-        ..text = opportunity_from;
-      partycontroller = TextEditingController()..text = party;
-      titlecontroller = TextEditingController()..text = title;
-      opportunity_typecontroller = TextEditingController()
-        ..text = opportunity_type;
-      sales_stagecontroller = TextEditingController()..text = sales_stage;
-      statuscontroller = TextEditingController()..text = status;
-      dateinput = TextEditingController()..text = expected_closing;
-      probabilitycontroller = TextEditingController()..text = probability;
+    setState(() {oppo.fetchOpponame();
+    opportunity_fromcontroller = TextEditingController()..text=opportunity_from;
+    partycontroller=TextEditingController()..text=party;
+    titlecontroller=TextEditingController()..text=title;
+    opportunity_typecontroller=TextEditingController()..text=opportunity_type;
+    sales_stagecontroller=TextEditingController()..text=sales_stage;
+    statuscontroller=TextEditingController()..text=status;
+    dateinput=TextEditingController()..text=expected_closing;
+    probabilitycontroller=TextEditingController()..text=probability;
 
       fetchOppoind();
     });
@@ -158,9 +142,7 @@ class _DisplayOppo extends State<DisplayOppo> {
               Navigator.pop(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Opportunityindex(
-                          title: '',
-                        )),
+                    builder: (context) => Opportunityindex(title: '',)),
               );
             },
             child: const Icon(Icons.arrow_back),
@@ -172,10 +154,9 @@ class _DisplayOppo extends State<DisplayOppo> {
                     onTap: () {
                       updateOppo();
 
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Opportunity Updated !')));
-                    },
-                    child: const Icon(Icons.check))),
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Opportunity Updated !')));
+                    }, child: const Icon(Icons.check))),
           ]),
       body: ListView(
         children: <Widget>[
@@ -186,10 +167,9 @@ class _DisplayOppo extends State<DisplayOppo> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
-                      controller: titlecontroller,
+                  controller: titlecontroller,
                       decoration: const InputDecoration(
-                          labelText: 'Opportunity name',
-                          icon: Icon(Icons.person)),
+                          labelText: 'Opportunity name', icon: Icon(Icons.person)),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
@@ -197,10 +177,9 @@ class _DisplayOppo extends State<DisplayOppo> {
                         return null;
                       }),
                   TextFormField(
-                      controller: opportunity_typecontroller,
+                      controller:opportunity_typecontroller,
                       decoration: const InputDecoration(
-                          labelText: 'Opportunity type',
-                          icon: Icon(Icons.person)),
+                          labelText: 'Opportunity type', icon: Icon(Icons.person)),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
@@ -210,14 +189,14 @@ class _DisplayOppo extends State<DisplayOppo> {
                   TextFormField(
                       controller: opportunity_fromcontroller,
                       decoration: const InputDecoration(
-                          labelText: 'Opportunity from',
-                          icon: Icon(Icons.person)),
+                          labelText: 'Opportunity from', icon: Icon(Icons.person)),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter some text';
                         }
                         return null;
                       }),
+
                   TextFormField(
                       controller: partycontroller,
                       decoration: const InputDecoration(
@@ -229,7 +208,7 @@ class _DisplayOppo extends State<DisplayOppo> {
                         return null;
                       }),
                   TextFormField(
-                      controller: sales_stagecontroller,
+                    controller: sales_stagecontroller,
                       decoration: const InputDecoration(
                           labelText: 'Sales Stage',
                           icon: Icon(Icons.account_box)),
@@ -253,21 +232,23 @@ class _DisplayOppo extends State<DisplayOppo> {
                       );
                     }).toList(),
                     onChanged: (
-                      value,
-                    ) {
+                        value,
+                        ) {
                       setState(() {
-                        status = value.toString();
+                        status=value.toString();
+
                         //leadstatus = dropdownvalue;
                       });
                     },
                   ),
                   TextField(
+
                     controller: dateInput,
                     //editing controller of this TextField
                     decoration: InputDecoration(
                         icon: Icon(Icons.calendar_today), //icon of text field
                         labelText: "Enter Date" //label text of field
-                        ),
+                    ),
                     readOnly: true,
                     //set it true, so that user will not able to edit text
                     onTap: () async {
@@ -282,7 +263,7 @@ class _DisplayOppo extends State<DisplayOppo> {
                         print(
                             pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                         String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
                         print(
                             formattedDate); //formatted date output using intl package =>  2021-03-16
                         setState(() {
@@ -293,7 +274,15 @@ class _DisplayOppo extends State<DisplayOppo> {
                     },
                   ),
                   TextFormField(
-                      controller: probabilitycontroller,
+                    controller: probabilitycontroller,
+                      onChanged: (
+    value,
+    ) {
+    setState(() {
+    probability=value.toString();
+
+    //leadstatus = dropdownvalue;
+    });},
                       decoration: const InputDecoration(
                           labelText: 'Probability',
                           icon: Icon(Icons.account_box)),
@@ -303,6 +292,8 @@ class _DisplayOppo extends State<DisplayOppo> {
                         }
                         return null;
                       }),
+
+
                 ],
               ),
             ),
