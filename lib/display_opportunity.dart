@@ -236,7 +236,6 @@ class _DisplayOppo extends State<DisplayOppo> {
                         ) {
                       setState(() {
                         status=value.toString();
-
                         //leadstatus = dropdownvalue;
                       });
                     },
@@ -275,14 +274,6 @@ class _DisplayOppo extends State<DisplayOppo> {
                   ),
                   TextFormField(
                     controller: probabilitycontroller,
-                      onChanged: (
-    value,
-    ) {
-    setState(() {
-    probability=value.toString();
-
-    //leadstatus = dropdownvalue;
-    });},
                       decoration: const InputDecoration(
                           labelText: 'Probability',
                           icon: Icon(Icons.account_box)),
