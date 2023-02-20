@@ -11,11 +11,13 @@ String inlat = "";
 String inlong = "";
 String inaddress = "";
 String inTime = "";
+String inDate = "";
 String inRunning = "";
 String outlat = "";
 String outlong = "";
 String outaddress = "";
 String outTime = "";
+String outDate = "";
 String outRunning = "";
 DateTime now = DateTime.now();
 
@@ -32,6 +34,7 @@ class _LocationPageState extends State<LocationPage> {
   String? _currentAddress;
   Position? _currentPosition;
   double differenceHours = 0;
+  String date = '${now.day} / ${now.month} / ${now.year}';
   String timein =
       '${now.hour % 12}:${now.minute} ${now.hour < 12 ? 'AM' : 'PM'}';
   String timeout =
@@ -144,7 +147,6 @@ class _LocationPageState extends State<LocationPage> {
     super.initState();
     _controller1.addListener(_calculate);
     _controller2.addListener(_calculate);
-  
   }
 
   @override
@@ -171,30 +173,46 @@ class _LocationPageState extends State<LocationPage> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
-                Row(children: [getInCurrentLoc()]),
+                Row(children: [
+                  Text('Date: $inDate'),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  getInCurrentLoc(),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Text('Time:$inTime'),
+                  SizedBox(
+                    height: 10,
+                  )
+                ]),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('LAT: $inlat'),
-                    const SizedBox(
-                      height: 10,
+                    Row(
+                      children: [
+                        Text('LAT: $inlat'),
+                        const SizedBox(
+                          width: 140,
+                        ),
+                        Text('LNG: $inlong'),
+                        SizedBox(
+                          height: 10,
+                        )
+                      ],
                     ),
-                    Text('LNG: $inlong'),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     Text('ADDRESS: $inaddress'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text('Time:$inTime'),
                     const SizedBox(
                       height: 10,
                     ),
@@ -214,6 +232,7 @@ class _LocationPageState extends State<LocationPage> {
               ]),
             ),
           ),
+          SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -223,30 +242,46 @@ class _LocationPageState extends State<LocationPage> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
-                Row(children: [getOutCurrentLoc()]),
+                Row(children: [
+                  Text('Date: $outDate'),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  getOutCurrentLoc(),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  Text('Time:$outTime'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]),
+                SizedBox(
+                  height: 10,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('LAT: ${outlat}'),
-                    const SizedBox(
+                    Row(
+                      children: [
+                        Text('LAT: $outlat'),
+                        const SizedBox(
+                          width: 140,
+                        ),
+                        Text('LNG: $outlong'),
+                      ],
+                    ),
+                    SizedBox(
                       height: 10,
                     ),
-                    Text('LNG: ${outlong}'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text('ADDRESS: ${outaddress}'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text('Time:$outTime'),
+                    Text('ADDRESS: $outaddress'),
                     const SizedBox(
                       height: 10,
                     ),
@@ -266,6 +301,7 @@ class _LocationPageState extends State<LocationPage> {
               ]),
             ),
           ),
+          SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -275,7 +311,7 @@ class _LocationPageState extends State<LocationPage> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -284,11 +320,11 @@ class _LocationPageState extends State<LocationPage> {
               children: [
                 Text(
                   'Total (kms): $_result km',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 Text(
                   'Total Work Hours (Hours): $differenceHours ',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 )
               ],
             ),
@@ -298,6 +334,7 @@ class _LocationPageState extends State<LocationPage> {
 
   Widget getInCurrentLoc() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
@@ -309,15 +346,17 @@ class _LocationPageState extends State<LocationPage> {
                 inlong = _currentPosition!.longitude.toString();
                 inaddress = _currentAddress!;
                 inTime = timein;
+                inDate = date;
                 inRunning = _controller1.text;
               });
               print(inlat);
               print(inlong);
               print(inaddress);
+              print(inDate);
               print(inRunning);
             });
           },
-          child: const Text('In'),
+          child: const Text('Check In'),
         ),
       ],
     );
@@ -325,6 +364,7 @@ class _LocationPageState extends State<LocationPage> {
 
   Widget getOutCurrentLoc() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
@@ -336,15 +376,17 @@ class _LocationPageState extends State<LocationPage> {
                 outlong = _currentPosition!.longitude.toString();
                 outaddress = _currentAddress!;
                 outTime = timeout;
+                outDate = date;
                 outRunning = _controller2.text;
               });
               print(outlat);
               print(outlong);
               print(outaddress);
+              print(outDate);
               print(outRunning);
             });
           },
-          child: const Text('OUT'),
+          child: const Text('Check OUT'),
         ),
       ],
     );
