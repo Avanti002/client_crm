@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quantbit_crm/backend/post_lead.dart';
 import 'package:quantbit_crm/home.dart' as tmp;
 import 'package:quantbit_crm/index/lead_index.dart';
 
+List xyz = [];
 
-List xyz=[];
 class CreateLead extends StatefulWidget {
   const CreateLead({Key? key}) : super(key: key);
 
@@ -15,7 +16,6 @@ class CreateLead extends StatefulWidget {
 }
 
 class CreateLeadState extends State<CreateLead> {
-
   String dropdownvalue = 'Lead';
 
   String? companyname;
@@ -26,7 +26,6 @@ class CreateLeadState extends State<CreateLead> {
   String? emailid;
   String? city;
   String? state;
-
 
   var items = [
     'Lead',
@@ -46,15 +45,13 @@ class CreateLeadState extends State<CreateLead> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    int len=(tmp.lst).length;
-    for(int i=0;i<len;i++)
-      {
-        var temp;
-        temp=tmp.lst[i].toString();
-        xyz.add(temp);
-      }
+    int len = (tmp.lst).length;
+    for (int i = 0; i < len; i++) {
+      var temp;
+      temp = tmp.lst[i].toString();
+      xyz.add(temp);
+    }
     print(xyz);
-
   }
 
   @override
@@ -140,6 +137,9 @@ class CreateLeadState extends State<CreateLead> {
                   TextFormField(
                       decoration: const InputDecoration(
                           labelText: 'Mobile No.', icon: Icon(Icons.phone)),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       onChanged: (value) {
                         setState(() {
                           mobileno = value;
@@ -165,8 +165,8 @@ class CreateLeadState extends State<CreateLead> {
                       );
                     }).toList(),
                     onChanged: (
-                        value,
-                        ) {
+                      value,
+                    ) {
                       setState(() {
                         dropdownvalue = value!;
                         leadstatus = dropdownvalue;
@@ -202,7 +202,7 @@ class CreateLeadState extends State<CreateLead> {
                         return null;
                       }),
                   TextFormField(
-                    // onSaved: (val) => _cardDetails.cardHolderName = val,
+                      // onSaved: (val) => _cardDetails.cardHolderName = val,
                       decoration: const InputDecoration(
                           labelText: 'State',
                           icon: Icon(Icons.south_america_rounded)),

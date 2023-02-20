@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:quantbit_crm/app_drawer.dart';
@@ -21,13 +20,13 @@ DateTime now = DateTime.now();
 
 enum Location { location1, location2 }
 
-class LocationPage extends StatefulWidget {
-  const LocationPage({Key? key}) : super(key: key);
+class LocationPage2 extends StatefulWidget {
+  const LocationPage2({Key? key}) : super(key: key);
   @override
-  State<LocationPage> createState() => _LocationPageState();
+  State<LocationPage2> createState() => _LocationPageState2();
 }
 
-class _LocationPageState extends State<LocationPage> {
+class _LocationPageState2 extends State<LocationPage2> {
   bool isPressed = false;
   String? _currentAddress;
   Position? _currentPosition;
@@ -144,7 +143,6 @@ class _LocationPageState extends State<LocationPage> {
     super.initState();
     _controller1.addListener(_calculate);
     _controller2.addListener(_calculate);
-  
   }
 
   @override
@@ -204,9 +202,6 @@ class _LocationPageState extends State<LocationPage> {
                         labelText: 'Enter your Meter Running',
                         border: OutlineInputBorder(),
                       ),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
                       keyboardType: TextInputType.number,
                     )
                   ],
@@ -256,9 +251,6 @@ class _LocationPageState extends State<LocationPage> {
                         labelText: 'Enter your  Meter Running',
                         border: OutlineInputBorder(),
                       ),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
                       keyboardType: TextInputType.number,
                     )
                   ],
@@ -309,7 +301,9 @@ class _LocationPageState extends State<LocationPage> {
                 inlong = _currentPosition!.longitude.toString();
                 inaddress = _currentAddress!;
                 inTime = timein;
-                inRunning = _controller1.text;
+                inRunning = _controller1
+                    .toString()
+                    .replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
               });
               print(inlat);
               print(inlong);
@@ -326,46 +320,43 @@ class _LocationPageState extends State<LocationPage> {
   Widget getOutCurrentLoc() {
     return Column(
       children: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            _getCurrentPosition();
-            Timer(const Duration(seconds: 5), () {
-              setState(() {
-                isPressed = true;
-                outlat = _currentPosition!.latitude.toString();
-                outlong = _currentPosition!.longitude.toString();
-                outaddress = _currentAddress!;
-                outTime = timeout;
-                outRunning = _controller2.text;
-              });
-              print(outlat);
-              print(outlong);
-              print(outaddress);
-              print(outRunning);
-            });
-          },
-          child: const Text('OUT'),
-        ),
-      ],
-    );
-  }
-
-  Widget getMapView() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MapSample()),
-              );
-              setState(() {
-                isPressed = false;
-              });
-            },
-            child: const Text('Get Map View'),
+        Visibility(
+          visible: true,
+          child: Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _getCurrentPosition();
+                  Timer(const Duration(seconds: 5), () {
+                    setState(() {
+                      isPressed = true;
+                      outlat = _currentPosition!.latitude.toString();
+                      outlong = _currentPosition!.longitude.toString();
+                      outaddress = _currentAddress!;
+                      outTime = timeout;
+                      outRunning = _controller2.text;
+                    });
+                    print(outlat);
+                    print(outlong);
+                    print(outaddress);
+                    print(outRunning);
+                  });
+                },
+                child: const Text('OUT'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MapSample()),
+                  );
+                  setState(() {
+                    isPressed = false;
+                  });
+                },
+                child: const Text('Get Map View'),
+              ),
+            ],
           ),
         ),
       ],

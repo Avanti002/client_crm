@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:quantbit_crm/backend/post_task.dart';
 import 'package:quantbit_crm/index/task_index.dart';
@@ -21,11 +22,11 @@ class CreateTaskState extends State<CreateTask> {
   String? priority;
   // String? task_weight;
   // String? parent_task;
-   DateTime? exp_start_date;
+  DateTime? exp_start_date;
   // String? exp_end_date;
- // String? progress;
+  // String? progress;
   //Float? expected_time;
- // String? description;
+  // String? description;
   TextEditingController dateinput = TextEditingController();
   String dropdownvalue = 'Open';
 
@@ -51,7 +52,6 @@ class CreateTaskState extends State<CreateTask> {
   String dropdownvalue3 = 'Low';
 
   var items3 = [
-
     'Low',
     'Medium',
     'High',
@@ -102,8 +102,8 @@ class CreateTaskState extends State<CreateTask> {
           title: const Text('Add Task'),
           leading: GestureDetector(
             onTap: () {
-              Navigator.pop(
-                  context, MaterialPageRoute(builder: (context) => Taskindex()));
+              Navigator.pop(context,
+                  MaterialPageRoute(builder: (context) => Taskindex()));
             },
             child: Icon(Icons.arrow_back),
           ),
@@ -112,10 +112,13 @@ class CreateTaskState extends State<CreateTask> {
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                     onTap: () {
-                  Navigator.pop(context,
-                  MaterialPageRoute(builder: (context)=> const Taskindex()));
-                  sendData(subject,status, priority,exp_start_date);
-                }, child: Icon(Icons.check))),
+                      Navigator.pop(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Taskindex()));
+                      sendData(subject, status, priority, exp_start_date);
+                    },
+                    child: Icon(Icons.check))),
           ]),
       body: ListView(
         children: <Widget>[
@@ -158,8 +161,8 @@ class CreateTaskState extends State<CreateTask> {
                       }).toList(),
                       onChanged: (String? newValue) {
                         setState(() {
-                          dropdownvalue= newValue!;
-                          status= dropdownvalue;
+                          dropdownvalue = newValue!;
+                          status = dropdownvalue;
                         });
                       }),
                   DropdownButtonFormField(
@@ -178,8 +181,7 @@ class CreateTaskState extends State<CreateTask> {
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownvalue3 = newValue!;
-                          priority= dropdownvalue3;
-
+                          priority = dropdownvalue3;
                         });
                       }),
                   TextFormField(
@@ -194,6 +196,9 @@ class CreateTaskState extends State<CreateTask> {
                   TextFormField(
                     decoration: const InputDecoration(
                         labelText: 'Weight', icon: Icon(Icons.circle)),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     // onChanged: ((value) {
                     //   setState(() {
                     //     task_weight = value;
@@ -202,7 +207,7 @@ class CreateTaskState extends State<CreateTask> {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
-                        labelText:'Type', icon: Icon(Icons.library_add)),
+                        labelText: 'Type', icon: Icon(Icons.library_add)),
                     // onChanged: ((value) {
                     //   setState(() {
                     //     type = value;
@@ -211,7 +216,8 @@ class CreateTaskState extends State<CreateTask> {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
-                        labelText: 'Parent Task', icon: Icon(Icons.adjust_rounded)),
+                        labelText: 'Parent Task',
+                        icon: Icon(Icons.adjust_rounded)),
                     // onChanged: ((value) {
                     //   setState(() {
                     //     parent_task = value;
@@ -245,13 +251,13 @@ class CreateTaskState extends State<CreateTask> {
                           setState(() {
                             // dateinput.text =
                             //     formattedDate;
-                            dateinput.text=formattedDate;
-                            exp_start_date=dateinput.text as DateTime?;//set output date to TextField value.
+                            dateinput.text = formattedDate;
+                            exp_start_date = dateinput.text
+                                as DateTime?; //set output date to TextField value.
                           });
                         } else {
                           print("Date is not selected");
                         }
-
                       }),
                   // TextFormField(
                   //     controller: dateinput,
@@ -288,13 +294,13 @@ class CreateTaskState extends State<CreateTask> {
                   //     }),
                   TextFormField(
                     decoration: const InputDecoration(
-                        labelText: 'Progress', icon: Icon(Icons.percent_rounded)),
+                        labelText: 'Progress',
+                        icon: Icon(Icons.percent_rounded)),
                     // onChanged: ((value) {
                     //   setState(() {
                     //     progress = value;
                     //   });
                     // }),
-
                   ),
                   // TextFormField(
                   //   decoration: const InputDecoration(
@@ -306,26 +312,21 @@ class CreateTaskState extends State<CreateTask> {
                   //   }),
                   // ),
 
-
-
-
-
-
                   TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: 'Description',
-                          icon: Icon(Icons.text_fields)),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-               //        onChanged: ((value) {
-               //   setState(() {
-               //  description = value;
-               //   });
-               // }),),
+                    decoration: const InputDecoration(
+                        labelText: 'Description',
+                        icon: Icon(Icons.text_fields)),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    //        onChanged: ((value) {
+                    //   setState(() {
+                    //  description = value;
+                    //   });
+                    // }),),
                   ),
                   // DropdownButtonFormField(
                   //     decoration: const InputDecoration(

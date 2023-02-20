@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quantbit_crm/backend/post_contact.dart';
 import 'package:quantbit_crm/index/contact_index.dart';
 
@@ -116,6 +117,9 @@ class _CreateContactState extends State<CreateContact> {
                       decoration: const InputDecoration(
                           labelText: 'Mobile No.',
                           icon: Icon(Icons.phone_android_sharp)),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       onChanged: (value) {
                         setState(() {
                           mobileno = mobileno;

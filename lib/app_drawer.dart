@@ -13,6 +13,7 @@ import 'package:quantbit_crm/index/task_index.dart';
 import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/location_page.dart';
 import 'package:quantbit_crm/test.dart';
+import 'package:quantbit_crm/test2.dart';
 
 Widget myDrawer(BuildContext context) {
   return Drawer(
@@ -110,7 +111,7 @@ Widget myDrawer(BuildContext context) {
           selectedTileColor: Colors.blue[100],
           onTap: () {
              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CallLogs()));
+                MaterialPageRoute(builder: (context) => const CallLogs()));
           }
         ),
         // Divider(),
@@ -143,6 +144,16 @@ Widget myDrawer(BuildContext context) {
                 context, MaterialPageRoute(builder: (context) => const Test()));
           },
         ),
+        //  ListTile(
+        //   title: const Text('Test2',
+        //       style: TextStyle(fontWeight: FontWeight.bold)),
+        //   selectedTileColor: Colors.blue[100],
+        //   leading: const Icon(Icons.location_on, color: Colors.black),
+        //   onTap: () {
+        //     Navigator.push(context,
+        //         MaterialPageRoute(builder: (context) => const LocationPage2()));
+        //   },
+        // ),
         ListTile(
           title: const Text('Tasks',
               style: TextStyle(fontWeight: FontWeight.bold)),
