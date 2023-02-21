@@ -181,13 +181,13 @@ class _LocationPageState extends State<LocationPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
                 Row(children: [
-                  Text('Date: $inDate'),
+                  getInCurrentLoc(),
                   const SizedBox(
                     width: 50,
                   ),
-                  getInCurrentLoc(),
+                  Text('Date: $inDate'),
                   SizedBox(
-                    width: 50,
+                    width: 40,
                   ),
                   Text('Time:$inTime'),
                   SizedBox(
@@ -201,7 +201,7 @@ class _LocationPageState extends State<LocationPage> {
                       children: [
                         Text('LAT: $inlat'),
                         const SizedBox(
-                          width: 140,
+                          width: 120,
                         ),
                         Text('LNG: $inlong'),
                         SizedBox(
@@ -250,13 +250,13 @@ class _LocationPageState extends State<LocationPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
                 Row(children: [
-                  Text('Date: $outDate'),
+                  getOutCurrentLoc(),
                   const SizedBox(
                     width: 50,
                   ),
-                  getOutCurrentLoc(),
+                  Text('Date: $outDate'),
                   const SizedBox(
-                    width: 40,
+                    width: 30,
                   ),
                   Text('Time:$outTime'),
                   const SizedBox(
@@ -273,7 +273,7 @@ class _LocationPageState extends State<LocationPage> {
                       children: [
                         Text('LAT: $outlat'),
                         const SizedBox(
-                          width: 140,
+                          width: 120,
                         ),
                         Text('LNG: $outlong'),
                       ],
