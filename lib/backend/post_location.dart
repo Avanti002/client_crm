@@ -25,7 +25,7 @@ void postlocation(
   var request = http.Request('POST',
       Uri.parse('http://swtechnotest.erpdata.in/api/resource/Geo%20tagging'));
   request.body =
-      '''{\r\n    "inaddress":"$inaddress",\r\n    "indate":"$inDate",\r\n    "intime":"$inTime",\r\n    "inlat":"$inlat",\r\n    "inlong":"$inlong",\r\n    "inrunning":"$inRunning",\r\n"outdate":"$outDate"\r\n}''';
+      '''{\r\n    "inaddress":"$inaddress",\r\n    "indate":"$inDate",\r\n    "intime":"$inTime",\r\n    "inlat":"$inlat",\r\n    "inlong":"$inlong",\r\n    "inrunning":"$inRunning",\r\n"outdate":"$outDate",\r\n"outtime":"$outTime",\r\n"outlat":"$outlat",\r\n"outlong":"$outlong",\r\n"outaddress":"$outaddress",\r\n"outrunning":"$outRunning"\r\n}''';
 // '''{"indate"="$inDate","intime"="$inTime","inlat"="$inlat","inlong"="$inlong","inaddress"="$inaddress","inrunning"="$inRunning","outdate"="$outDate","outtime"="$outTime","outlat"="$outlat","outlong"="$outlong","outaddress"="$outaddress","outrunning"="$outRunning"}''';
   request.headers.addAll(headers);
 
