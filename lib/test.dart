@@ -32,7 +32,6 @@ Future<List<Data>> fetchCNameList() async {
   if (res.statusCode == 200) {
     lst1 = json.decode(res.body)["data"] as List;
     fetchCNameList();
-    print(lst1);
   }
   return list;
 }

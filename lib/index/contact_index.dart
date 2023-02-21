@@ -102,7 +102,7 @@ void initState() {
       home: Scaffold(
         drawer: myDrawer(context),
         appBar: AppBar(
-            title: Text("Contacts"),
+            title: const Text("Contacts"),
             
             actions: <Widget>[
               Padding(
@@ -116,21 +116,21 @@ void initState() {
                 ),
               ),
             ]),
-        body: ListView.builder(itemCount: lst.length,itemBuilder: ((context,position) {
+        body: ListView.builder(itemCount: home.lst1.length,itemBuilder: ((context,position) {
           return Card(
-            child: ListTile(title: Text((lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
+            child: ListTile(title: Text((home.lst1[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
     selected: position == _selectedIndex,onTap: () {
     setState(() {
 
     _selectedIndex = position;
-    name1=(lst[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z  \t]'), '');
+    name1=(home.lst1[position].toString()).substring(7).replaceAll(RegExp('[^A-Za-z  \t]'), '');
     fetchContactname();
     print(name1);
     }
     );
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>DisplayContact(title: ''),)
+        MaterialPageRoute(builder: (context) =>const DisplayContact(title: '',),)
     );
                 }),
 
@@ -158,7 +158,7 @@ void initState() {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CreateContact(title: 'Create Contact',)),
+                MaterialPageRoute(builder: (context) => const CreateContact(title: 'Create Contact',)),
               );
             },
           ),

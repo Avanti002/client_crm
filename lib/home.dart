@@ -13,7 +13,60 @@ import 'package:url_launcher/url_launcher.dart';
 String accessToken=at.tokenAccess;
 String greet="";
 List lst=[];
+List lst1=[];
+List lst2=[];
+List lst3=[];
+class Data1 {
+  final String name;
+  final String data;
 
+  const Data1({
+    required this.data,
+    required this.name,
+
+  });
+
+  factory Data1.fromJson(Map<String, dynamic> json) {
+    return Data1(
+      data: json['data'],
+      name: json['name'],
+    );
+  }
+}
+class Data2 {
+  final String name;
+  final String data;
+
+  const Data2({
+    required this.data,
+    required this.name,
+
+  });
+
+  factory Data2.fromJson(Map<String, dynamic> json) {
+    return Data2(
+      data: json['data'],
+      name: json['name'],
+    );
+  }
+}
+class Data3 {
+  final String name;
+  final String data;
+
+  const Data3({
+    required this.data,
+    required this.name,
+
+  });
+
+  factory Data3.fromJson(Map<String, dynamic> json) {
+    return Data3(
+      data: json['data'],
+      name: json['name'],
+    );
+  }
+}
 
 class Data {
   final String company_name;
@@ -85,6 +138,52 @@ fetchData();
 }
 return list;
 }
+  Future<List<Data1>> fetchcontact() async {
+    List<Data1> list1=[];
+    var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Contact',query:'fields=["name"]');
+    var res = await http
+        .get(httpsUri,headers: {
+      'Authorization': '$accessToken',
+      'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    });
+    if (res.statusCode == 200) {
+      lst1=json.decode(res.body)["data"] as List;
+      fetchcontact();
+     // print(lst1);
+    }
+    return list1;
+  }
+  Future<List<Data2>> fetchoppo() async {
+    List<Data2> list2=[];
+    var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Opportunity',query:'fields=["title"]');
+    var res = await http
+        .get(httpsUri,headers: {
+      'Authorization': '$accessToken',
+      'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    });
+    if (res.statusCode == 200) {
+      lst2=json.decode(res.body)["data"] as List;
+      fetchoppo();
+     // print(lst2);
+    }
+    return list2;
+  }
+  Future<List<Data3>> fetchtask() async {
+    List<Data3> list3=[];
+    var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Task',query:'fields=["subject"]');
+    var res = await http
+        .get(httpsUri,headers: {
+      'Authorization': '$accessToken',
+      'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    });
+    if (res.statusCode == 200) {
+      lst3=json.decode(res.body)["data"] as List;
+      fetchtask();
+      // print(lst2);
+    }
+    return list3;
+  }
+
 
 
   @override
@@ -93,6 +192,9 @@ void initState() {
   mySelectedEvents = {};
   setState(() {
     fetchData();
+    fetchcontact();
+    fetchoppo();
+    fetchtask();
 
   if (hour<12) {
           greet='Morning';

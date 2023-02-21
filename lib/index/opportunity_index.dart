@@ -6,6 +6,7 @@ import 'package:quantbit_crm/display_opportunity.dart';
 import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/home.dart' as home;
 import 'dart:convert';
 
 String accessToken = at.tokenAccess;
@@ -122,18 +123,18 @@ class _Opportunityindex extends State<Opportunityindex> {
           ),
         ]),
         body: ListView.builder(
-            itemCount: lst.length,
+            itemCount: home.lst2.length,
             itemBuilder: ((context, position) {
               return Card(
                 child: ListTile(
-                    title: Text((lst[position].toString())
+                    title: Text((home.lst2[position].toString())
                         .substring(8)
                         .replaceAll(RegExp('[^A-Za-z  \t]'), '')),
                     selected: position == _selectedIndex,
                     onTap: () {
                       setState(() {
                         _selectedIndex = position;
-                        tech = (lst[position].toString())
+                        tech = (home.lst2[position].toString())
                             .substring(8)
                             .replaceAll(RegExp('[^A-Za-z  \t]'), '');
                         fetchOpponame();
