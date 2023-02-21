@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:quantbit_crm/app_drawer.dart';
+import 'package:quantbit_crm/backend/post_location.dart';
 import 'dart:async';
 import 'gloc.dart';
 
@@ -186,11 +187,11 @@ class _LocationPageState extends State<LocationPage> {
                     width: 50,
                   ),
                   Text('Date: $inDate'),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   Text('Time:$inTime'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   )
                 ]),
@@ -204,12 +205,12 @@ class _LocationPageState extends State<LocationPage> {
                           width: 120,
                         ),
                         Text('LNG: $inlong'),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text('ADDRESS: $inaddress'),
@@ -232,7 +233,7 @@ class _LocationPageState extends State<LocationPage> {
               ]),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -263,7 +264,7 @@ class _LocationPageState extends State<LocationPage> {
                     height: 10,
                   ),
                 ]),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Column(
@@ -278,7 +279,7 @@ class _LocationPageState extends State<LocationPage> {
                         Text('LNG: $outlong'),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text('ADDRESS: $outaddress'),
@@ -301,7 +302,7 @@ class _LocationPageState extends State<LocationPage> {
               ]),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -339,7 +340,7 @@ class _LocationPageState extends State<LocationPage> {
         ElevatedButton(
           onPressed: () {
             _getCurrentPosition();
-            Timer(const Duration(seconds: 5), () {
+            Timer(const Duration(seconds: 2), () {
               setState(() {
                 isPressed = true;
                 inlat = _currentPosition!.latitude.toString();
@@ -349,6 +350,8 @@ class _LocationPageState extends State<LocationPage> {
                 inDate = date;
                 inRunning = _controller1.text;
               });
+              postlocation(inlat, inlong, inaddress, inTime, inDate, inRunning,
+                  outlat, outlong, outaddress, outTime, outDate, outRunning);
               print(inlat);
               print(inlong);
               print(inaddress);
@@ -369,7 +372,7 @@ class _LocationPageState extends State<LocationPage> {
         ElevatedButton(
           onPressed: () {
             _getCurrentPosition();
-            Timer(const Duration(seconds: 5), () {
+            Timer(const Duration(seconds: 2), () {
               setState(() {
                 isPressed = true;
                 outlat = _currentPosition!.latitude.toString();
@@ -379,6 +382,8 @@ class _LocationPageState extends State<LocationPage> {
                 outDate = date;
                 outRunning = _controller2.text;
               });
+              postlocation(inlat, inlong, inaddress, inTime, inDate, inRunning,
+                  outlat, outlong, outaddress, outTime, outDate, outRunning);
               print(outlat);
               print(outlong);
               print(outaddress);
