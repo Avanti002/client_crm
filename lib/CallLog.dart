@@ -53,72 +53,70 @@ class _CallLogsState extends State<CallLogs> {
     const TextStyle mono = TextStyle(fontFamily: 'monospace');
     final List<Widget> children = <Widget>[];
     for (CallLogEntry entry in _callLogEntries) {
-      children.add(Container(
-        child: Card(
-            color: Colors.white,
-            borderOnForeground: true,
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  ExpansionTile(
-                      expandedAlignment: Alignment.centerRight,
-                      leading: const Icon(Icons.phone),
-                      title: Text('Name : ${entry.name}', style: mono),
-                      trailing: Text('${entry.duration} sec', style: mono),
-                      children: <Widget>[
-                        const SizedBox(width: 80),
-                        Row(children: <Widget>[
+      children.add(Card(
+          color: Colors.white,
+          borderOnForeground: true,
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                ExpansionTile(
+                    expandedAlignment: Alignment.centerRight,
+                    leading: const Icon(Icons.phone),
+                    title: Text('Name : ${entry.name}', style: mono),
+                    trailing: Text('${entry.duration} sec', style: mono),
+                    children: <Widget>[
+                      const SizedBox(width: 80),
+                      Row(children: <Widget>[
+                        const SizedBox(width: 50),
+                        Text('Mobile ${entry.number}', style: mono),
+                      ]),
+                      Row(
+                        children: [
                           const SizedBox(width: 50),
-                          Text('Mobile ${entry.number}', style: mono),
-                        ]),
-                        Row(
-                          children: [
-                            const SizedBox(width: 50),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('${entry.callType}',
-                                    style: mono, textAlign: TextAlign.left),
-                              ],
-                            ),
-                            const SizedBox(width: 80),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.sim_card_alert_outlined,
-                                ),
-                                Text('${entry.simDisplayName}',
-                                    style: mono, textAlign: TextAlign.end),
-                              ],
-                            ),
-                          ],
-                        ),
-                        // Row(
-                        //   children: [
-                        //     const Text('DATE: ${DateTime.monthsPerYear}', style: mono),
-                        //   ],
-                        // ),
-                        // (entry.timestamp!)
-                      ]
-                      // const Divider(),
-                      // Text('F. NUMBER  : ${entry.formattedNumber}', style: mono),
-                      // Text('C.M. NUMBER: ${entry.cachedMatchedNumber}', style: mono),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('${entry.callType}',
+                                  style: mono, textAlign: TextAlign.left),
+                            ],
+                          ),
+                          const SizedBox(width: 80),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.sim_card_alert_outlined,
+                              ),
+                              Text('${entry.simDisplayName}',
+                                  style: mono, textAlign: TextAlign.end),
+                            ],
+                          ),
+                        ],
+                      ),
+                      // Row(
+                      //   children: [
+                      //     const Text('DATE: ${DateTime.monthsPerYear}', style: mono),
+                      //   ],
+                      // ),
+                      // (entry.timestamp!)
+                    ]
+                    // const Divider(),
+                    // Text('F. NUMBER  : ${entry.formattedNumber}', style: mono),
+                    // Text('C.M. NUMBER: ${entry.cachedMatchedNumber}', style: mono),
 
-                      // subtitle:
+                    // subtitle:
 
-                      //
+                    //
 
-                      //
-                      // Text('ACCOUNT ID : ${entry.phoneAccountId}', style: mono),
-                      //
-                      )
-                ],
-              ),
-            )),
-      ));
+                    //
+                    // Text('ACCOUNT ID : ${entry.phoneAccountId}', style: mono),
+                    //
+                    )
+              ],
+            ),
+          )));
     }
 
     return MaterialApp(
@@ -143,38 +141,7 @@ class _CallLogsState extends State<CallLogs> {
         ]),
         body: SingleChildScrollView(
           child:
-              // Column(
-              // children: <Widget>[
-              //   Center(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: ElevatedButton(
-              //         onPressed: () async {
-              //           final Iterable<CallLogEntry> result =
-              //               await CallLog.query();
-              //           setState(() {
-              //             _callLogEntries = result;
-              //           });
-              //         },
-              //         child: const Text('Get all'),
-              //       ),
-              //     ),
-              //   ),
-              //   Center(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: ElevatedButton(
-              //         onPressed: () {
-              //           Workmanager().registerOneOffTask(
-              //             DateTime.now().millisecondsSinceEpoch.toString(),
-              //             'simpleTask',
-              //             existingWorkPolicy: ExistingWorkPolicy.replace,
-              //           );
-              //         },
-              //         child: const Text('Get all in background'),
-              //       ),
-              //     ),
-              //   ),
+              
               Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(children: children),

@@ -350,8 +350,14 @@ class _LocationPageState extends State<LocationPage> {
                 inDate = date;
                 inRunning = _controller1.text;
               });
-              postlocation(inlat, inlong, inaddress, inTime, inDate, inRunning,
-                  outlat, outlong, outaddress, outTime, outDate, outRunning);
+              postlocation(
+                inlat,
+                inlong,
+                inaddress,
+                inTime,
+                inDate,
+                inRunning,
+              );
               print(inlat);
               print(inlong);
               print(inaddress);
@@ -382,8 +388,14 @@ class _LocationPageState extends State<LocationPage> {
                 outDate = date;
                 outRunning = _controller2.text;
               });
-              postlocation(inlat, inlong, inaddress, inTime, inDate, inRunning,
-                  outlat, outlong, outaddress, outTime, outDate, outRunning);
+              postlocation(
+                inlat,
+                inlong,
+                inaddress,
+                inTime,
+                inDate,
+                inRunning,
+              );
               print(outlat);
               print(outlong);
               print(outaddress);

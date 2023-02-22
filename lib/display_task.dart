@@ -9,45 +9,73 @@ import 'package:quantbit_crm/index/task_index.dart';
 import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:quantbit_crm/service_locator.dart';
 
-String accessToken=at.tokenAccess;
-String subject="";
-String project="";
-String status="";
-String priority="";
-String issue="";
-String task_weight="";
-String type="";
-String parent_task="";
-String exp_start_date="";
-String progress="";
-String description="";
+String accessToken = at.tokenAccess;
+String subject = "";
+String project = "";
+String status = "";
+String priority = "";
+String issue = "";
+String task_weight = "";
+String type = "";
+String parent_task = "";
+String exp_start_date = "";
+String progress = "";
+String description = "";
 Future<List<Data>> fetchTaskind() async {
-  List<Data> list=[];
-  var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Task/${task.taskind}');
-  var res = await http
-      .get(httpsUri,headers: {
+  List<Data> list = [];
+  var httpsUri = Uri(
+      scheme: 'https',
+      host: 'demo.erpdata.in',
+      path: '/api/resource/Task/${task.taskind}');
+  var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
-    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   });
   if (res.statusCode == 200) {
-    subject=(json.decode(res.body)["data"]["subject"]).toString();
-    project=(json.decode(res.body)["data"]["project"]).toString();
-    status=(json.decode(res.body)["data"]["status"]).toString();
-    priority=(json.decode(res.body)["data"]["priority"]).toString();
-    issue=(json.decode(res.body)["data"]["issue"]).toString();
+    subject = (json.decode(res.body)["data"]["subject"]).toString();
+    project = (json.decode(res.body)["data"]["project"]).toString();
+    status = (json.decode(res.body)["data"]["status"]).toString();
+    priority = (json.decode(res.body)["data"]["priority"]).toString();
+    issue = (json.decode(res.body)["data"]["issue"]).toString();
 
-    type=(json.decode(res.body)["data"]["type"]).toString();
-    parent_task=(json.decode(res.body)["data"]["parent_task"]).toString();
-    exp_start_date=(json.decode(res.body)["data"]["exp_start_date"]).toString();
-    progress=(json.decode(res.body)["data"]["progress"]).toString();
-    description=(json.decode(res.body)["data"]["description"]).toString();
-    task_weight=(json.decode(res.body)["data"]["task_weight"]).toString();
+    type = (json.decode(res.body)["data"]["type"]).toString();
+    parent_task = (json.decode(res.body)["data"]["parent_task"]).toString();
+    exp_start_date =
+        (json.decode(res.body)["data"]["exp_start_date"]).toString();
+    progress = (json.decode(res.body)["data"]["progress"]).toString();
+    description = (json.decode(res.body)["data"]["description"]).toString();
+    task_weight = (json.decode(res.body)["data"]["task_weight"]).toString();
 
     fetchTaskind();
   }
   return list;
 }
 
+Future<List<Data>> updateTask() async {
+  List<Data> list = [];
+  var headers = {
+    'Authorization': '$accessToken',
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+  };
+  var request = http.Request(
+      'PUT',
+      Uri.parse(
+          'https://demo.erpdata.in/api/resource/Task/${task.taskind}?status=$status'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    print(await response.stream.bytesToString());
+    print('update');
+  } else {
+    print(response.reasonPhrase);
+  }
+  return list;
+}
 
 class Data {
   final String name;
@@ -56,7 +84,6 @@ class Data {
   const Data({
     required this.data,
     required this.name,
-
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -66,7 +93,6 @@ class Data {
     );
   }
 }
-
 
 class DisplayTask extends StatefulWidget {
   const DisplayTask({Key? key}) : super(key: key);
@@ -82,15 +108,12 @@ class DisplayTaskState extends State<DisplayTask> {
     ..text = subject;
   TextEditingController projectcontroller = TextEditingController()
     ..text = project;
-  TextEditingController statuscontroller = TextEditingController()
-    ..text = status;
+  TextEditingController statuscontroller = TextEditingController()..text = "";
   TextEditingController prioritycontroller = TextEditingController()
     ..text = priority;
 
-  TextEditingController issuecontroller = TextEditingController()
-    ..text = issue;
-  TextEditingController typecontroller = TextEditingController()
-    ..text = type;
+  TextEditingController issuecontroller = TextEditingController()..text = issue;
+  TextEditingController typecontroller = TextEditingController()..text = type;
 
   TextEditingController parent_taskcontroller = TextEditingController()
     ..text = parent_task;
@@ -106,21 +129,6 @@ class DisplayTaskState extends State<DisplayTask> {
   TextEditingController task_weightcontroller = TextEditingController()
     ..text = task_weight;
 
-
-
-
-
-  // String? project;
-  // String? issue;
-  // String? type;
-
-  // String? task_weight;
-  // String? parent_task;
-
-  // String? exp_end_date;
-  // String? progress;
-  //Float? expected_time;
-  // String? description;
   TextEditingController dateinput = TextEditingController();
   String dropdownvalue = 'Open';
 
@@ -134,53 +142,14 @@ class DisplayTaskState extends State<DisplayTask> {
     'Cancelled',
   ];
 
-  // String dropdownvalue2 = 'Not Started';
-  //
-  // var items2 = [
-  //   'Not Started',
-  //   'Deferred',
-  //   'In Progress',
-  //   'Completed',
-  //   'Waiting for input',
-  // ];
   String dropdownvalue3 = 'Low';
 
   var items3 = [
-
     'Low',
     'Medium',
     'High',
     'Urgent',
   ];
-
-  // String dropdownvalue4 = 'None';
-  //
-  // var items4 = [
-  //   'None',
-  //   'Daily',
-  //   'Weekly',
-  //   'Monthly',
-  //   'Yearly',
-  // ];
-
-  // String dropdownvalue = 'None';
-  //
-  // var items = [
-  //   'Non
-  //   'Need Analysis',
-  //   'Value Proposition',
-  //   'Identify Decision Makers',
-  //   'Proposal/Price Quote',
-  //   'Negotiation/Review',
-  //   'Closed Won',
-  //   'Closed Lost',
-  //   'Closed-Lost to Competition',
-  // ];
-  // var items1 =[
-  //   'Existing Business',
-  //   'New Business',
-  //
-  // ];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -189,6 +158,7 @@ class DisplayTaskState extends State<DisplayTask> {
     setState(() {
       task.fetchTaskname();
       fetchTaskind();
+      statuscontroller = TextEditingController()..text = status;
     });
     dateinput.text = "";
     super.initState();
@@ -201,8 +171,8 @@ class DisplayTaskState extends State<DisplayTask> {
           title: const Text('Add Task'),
           leading: GestureDetector(
             onTap: () {
-              Navigator.pop(
-                  context, MaterialPageRoute(builder: (context) => Taskindex()));
+              Navigator.pop(context,
+                  MaterialPageRoute(builder: (context) => Taskindex()));
             },
             child: Icon(Icons.arrow_back),
           ),
@@ -211,10 +181,12 @@ class DisplayTaskState extends State<DisplayTask> {
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context,
-                          MaterialPageRoute(builder: (context)=> const Taskindex()));
-                      //sendData(subject,status, priority,exp_start_date);
-                    }, child: Icon(Icons.check))),
+                      updateTask();
+
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Task Status Updated !')));
+                    },
+                    child: Icon(Icons.check))),
           ]),
       body: ListView(
         children: <Widget>[
@@ -245,27 +217,28 @@ class DisplayTaskState extends State<DisplayTask> {
                     // }),
                   ),
                   DropdownButtonFormField(
-
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.offline_pin_rounded),
-                        labelText: 'Status',
-                      ),
-                      value: dropdownvalue,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      items: items.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue= newValue!;
-                          status= dropdownvalue;
-                        });
-                      }),
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person_outline_outlined),
+                      labelText: 'Status',
+                    ),
+                    value: dropdownvalue,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    onChanged: (
+                      value,
+                    ) {
+                      setState(() {
+                        status = value.toString();
+                        //leadstatus = dropdownvalue;
+                      });
+                    },
+                  ),
                   DropdownButtonFormField(
-
                       decoration: InputDecoration(
                         icon: Icon(Icons.add_circle_outline_rounded),
                         labelText: 'Priority',
@@ -281,8 +254,7 @@ class DisplayTaskState extends State<DisplayTask> {
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownvalue3 = newValue!;
-                          priority= dropdownvalue3;
-
+                          priority = dropdownvalue3;
                         });
                       }),
                   TextFormField(
@@ -308,7 +280,7 @@ class DisplayTaskState extends State<DisplayTask> {
                   TextFormField(
                     controller: typecontroller,
                     decoration: const InputDecoration(
-                        labelText:'Type', icon: Icon(Icons.library_add)),
+                        labelText: 'Type', icon: Icon(Icons.library_add)),
                     // onChanged: ((value) {
                     //   setState(() {
                     //     type = value;
@@ -318,7 +290,8 @@ class DisplayTaskState extends State<DisplayTask> {
                   TextFormField(
                     controller: parent_taskcontroller,
                     decoration: const InputDecoration(
-                        labelText: 'Parent Task', icon: Icon(Icons.adjust_rounded)),
+                        labelText: 'Parent Task',
+                        icon: Icon(Icons.adjust_rounded)),
                     // onChanged: ((value) {
                     //   setState(() {
                     //     parent_task = value;
@@ -345,7 +318,7 @@ class DisplayTaskState extends State<DisplayTask> {
                           print(
                               pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                           String formattedDate =
-                          DateFormat('dd-mm-yyyy').format(pickedDate);
+                              DateFormat('dd-mm-yyyy').format(pickedDate);
                           print(
                               formattedDate); //formatted date output using intl package =>  2021-03-16
                           //you can implement different kind of Date Format here according to your requirement
@@ -353,13 +326,12 @@ class DisplayTaskState extends State<DisplayTask> {
                           setState(() {
                             // dateinput.text =
                             //     formattedDate;
-                            dateinput.text=formattedDate;
-                           // exp_start_date=dateinput.text as DateTime?;//set output date to TextField value.
+                            dateinput.text = formattedDate;
+                            // exp_start_date=dateinput.text as DateTime?;//set output date to TextField value.
                           });
                         } else {
                           print("Date is not selected");
                         }
-
                       }),
                   // TextFormField(
                   //     controller: dateinput,
@@ -397,13 +369,13 @@ class DisplayTaskState extends State<DisplayTask> {
                   TextFormField(
                     controller: progresscontroller,
                     decoration: const InputDecoration(
-                        labelText: 'Progress', icon: Icon(Icons.percent_rounded)),
+                        labelText: 'Progress',
+                        icon: Icon(Icons.percent_rounded)),
                     // onChanged: ((value) {
                     //   setState(() {
                     //     progress = value;
                     //   });
                     // }),
-
                   ),
                   // TextFormField(
                   //   decoration: const InputDecoration(
@@ -414,11 +386,6 @@ class DisplayTaskState extends State<DisplayTask> {
                   //     });
                   //   }),
                   // ),
-
-
-
-
-
 
                   TextFormField(
                     controller: descriptioncontroller,

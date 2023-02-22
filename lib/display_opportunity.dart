@@ -21,6 +21,7 @@ String sales_stage = "";
 String status = "";
 String expected_closing = "";
 String probability = "";
+
 Future<List<Data>> fetchOppoind() async {
   List<Data> list = [];
   var httpsUri = Uri(
@@ -37,7 +38,12 @@ Future<List<Data>> fetchOppoind() async {
     opportunity_from = (json.decode(res.body)["data"]["opportunity_from"]);
     title = (json.decode(res.body)["data"]["title"]).toString();
     party = (json.decode(res.body)["data"]["party_name"]).toString();
-    
+    opportunity_type =
+        (json.decode(res.body)["data"]["opportunity_type"]).toString();
+    sales_stage = (json.decode(res.body)["data"]["sales_stage"]).toString();
+    expected_closing =
+        (json.decode(res.body)["data"]["expected_closing"]).toString();
+    probability = (json.decode(res.body)["data"]["probability"]).toString();
     print(opportunity_from);
     //print(temp);
     fetchOppoind();
@@ -138,7 +144,7 @@ class _DisplayOppo extends State<DisplayOppo> {
       statuscontroller = TextEditingController()..text = status;
       dateinput = TextEditingController()..text = expected_closing;
       probabilitycontroller = TextEditingController()..text = probability;
-
+      dropdownvalue;
       fetchOppoind();
     });
     dateInput.text = ""; //set the initial value of text field
@@ -149,7 +155,7 @@ class _DisplayOppo extends State<DisplayOppo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(widget.title),
+          title: const Text("Update Opportunity"),
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(
@@ -258,37 +264,37 @@ class _DisplayOppo extends State<DisplayOppo> {
                       });
                     },
                   ),
-                  TextField(
-                    controller: dateInput,
-                    //editing controller of this TextField
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.calendar_today), //icon of text field
-                        labelText: "Enter Date" //label text of field
-                        ),
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1950),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2100));
-
-                      if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        setState(() {
-                          dateInput.text =
-                              formattedDate; //set output date to TextField value.
-                        });
-                      } else {}
-                    },
-                  ),
+                  // TextField(
+                  //   controller: dateInput,
+                  //   //editing controller of this TextField
+                  //   decoration: InputDecoration(
+                  //       icon: Icon(Icons.calendar_today), //icon of text field
+                  //       labelText: "Enter Date" //label text of field
+                  //       ),
+                  //   readOnly: true,
+                  //   //set it true, so that user will not able to edit text
+                  //   onTap: () async {
+                  //     DateTime? pickedDate = await showDatePicker(
+                  //         context: context,
+                  //         initialDate: DateTime.now(),
+                  //         firstDate: DateTime(1950),
+                  //         //DateTime.now() - not to allow to choose before today.
+                  //         lastDate: DateTime(2100));
+                  //
+                  //     if (pickedDate != null) {
+                  //       print(
+                  //           pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  //       String formattedDate =
+                  //           DateFormat('yyyy-MM-dd').format(pickedDate);
+                  //       print(
+                  //           formattedDate); //formatted date output using intl package =>  2021-03-16
+                  //       setState(() {
+                  //         dateInput.text =
+                  //             formattedDate; //set output date to TextField value.
+                  //       });
+                  //     } else {}
+                  //   },
+                  // ),
                   TextFormField(
                       controller: probabilitycontroller,
                       decoration: const InputDecoration(

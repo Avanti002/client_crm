@@ -9,12 +9,12 @@ void postlocation(
   String inTime,
   String inDate,
   String inRunning,
-  String outlat,
-  String outlong,
-  String outaddress,
-  String outTime,
-  String outDate,
-  String outRunning,
+  // String outlat,
+  // String outlong,
+  // String outaddress,
+  // String outTime,
+  // String outDate,
+  // String outRunning,
 ) async {
   var headers = {
     'Authorization': 'token 2de95e9c100d19c:6cde1fa98f2c82e',
@@ -25,7 +25,7 @@ void postlocation(
   var request = http.Request('POST',
       Uri.parse('http://swtechnotest.erpdata.in/api/resource/Geo%20tagging'));
   request.body =
-      '''{\r\n    "inaddress":"$inaddress",\r\n    "indate":"$inDate",\r\n    "intime":"$inTime",\r\n    "inlat":"$inlat",\r\n    "inlong":"$inlong",\r\n    "inrunning":"$inRunning",\r\n"outdate":"$outDate",\r\n"outtime":"$outTime",\r\n"outlat":"$outlat",\r\n"outlong":"$outlong",\r\n"outaddress":"$outaddress",\r\n"outrunning":"$outRunning"\r\n}''';
+      '''{\r\n    "inaddress":"$inaddress",\r\n    "indate":"$inDate",\r\n    "intime":"$inTime",\r\n    "inlat":"$inlat",\r\n    "inlong":"$inlong",\r\n    "inrunning":"$inRunning"}''';
 // '''{"indate"="$inDate","intime"="$inTime","inlat"="$inlat","inlong"="$inlong","inaddress"="$inaddress","inrunning"="$inRunning","outdate"="$outDate","outtime"="$outTime","outlat"="$outlat","outlong"="$outlong","outaddress"="$outaddress","outrunning"="$outRunning"}''';
   request.headers.addAll(headers);
 
