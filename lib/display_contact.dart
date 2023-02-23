@@ -76,7 +76,7 @@ abstract class _DisplayContact extends State<DisplayContact>
 
 class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
   @override
-  final Duration autoReloadDuration = const Duration(seconds: 1);
+  final Duration autoReloadDuration = const Duration(seconds: 2);
   final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
   TextEditingController companyNamecontroller = TextEditingController()
@@ -93,10 +93,11 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
 
   @override
   void initState() {
-    setState(() {
-      contact.fetchContactname();
-      fetchContactind();
-    });
+    contact.fetchContactname();
+    fetchContactind();
+    // setState(() {
+
+    // });
     super.initState();
     startAutoReload();
   }

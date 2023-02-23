@@ -12,51 +12,60 @@ import 'package:quantbit_crm/home.dart' as home;
 import 'package:quantbit_crm/update_lead.dart' as api;
 import 'package:quantbit_crm/accessToken.dart' as at;
 
-String accessToken=at.tokenAccess;
-String curl=login.custUrl;
-List lst1=[];
-String companyName="";
-String leadind="";
-String temp="";
+String accessToken = at.tokenAccess;
+String curl = login.custUrl;
+List lst1 = [];
+String companyName = "";
+String leadind = "";
+String temp = "";
 
 Future<List<Data>> fetchCNameList() async {
-List<Data> list=[];
-var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Lead',query:'fields=["company_name"]');
-var res = await http
-.get(httpsUri,headers: {
-  'Authorization': '$accessToken',
-  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
-});
-if (res.statusCode == 200) {
-lst1=json.decode(res.body)["data"] as List;
-fetchCNameList();
-}
-return list;
+  List<Data> list = [];
+  var httpsUri = Uri(
+      scheme: 'https',
+      host: 'demo.erpdata.in',
+      path: '/api/resource/Lead',
+      query: 'fields=["company_name"]');
+  var res = await http.get(httpsUri, headers: {
+    'Authorization': '$accessToken',
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+  });
+  if (res.statusCode == 200) {
+    lst1 = json.decode(res.body)["data"] as List;
+    fetchCNameList();
+  }
+  return list;
 }
 
 Future<Data> fetchCname() async {
- var headers = {
-  'Authorization': 'token da8dde973368af3:f584b09f290bab9',
-  'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
-};
-var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/Lead?filters=[["company_name","=","$companyName"]]'));
+  var headers = {
+    'Authorization': 'token da8dde973368af3:f584b09f290bab9',
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+  };
+  var request = http.Request(
+      'GET',
+      Uri.parse(
+          'https://demo.erpdata.in/api/resource/Lead?filters=[["company_name","=","$companyName"]]'));
 
-request.headers.addAll(headers);
+  request.headers.addAll(headers);
 
-http.StreamedResponse response = await request.send();
+  http.StreamedResponse response = await request.send();
 
-if (response.statusCode == 200) {
- await response.stream.bytesToString().then((value) {
-  temp=value;
-  leadind=temp.toString().substring(18).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
-  });
+  if (response.statusCode == 200) {
+    await response.stream.bytesToString().then((value) {
+      temp = value;
+      leadind = temp
+          .toString()
+          .substring(18)
+          .replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+    });
+  } else {
+    print(response.reasonPhrase);
+  }
+  return Data.fromJson(jsonDecode(request.body));
 }
-else {
-  print(response.reasonPhrase);
-}
-return Data.fromJson(jsonDecode(request.body));
-}
-
 
 class Data {
   final String company_name;
@@ -65,7 +74,6 @@ class Data {
   const Data({
     required this.data,
     required this.company_name,
-    
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -86,14 +94,14 @@ class Leadindex extends StatefulWidget {
 
 class LeadindexState extends State<Leadindex> {
   @override
-void initState() {
-  setState(() {
-    fetchCNameList();
-    api.fetchLeadind();
-  });
-  super.initState();
-  
-}
+  void initState() {
+    setState(() {
+      fetchCNameList();
+      api.fetchLeadind();
+    });
+    super.initState();
+  }
+
   int _selectedIndex = 0;
   final _formKey = GlobalKey<FormState>();
   @override
@@ -102,56 +110,58 @@ void initState() {
       title: 'Welcome to Flutter',
       home: Scaffold(
         drawer: myDrawer(context),
-        appBar: AppBar(
-            title: Text("Leads"),
-            
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.search,
-                    size: 26.0,
-                  ),
-                ),
+        appBar: AppBar(title: Text("Leads"), actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: const Icon(
+                Icons.search,
+                size: 26.0,
               ),
-            ]),
-        body: ListView.builder(itemCount: home.lst.length,itemBuilder: ((context, position) {
-          return Card(
-            child: ListTile(title: Text((home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), ''
-            
-            )),selected: position == _selectedIndex,onTap: () {
-            setState(() {
-              
-              _selectedIndex = position;
-              companyName=(home.lst[position].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '');
-              fetchCname();
-              // showDialog(
-              //   context: context,
-              //   builder: (BuildContext context) {
-              //     return AlertDialog(
-              //       scrollable: true,
-              //       title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
-              //        actions: [
-              //         ElevatedButton(
-              //             child: Text('Close'),
-              //             onPressed: () {
-              //               Navigator.pop(context);
-              //             })
-              //       ],
-              //     );
-              //   }); 
-            }
-            );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UpdateLead(),)
+            ),
+          ),
+        ]),
+        body: ListView.builder(
+            itemCount: home.lst.length,
+            itemBuilder: ((context, position) {
+              return Card(
+                child: ListTile(
+                    title: Text((home.lst[position].toString())
+                        .substring(15)
+                        .replaceAll(RegExp('[^A-Za-z  \t]'), '')),
+                    selected: position == _selectedIndex,
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = position;
+                        companyName = (home.lst[position].toString())
+                            .substring(15)
+                            .replaceAll(RegExp('[^A-Za-z  \t]'), '');
+                        fetchCname();
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (BuildContext context) {
+                        //     return AlertDialog(
+                        //       scrollable: true,
+                        //       title: Text((lst[_selectedIndex].toString()).substring(15).replaceAll(RegExp('[^A-Za-z  \t]'), '')),
+                        //        actions: [
+                        //         ElevatedButton(
+                        //             child: Text('Close'),
+                        //             onPressed: () {
+                        //               Navigator.pop(context);
+                        //             })
+                        //       ],
+                        //     );
+                        //   });
+                      });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateLead(),
+                          ));
+                    }),
               );
-            }),
-            
-          );
-        })),
+            })),
         floatingActionButton:
             SpeedDial(animatedIcon: AnimatedIcons.add_event, children: [
           SpeedDialChild(
@@ -164,7 +174,6 @@ void initState() {
                 context,
                 MaterialPageRoute(builder: (context) => LeadPicker()),
               );
-
             },
           ),
           SpeedDialChild(

@@ -115,19 +115,15 @@ class _CreateContactState extends State<CreateContact> {
                       }),
                   TextFormField(
                       decoration: const InputDecoration(
-                          labelText: 'Mobile No.',
-                          icon: Icon(Icons.phone_android_sharp)),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                          labelText: 'Mobile No', icon: Icon(Icons.phone)),
                       onChanged: (value) {
                         setState(() {
-                          mobileno = mobileno;
+                          mobileno = value;
                         });
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter some number';
+                          return 'Please enter some text';
                         }
                         return null;
                       }),

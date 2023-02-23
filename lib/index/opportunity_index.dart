@@ -151,16 +151,16 @@ class _Opportunityindex extends State<Opportunityindex> {
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.add_event,
           children: [
-            SpeedDialChild(
-              child: const Icon(Icons.arrow_circle_down_rounded,
-                  color: Colors.white),
-              label: 'Import from Address Book',
-              backgroundColor: Colors.blue,
-              onTap: () {},
-            ),
+            // SpeedDialChild(
+            //   child: const Icon(Icons.arrow_circle_down_rounded,
+            //       color: Colors.white),
+            //   label: 'Import from Address Book',
+            //   backgroundColor: Colors.blue,
+            //   onTap: () {},
+            // ),
             SpeedDialChild(
               child: const Icon(Icons.person_add, color: Colors.white),
-              label: 'Add Account',
+              label: 'Add Opportunity',
               backgroundColor: Colors.blue,
               onTap: () {
                 Navigator.push(

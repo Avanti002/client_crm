@@ -141,7 +141,8 @@ class OpportunityState extends _Opportunity with AutoReloadMixin {
                           MaterialPageRoute(
                               builder: (context) =>
                                   const Opportunityindex(title: "")));
-                      postoppo();
+                      postoppo(
+                          opportunity_type, sales_stage, status1, probability);
                     },
                     child: const Icon(Icons.check))),
           ]),
