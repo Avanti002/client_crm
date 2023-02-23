@@ -24,7 +24,7 @@ Future<List<Data>> fetchContactind() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'mobilecrm.erpdata.in',
+      host: 'demo.erpdata.in',
       path: '/api/resource/Contact/${contact.contactind}');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',

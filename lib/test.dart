@@ -10,10 +10,12 @@ import 'package:quantbit_crm/login.dart' as login;
 import 'package:quantbit_crm/home.dart' as home;
 import 'package:quantbit_crm/update_lead.dart' as api;
 import 'package:quantbit_crm/accessToken.dart' as at;
+import 'package:quantbit_crm/create/create_opportunity.dart' as temp;
 
 String accessToken = at.tokenAccess;
 String curl = login.custUrl;
 List lst1 = [];
+String company_name = "";
 
 String? _myState;
 
@@ -22,7 +24,7 @@ Future<List<Data>> fetchCNameList() async {
   var httpsUri = Uri(
       scheme: 'https',
       host: 'demo.erpdata.in',
-      path: '/api/resource/Sales%20Stage',
+      path: '/api/resource/Lead',
       query: 'fields=["name"]');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
@@ -93,6 +95,7 @@ class TestState extends State<Test> {
   void initState() {
     setState(() {
       fetchCNameList();
+      //fetchLeadind1();
       // api.fetchLeadind();
     });
     super.initState();
@@ -123,7 +126,7 @@ class TestState extends State<Test> {
               return DropdownButtonFormField(
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person_outline_outlined),
-                  labelText: 'Sales Stage',
+                  labelText: 'Select Lead',
                 ),
                 value: _myState,
                 icon: const Icon(Icons.keyboard_arrow_down),
@@ -140,51 +143,10 @@ class TestState extends State<Test> {
                   });
                 },
               );
-              // DropdownButton<String>(
-              //     items: lst1.map((item) {
-              //       return DropdownMenuItem<String>(
-              //         value: _myState,
-              //         child: Text(item['name']),
-              //       );
-              //     }).toList(),
-              //     hint: const Text('Opportunity Type'),
-              //     onChanged: (String? value) {
-              //       setState(() {
-              //         _myState = value;
-              //         fetchCNameList();
-              //       });
-              //     });
             } else {
               return const CircularProgressIndicator();
             }
           },
-          // DropdownButtonHideUnderline(
-          //   child: ButtonTheme(
-          //     alignedDropdown: true,
-          //     child: DropdownButton<String>(
-          //       value: _myState,
-          //       iconSize: 30,
-          //       icon: (null),
-          //       style: const TextStyle(
-          //         color: Colors.black54,
-          //         fontSize: 16,
-          //       ),
-          //       hint: const Text('Opportunity Type'),
-          //       onChanged: (String? newValue) {
-          //         setState(() {
-          //           _myState = newValue;
-          //           fetchCNameList();
-          //         });
-          //       },
-          //       items: lst1.map((item) {
-          //             return DropdownMenuItem(
-          //               value: item['id'].toString(),
-          //               child: Text(item['name']),
-          //             );
-          //           }).toList()
-          //     ),
-          //   ),
-          // ),
         ),
       ),
     );

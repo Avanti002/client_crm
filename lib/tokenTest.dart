@@ -17,7 +17,7 @@ Future<Data> fetchApiKey() async {
   var request = http.Request(
       'GET',
       Uri.parse(
-          'https://$curl/api/resource/User?filters=[["name","=","abhishek.chougule@erpdata.in"]]&fields=["api_key"]'));
+          'https://mobilecrm.erpdata.in/api/resource/User?filters=[["name","=","abhishek.chougule@erpdata.in"]]&fields=["api_key"]'));
 
   request.headers.addAll(headers);
 
@@ -44,7 +44,7 @@ Future<Data> fetchApiSecret() async {
   var request = http.Request(
       'POST',
       Uri.parse(
-          'https://$curl/api/method/frappe.core.doctype.user.user.generate_keys?user=abhishek.chougule@erpdata.in'));
+          'https://mobilecrm.erpdata.in/api/method/frappe.core.doctype.user.user.generate_keys?user=abhishek.chougule@erpdata.in'));
 
   request.headers.addAll(headers);
 

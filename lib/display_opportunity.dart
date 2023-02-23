@@ -22,7 +22,7 @@ Future<List<Data>> fetchOppoind() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: '$curl',
+      host: 'demo.erpdata.in',
       path: '/api/resource/Opportunity/${oppo.oppoind}');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
