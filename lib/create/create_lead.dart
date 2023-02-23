@@ -135,11 +135,12 @@ class CreateLeadState extends State<CreateLead> {
                         return null;
                       }),
                   TextFormField(
+                      maxLength: 10,
                       decoration: const InputDecoration(
                           labelText: 'Mobile No.', icon: Icon(Icons.phone)),
-                      // inputFormatters: <TextInputFormatter>[
-                      //   FilteringTextInputFormatter.digitsOnly
-                      // ],
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       onChanged: (value) {
                         setState(() {
                           mobileno = value;

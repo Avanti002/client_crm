@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:quantbit_crm/CallLog.dart';
 import 'package:quantbit_crm/accessToken.dart';
 import 'package:quantbit_crm/service_locator.dart';
-import 'package:quantbit_crm/face_detection/locator.dart';
+
 import 'package:quantbit_crm/tokenTest.dart';
 import 'package:quantbit_crm/login.dart';
 import 'package:workmanager/workmanager.dart';
 
-void main() {
+void main() async {
   setupLocator();
-  setupServices();
+ 
   Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   runApp(const MyApp());
 }

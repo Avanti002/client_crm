@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'dart:async';
-import 'package:quantbit_crm/app_drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:auto_reload/auto_reload.dart';
 import 'dart:convert';
 import 'package:quantbit_crm/index/opportunity_index.dart' as oppo;
 import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:quantbit_crm/index/opportunity_index.dart';
-import 'package:quantbit_crm/service_locator.dart';
-import 'package:quantbit_crm/home.dart';
 
 String temp = oppo.tech;
 String accessToken = at.tokenAccess;
@@ -26,7 +22,7 @@ Future<List<Data>> fetchOppoind() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'demo.erpdata.in',
+      host: '$curl',
       path: '/api/resource/Opportunity/${oppo.oppoind}');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
@@ -44,8 +40,7 @@ Future<List<Data>> fetchOppoind() async {
     expected_closing =
         (json.decode(res.body)["data"]["expected_closing"]).toString();
     probability = (json.decode(res.body)["data"]["probability"]).toString();
-    print(opportunity_from);
-    //print(temp);
+   
     fetchOppoind();
   }
   return list;
@@ -78,7 +73,7 @@ Future<List<Data>> updateOppo() async {
   var request = http.Request(
       'PUT',
       Uri.parse(
-          'https://demo.erpdata.in/api/resource/Opportunity/${oppo.oppoind}?status=$status'));
+          'https://$curl/api/resource/Opportunity/${oppo.oppoind}?status=$status'));
 
   request.headers.addAll(headers);
 
@@ -98,10 +93,17 @@ class DisplayOppo extends StatefulWidget {
   final String title;
 
   @override
-  State<DisplayOppo> createState() => _DisplayOppo();
+  State<StatefulWidget> createState() {
+    return DisplayOppoState();
+  }
 }
 
-class _DisplayOppo extends State<DisplayOppo> {
+abstract class _DisplayOppo extends State<DisplayOppo>
+    implements AutoReloader {}
+
+class DisplayOppoState extends _DisplayOppo with AutoReloadMixin {
+  @override
+  final Duration autoReloadDuration = const Duration(seconds: 2);
   final _formKey = GlobalKey<FormState>();
   TextEditingController opportunity_fromcontroller = TextEditingController()
     ..text = "";
@@ -132,6 +134,13 @@ class _DisplayOppo extends State<DisplayOppo> {
 
   @override
   void initState() {
+    dateInput.text = ""; //set the initial value of text field
+    super.initState();
+    startAutoReload();
+  }
+
+  @override
+  void autoReload() {
     setState(() {
       oppo.fetchOpponame();
       opportunity_fromcontroller = TextEditingController()
@@ -145,17 +154,14 @@ class _DisplayOppo extends State<DisplayOppo> {
       dateinput = TextEditingController()..text = expected_closing;
       probabilitycontroller = TextEditingController()..text = probability;
       dropdownvalue;
-      fetchOppoind();
     });
-    dateInput.text = ""; //set the initial value of text field
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Update Opportunity"),
+          title: Text("Update Opportunity"),
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(

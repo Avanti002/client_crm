@@ -2,17 +2,22 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:quantbit_crm/backend/post_contact.dart';
 
-var api_key="";
-var api_secret="";
-var loggedUser="";
+var api_key = "";
+var api_secret = "";
+var loggedUser = "";
 
 Future<Data> fetchApiKey() async {
   var headers = {
-    'Authorization': 'token da8dde973368af3:f584b09f290bab9',
-    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'Authorization': 'token 94133f5eab07810:a8a214dc5cc530c',
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   };
-  var request = http.Request('GET', Uri.parse('https://demo.erpdata.in/api/resource/User?filters=[["name","=","abhishek.chougule@erpdata.in"]]&fields=["api_key"]'));
+  var request = http.Request(
+      'GET',
+      Uri.parse(
+          'https://$curl/api/resource/User?filters=[["name","=","abhishek.chougule@erpdata.in"]]&fields=["api_key"]'));
 
   request.headers.addAll(headers);
 
@@ -20,21 +25,26 @@ Future<Data> fetchApiKey() async {
 
   if (response.statusCode == 200) {
     await response.stream.bytesToString().then((value) {
-      api_key=value;
-      api_key=api_key.substring(21).replaceAll(RegExp('[^A-Za-z0-9  \t]'), '');
+      api_key = value;
+      api_key =
+          api_key.substring(21).replaceAll(RegExp('[^A-Za-z0-9  \t]'), '');
     });
-  }
-  else {
+  } else {
     print(response.reasonPhrase);
   }
   return Data.fromJson(jsonDecode(request.body));
 }
+
 Future<Data> fetchApiSecret() async {
   var headers = {
     'Authorization': 'token da8dde973368af3:f584b09f290bab9',
-    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   };
-  var request = http.Request('POST', Uri.parse('https://demo.erpdata.in/api/method/frappe.core.doctype.user.user.generate_keys?user=abhishek.chougule@erpdata.in'));
+  var request = http.Request(
+      'POST',
+      Uri.parse(
+          'https://$curl/api/method/frappe.core.doctype.user.user.generate_keys?user=abhishek.chougule@erpdata.in'));
 
   request.headers.addAll(headers);
 
@@ -42,11 +52,11 @@ Future<Data> fetchApiSecret() async {
 
   if (response.statusCode == 200) {
     await response.stream.bytesToString().then((value) {
-      api_secret=value;
-      api_secret=api_secret.substring(26).replaceAll(RegExp('[^A-Za-z0-9  \t]'), '');
+      api_secret = value;
+      api_secret =
+          api_secret.substring(26).replaceAll(RegExp('[^A-Za-z0-9  \t]'), '');
     });
-  }
-  else {
+  } else {
     print(response.reasonPhrase);
   }
   return Data.fromJson(jsonDecode(request.body));
@@ -95,7 +105,6 @@ class Data {
   }
 }
 
-
 class TokenTest extends StatefulWidget {
   const TokenTest({super.key});
 
@@ -104,7 +113,6 @@ class TokenTest extends StatefulWidget {
 }
 
 class _TokenTestState extends State<TokenTest> {
-
   @override
   void initState() {
     fetchApiKey();
@@ -120,14 +128,18 @@ class _TokenTestState extends State<TokenTest> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(  
+      home: Scaffold(
         appBar: AppBar(
-          leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () { Navigator.pop(context); },),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: const Text('Test'),
         ),
         body: Center(
           child: Text('token $api_key:$api_secret'),
-          
         ),
       ),
     );

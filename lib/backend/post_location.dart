@@ -3,19 +3,20 @@ import 'package:quantbit_crm/accessToken.dart' as at;
 
 String accessToken = at.tokenAccess;
 void postlocation(
-  String inlat,
-  String inlong,
-  String inaddress,
-  String inTime,
-  String inDate,
-  String inRunning,
-  // String outlat,
-  // String outlong,
-  // String outaddress,
-  // String outTime,
-  // String outDate,
-  // String outRunning,
-) async {
+    String inlat,
+    String inlong,
+    String inaddress,
+    String inTime,
+    String inDate,
+    String inRunning,
+    String outlat,
+    String outlong,
+    String outaddress,
+    String outTime,
+    String outDate,
+    String outRunning,
+    String totalkm,
+    String totalHours) async {
   var headers = {
     'Authorization': 'token 2de95e9c100d19c:6cde1fa98f2c82e',
     'Content-Type': 'text/plain',
@@ -25,7 +26,7 @@ void postlocation(
   var request = http.Request('POST',
       Uri.parse('http://swtechnotest.erpdata.in/api/resource/Geo%20tagging'));
   request.body =
-      '''{\r\n    "inaddress":"$inaddress",\r\n    "indate":"$inDate",\r\n    "intime":"$inTime",\r\n    "inlat":"$inlat",\r\n    "inlong":"$inlong",\r\n    "inrunning":"$inRunning"}''';
+      '''{"inaddress":"$inaddress","indate":"$inDate","intime":"$inTime","inlat":"$inlat","inlong":"$inlong","inrunning":"$inRunning","total_km":"$totalkm","total_work":"$totalHours"}''';
 // '''{"indate"="$inDate","intime"="$inTime","inlat"="$inlat","inlong"="$inlong","inaddress"="$inaddress","inrunning"="$inRunning","outdate"="$outDate","outtime"="$outTime","outlat"="$outlat","outlong"="$outlong","outaddress"="$outaddress","outrunning"="$outRunning"}''';
   request.headers.addAll(headers);
 

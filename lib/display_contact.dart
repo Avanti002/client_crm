@@ -1,3 +1,4 @@
+import 'package:auto_reload/auto_reload.dart';
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:http/http.dart' as http;
@@ -11,36 +12,38 @@ import 'package:quantbit_crm/home.dart';
 import 'package:quantbit_crm/update_lead.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String accessToken=at.tokenAccess;
-String first_name="";
+String accessToken = at.tokenAccess;
+String first_name = "";
 
-String email_id="";
-String last_name="";
+String email_id = "";
+String last_name = "";
 
-String mobile_no="";
-String company_name="";
+String mobile_no = "";
+String company_name = "";
 Future<List<Data>> fetchContactind() async {
-  List<Data> list=[];
-  var httpsUri = Uri(scheme: 'https',host: 'demo.erpdata.in',path: '/api/resource/Contact/${contact.contactind}');
-  var res = await http
-      .get(httpsUri,headers: {
+  List<Data> list = [];
+  var httpsUri = Uri(
+      scheme: 'https',
+      host: 'mobilecrm.erpdata.in',
+      path: '/api/resource/Contact/${contact.contactind}');
+  var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
-    'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'Cookie':
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   });
   if (res.statusCode == 200) {
     //name==json.decode(res.body)["data"]["name"];
-    first_name=(json.decode(res.body)["data"]["first_name"]).toString();
-    last_name=(json.decode(res.body)["data"]["last_name"]).toString();
-    company_name=(json.decode(res.body)["data"]["company_name"]).toString();
-    email_id=(json.decode(res.body)["data"]["email_id"]).toString();
+    first_name = (json.decode(res.body)["data"]["first_name"]).toString();
+    last_name = (json.decode(res.body)["data"]["last_name"]).toString();
+    company_name = (json.decode(res.body)["data"]["company_name"]).toString();
+    email_id = (json.decode(res.body)["data"]["email_id"]).toString();
 
-    mobile_no=(json.decode(res.body)["data"]["mobile_no"]).toString();
+    mobile_no = (json.decode(res.body)["data"]["mobile_no"]).toString();
 
     fetchContactind();
   }
   return list;
 }
-
 
 class Data {
   final String name;
@@ -49,7 +52,6 @@ class Data {
   const Data({
     required this.data,
     required this.name,
-
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
@@ -60,18 +62,21 @@ class Data {
   }
 }
 
-
-
 class DisplayContact extends StatefulWidget {
   const DisplayContact({Key? key, required this.title}) : super(key: key);
-
   final String title;
-
   @override
-  State<DisplayContact> createState() => _DisplayContactState();
+  State<DisplayContact> createState() {
+    return _DisplayContactState();
+  }
 }
 
-class _DisplayContactState extends State<DisplayContact> {
+abstract class _DisplayContact extends State<DisplayContact>
+    implements AutoReloader {}
+
+class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
+  @override
+  final Duration autoReloadDuration = const Duration(seconds: 1);
   final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
   TextEditingController companyNamecontroller = TextEditingController()
@@ -93,6 +98,18 @@ class _DisplayContactState extends State<DisplayContact> {
       fetchContactind();
     });
     super.initState();
+    startAutoReload();
+  }
+
+  @override
+  void autoReload() {
+    setState(() {
+      companyNamecontroller = TextEditingController()..text = company_name;
+      firstnamecontroller = TextEditingController()..text = first_name;
+      lastnamecontroller = TextEditingController()..text = last_name;
+      emailidcontroller = TextEditingController()..text = email_id;
+      mobilenocontroller = TextEditingController()..text = mobile_no;
+    });
   }
 
   String? firstname;
@@ -107,10 +124,8 @@ class _DisplayContactState extends State<DisplayContact> {
     return MaterialApp(
         title: 'Update Lead',
         home: Scaffold(
-        drawer: myDrawer(context),
-      appBar: AppBar(
-          title: Text(' display contact'),
-          actions: <Widget>[
+          drawer: myDrawer(context),
+          appBar: AppBar(title: Text(first_name), actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -122,105 +137,130 @@ class _DisplayContactState extends State<DisplayContact> {
               ),
             ),
           ]),
-      body: Padding(padding: EdgeInsets.all(20),
-        child:
-        Column(
-          children: <Widget>[
-
-            TextFormField(
-                controller: firstnamecontroller,
-                decoration: const InputDecoration(
-                    labelText: 'First Name', icon: Icon(Icons.person)),
-                onChanged: (value) {
-                  setState(() {
-                    firstname = value;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                }),
-            TextFormField(
-                controller: lastnamecontroller,
-                decoration: const InputDecoration(
-                    labelText: 'Last Name', icon: Icon(Icons.person)),
-                onChanged: (value) {
-                  setState(() {
-                    lastname = value;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                }),
-            TextFormField(
-                controller: companyNamecontroller,
-                decoration: const InputDecoration(
-                    labelText: 'Company Name',
-                    icon: Icon(Icons.account_box)),
-                onChanged: (value) {
-                  setState(() {
-                    companyname = value;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                }),
-            TextFormField(
-                controller: emailidcontroller,
-                decoration: const InputDecoration(
-                    labelText: 'Email Id', icon: Icon(Icons.email)),
-                onChanged: (value) {
-                  setState(() {
-                    emailid = value;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                }),
-            TextFormField(
-                controller: mobilenocontroller,
-                decoration: const InputDecoration(
-                    labelText: 'Mobile No.',
-                    icon: Icon(Icons.phone_android_sharp)),
-                onChanged: (value) {
-                  setState(() {
-                    mobileno = mobileno;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some number';
-                  }
-                  return null;
-                }),
-          ],
-        ),
-      ),
+          body: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                    controller: firstnamecontroller,
+                    decoration: const InputDecoration(
+                        labelText: 'First Name', icon: Icon(Icons.person)),
+                    onChanged: (value) {
+                      setState(() {
+                        firstname = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    }),
+                TextFormField(
+                    controller: lastnamecontroller,
+                    decoration: const InputDecoration(
+                        labelText: 'Last Name', icon: Icon(Icons.person)),
+                    onChanged: (value) {
+                      setState(() {
+                        lastname = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    }),
+                TextFormField(
+                    controller: companyNamecontroller,
+                    decoration: const InputDecoration(
+                        labelText: 'Company Name',
+                        icon: Icon(Icons.account_box)),
+                    onChanged: (value) {
+                      setState(() {
+                        companyname = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    }),
+                TextFormField(
+                    controller: emailidcontroller,
+                    decoration: const InputDecoration(
+                        labelText: 'Email Id', icon: Icon(Icons.email)),
+                    onChanged: (value) {
+                      setState(() {
+                        emailid = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    }),
+                TextFormField(
+                    controller: mobilenocontroller,
+                    decoration: const InputDecoration(
+                        labelText: 'Mobile No.',
+                        icon: Icon(Icons.phone_android_sharp)),
+                    onChanged: (value) {
+                      setState(() {
+                        mobileno = mobileno;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some number';
+                      }
+                      return null;
+                    }),
+              ],
+            ),
+          ),
           floatingActionButton: Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FloatingActionButton(onPressed: (){whatsapp(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/4494/4494494.png')),
-                SizedBox(width: 30,),
-                FloatingActionButton(onPressed: (){_service.call(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/724/724664.png')),
-                SizedBox(width: 30,),
-                FloatingActionButton(onPressed: (){_service.sendSms(mobile_no);},child:Image.network('https://cdn-icons-png.flaticon.com/512/234/234129.png')),
-                SizedBox(width: 30,),
-                FloatingActionButton(onPressed: (){ _service.sendEmail(email_id);},child:Image.network('https://cdn-icons-png.flaticon.com/512/2913/2913990.png')),
-              ],),
+                FloatingActionButton(
+                    onPressed: () {
+                      whatsapp(mobile_no);
+                    },
+                    child: Image.network(
+                        'https://cdn-icons-png.flaticon.com/512/4494/4494494.png')),
+                SizedBox(
+                  width: 30,
+                ),
+                FloatingActionButton(
+                    onPressed: () {
+                      _service.call(mobile_no);
+                    },
+                    child: Image.network(
+                        'https://cdn-icons-png.flaticon.com/512/724/724664.png')),
+                SizedBox(
+                  width: 30,
+                ),
+                FloatingActionButton(
+                    onPressed: () {
+                      _service.sendSms(mobile_no);
+                    },
+                    child: Image.network(
+                        'https://cdn-icons-png.flaticon.com/512/234/234129.png')),
+                SizedBox(
+                  width: 30,
+                ),
+                FloatingActionButton(
+                    onPressed: () {
+                      _service.sendEmail(email_id);
+                    },
+                    child: Image.network(
+                        'https://cdn-icons-png.flaticon.com/512/2913/2913990.png')),
+              ],
+            ),
           ),
-        )
-    );
+        ));
   }
 }

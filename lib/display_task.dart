@@ -1,13 +1,12 @@
+import 'package:auto_reload/auto_reload.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:quantbit_crm/backend/post_task.dart';
 import 'package:quantbit_crm/index/task_index.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:quantbit_crm/index/task_index.dart' as task;
 import 'package:quantbit_crm/index/task_index.dart';
 import 'package:quantbit_crm/accessToken.dart' as at;
-import 'package:quantbit_crm/service_locator.dart';
 
 String accessToken = at.tokenAccess;
 String subject = "";
@@ -25,7 +24,7 @@ Future<List<Data>> fetchTaskind() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'demo.erpdata.in',
+      host: '$curl',
       path: '/api/resource/Task/${task.taskind}');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
@@ -62,7 +61,7 @@ Future<List<Data>> updateTask() async {
   var request = http.Request(
       'PUT',
       Uri.parse(
-          'https://demo.erpdata.in/api/resource/Task/${task.taskind}?status=$status'));
+          'https://$curl/api/resource/Task/${task.taskind}?status=$status'));
 
   request.headers.addAll(headers);
 
@@ -103,7 +102,12 @@ class DisplayTask extends StatefulWidget {
   }
 }
 
-class DisplayTaskState extends State<DisplayTask> {
+abstract class _DisplayTask extends State<DisplayTask>
+    implements AutoReloader {}
+
+class DisplayTaskState extends _DisplayTask with AutoReloadMixin {
+  @override
+  final Duration autoReloadDuration = const Duration(seconds: 2);
   TextEditingController subjectcontroller = TextEditingController()
     ..text = subject;
   TextEditingController projectcontroller = TextEditingController()
@@ -162,13 +166,33 @@ class DisplayTaskState extends State<DisplayTask> {
     });
     dateinput.text = "";
     super.initState();
+    startAutoReload();
+  }
+
+  @override
+  void autoReload() {
+    setState(() {
+      subjectcontroller = TextEditingController()..text = subject;
+      projectcontroller = TextEditingController()..text = project;
+      prioritycontroller = TextEditingController()..text = priority;
+      issuecontroller = TextEditingController()..text = issue;
+      statuscontroller = TextEditingController()..text = status;
+      typecontroller = TextEditingController()..text = type;
+      parent_taskcontroller = TextEditingController()..text = parent_task;
+      exp_start_datecontroller = TextEditingController()..text = exp_start_date;
+      progresscontroller = TextEditingController()..text = progress;
+      descriptioncontroller = TextEditingController()..text = description;
+      task_weightcontroller = TextEditingController()..text = task_weight;
+      dateinput = TextEditingController();
+      dropdownvalue;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Add Task'),
+          title: Text(subject),
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context,

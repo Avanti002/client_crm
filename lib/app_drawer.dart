@@ -2,7 +2,7 @@ import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/CallLog.dart';
 import 'package:quantbit_crm/create/create_event.dart';
-import 'package:quantbit_crm/face_detection/attendance.dart';
+
 import 'package:quantbit_crm/index/contact_index.dart';
 import 'package:quantbit_crm/create/create_meeting.dart';
 import 'package:quantbit_crm/index/deal_index.dart';
@@ -105,15 +105,14 @@ Widget myDrawer(BuildContext context) {
         //   },
         // ),
         ListTile(
-          leading: const Icon(Icons.call_sharp, color: Colors.black),
-          title: const Text('Calls',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          selectedTileColor: Colors.blue[100],
-          onTap: () {
-             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CallLogs()));
-          }
-        ),
+            leading: const Icon(Icons.call_sharp, color: Colors.black),
+            title: const Text('Calls',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            selectedTileColor: Colors.blue[100],
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const CallLogs()));
+            }),
         // Divider(),
         ListTile(
           title: const Text('Meeting',
@@ -175,16 +174,16 @@ Widget myDrawer(BuildContext context) {
                 MaterialPageRoute(builder: (context) => const LocationPage()));
           },
         ),
-        ListTile(
-          title: const Text('Attendance',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          selectedTileColor: Colors.blue[100],
-          leading: const Icon(Icons.verified_user, color: Colors.black),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AttendancePage()));
-          },
-        ),
+        // ListTile(
+        //   title: const Text('Attendance',
+        //       style: TextStyle(fontWeight: FontWeight.bold)),
+        //   selectedTileColor: Colors.blue[100],
+        //   leading: const Icon(Icons.verified_user, color: Colors.black),
+        //   onTap: () {
+        //     Navigator.push(context,
+        //         MaterialPageRoute(builder: (context) => AttendancePage()));
+        //   },
+        // ),
         ListTile(
           title: const Text('Settings',
               style: TextStyle(fontWeight: FontWeight.bold)),

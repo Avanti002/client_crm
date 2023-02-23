@@ -20,6 +20,8 @@ String outaddress = "";
 String outTime = "";
 String outDate = "";
 String outRunning = "";
+String? totalkm;
+String? totalHours;
 DateTime now = DateTime.now();
 
 enum Location { location1, location2 }
@@ -128,8 +130,9 @@ class _LocationPageState extends State<LocationPage> {
         (now.hour % 12) * 60 + now.minute + (now.hour < 12 ? 0 : 720);
     int timeoutMinutes =
         (now.hour % 12) * 60 + now.minute + (now.hour < 12 ? 0 : 720);
-    int differenceMinutes = timeoutMinutes - timeinMinutes;
+
     setState(() {
+      int differenceMinutes = timeoutMinutes - timeinMinutes;
       differenceHours = differenceMinutes / 60.0;
     });
   }
@@ -148,6 +151,7 @@ class _LocationPageState extends State<LocationPage> {
     super.initState();
     _controller1.addListener(_calculate);
     _controller2.addListener(_calculate);
+    _getHours();
   }
 
   @override
@@ -181,20 +185,17 @@ class _LocationPageState extends State<LocationPage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
+                Row(children: [getInCurrentLoc()]),
                 Row(children: [
-                  getInCurrentLoc(),
-                  const SizedBox(
-                    width: 50,
-                  ),
                   Text('Date: $inDate'),
                   const SizedBox(
-                    width: 40,
+                    width: 140,
                   ),
                   Text('Time:$inTime'),
-                  const SizedBox(
-                    height: 10,
-                  )
                 ]),
+                const SizedBox(
+                  height: 10,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -202,7 +203,7 @@ class _LocationPageState extends State<LocationPage> {
                       children: [
                         Text('LAT: $inlat'),
                         const SizedBox(
-                          width: 120,
+                          width: 100,
                         ),
                         Text('LNG: $inlong'),
                         const SizedBox(
@@ -218,6 +219,7 @@ class _LocationPageState extends State<LocationPage> {
                       height: 10,
                     ),
                     TextFormField(
+                      maxLength: 5,
                       controller: _controller1,
                       decoration: const InputDecoration(
                         labelText: 'Enter your Meter Running',
@@ -250,14 +252,18 @@ class _LocationPageState extends State<LocationPage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
+                Row(
+                  children: [
+                    getOutCurrentLoc(),
+                  ],
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
                 Row(children: [
-                  getOutCurrentLoc(),
-                  const SizedBox(
-                    width: 50,
-                  ),
                   Text('Date: $outDate'),
                   const SizedBox(
-                    width: 30,
+                    width: 140,
                   ),
                   Text('Time:$outTime'),
                   const SizedBox(
@@ -287,6 +293,7 @@ class _LocationPageState extends State<LocationPage> {
                       height: 10,
                     ),
                     TextFormField(
+                      maxLength: 5,
                       controller: _controller2,
                       decoration: const InputDecoration(
                         labelText: 'Enter your  Meter Running',
@@ -339,31 +346,46 @@ class _LocationPageState extends State<LocationPage> {
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
-            _getCurrentPosition();
-            Timer(const Duration(seconds: 2), () {
-              setState(() {
-                isPressed = true;
-                inlat = _currentPosition!.latitude.toString();
-                inlong = _currentPosition!.longitude.toString();
-                inaddress = _currentAddress!;
-                inTime = timein;
-                inDate = date;
-                inRunning = _controller1.text;
+            if (_controller1.text != "") {
+              _getCurrentPosition();
+              Timer(const Duration(seconds: 2), () {
+                setState(() {
+                  isPressed = true;
+                  inlat = _currentPosition!.latitude.toString();
+                  inlong = _currentPosition!.longitude.toString();
+                  inaddress = _currentAddress!;
+                  inTime = timein;
+                  inDate = date;
+                  inRunning = _controller1.text;
+                  totalkm = _result.toString();
+                  totalHours = differenceHours.toString();
+                });
+                postlocation(
+                    inlat,
+                    inlong,
+                    inaddress,
+                    inTime,
+                    inDate,
+                    inRunning,
+                    outlat,
+                    outlong,
+                    outaddress,
+                    outTime,
+                    outDate,
+                    outRunning,
+                    totalkm!,
+                    totalHours!);
+                print(inlat);
+                print(inlong);
+                print(inaddress);
+                print(inDate);
+                print(inRunning);
+                print(totalkm);
               });
-              postlocation(
-                inlat,
-                inlong,
-                inaddress,
-                inTime,
-                inDate,
-                inRunning,
-              );
-              print(inlat);
-              print(inlong);
-              print(inaddress);
-              print(inDate);
-              print(inRunning);
-            });
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please Enter Meter Running')));
+            }
           },
           child: const Text('Check In'),
         ),
@@ -377,31 +399,45 @@ class _LocationPageState extends State<LocationPage> {
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
-            _getCurrentPosition();
-            Timer(const Duration(seconds: 2), () {
-              setState(() {
-                isPressed = true;
-                outlat = _currentPosition!.latitude.toString();
-                outlong = _currentPosition!.longitude.toString();
-                outaddress = _currentAddress!;
-                outTime = timeout;
-                outDate = date;
-                outRunning = _controller2.text;
+            if (_controller2.text != "") {
+              _getCurrentPosition();
+              Timer(const Duration(seconds: 2), () {
+                setState(() {
+                  isPressed = true;
+                  outlat = _currentPosition!.latitude.toString();
+                  outlong = _currentPosition!.longitude.toString();
+                  outaddress = _currentAddress!;
+                  outTime = timeout;
+                  outDate = date;
+                  outRunning = _controller2.text;
+                  totalkm = _result.toString();
+                  totalHours = differenceHours.toString();
+                });
+                postlocation(
+                    inlat,
+                    inlong,
+                    inaddress,
+                    inTime,
+                    inDate,
+                    inRunning,
+                    outlat,
+                    outlong,
+                    outaddress,
+                    outTime,
+                    outDate,
+                    outRunning,
+                    totalkm!,
+                    totalHours!);
+                print(outlong);
+                print(outaddress);
+                print(outDate);
+                print(outRunning);
+                print(totalkm);
               });
-              postlocation(
-                inlat,
-                inlong,
-                inaddress,
-                inTime,
-                inDate,
-                inRunning,
-              );
-              print(outlat);
-              print(outlong);
-              print(outaddress);
-              print(outDate);
-              print(outRunning);
-            });
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Please Enter Meter Running!")));
+            }
           },
           child: const Text('Check OUT'),
         ),
