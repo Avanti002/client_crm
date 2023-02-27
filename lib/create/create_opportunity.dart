@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:auto_reload/auto_reload.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +24,7 @@ Future<List<Data>> fetchLeadind1() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'demo.erpdata.in',
+      host: 'mobilecrm.erpdata.in',
       path: '/api/resource/Lead/${temp1}');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',

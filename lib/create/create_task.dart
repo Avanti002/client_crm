@@ -3,6 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:quantbit_crm/backend/post_task.dart';
 import 'package:quantbit_crm/index/task_index.dart';
+import 'package:quantbit_crm/project_list.dart' as pl;
+import 'package:quantbit_crm/Issue_list.dart' as issue;
+import 'package:quantbit_crm/type_list.dart' as xy;
+
+String? proj;
+String? temp;
+String? temp1;
+String? Issue;
+String? Itemp;
+String? Itemp1;
+String? TT;
+String? TTtemp;
+String? TTtemp1;
+String a = ".0";
+String p = "";
 
 class CreateTask extends StatefulWidget {
   const CreateTask({Key? key}) : super(key: key);
@@ -15,18 +30,18 @@ class CreateTask extends StatefulWidget {
 
 class CreateTaskState extends State<CreateTask> {
   String? subject;
-  // String? project;
+
   // String? issue;
   // String? type;
   String? status;
   String? priority;
-  // String? task_weight;
+  String? task_weight;
   // String? parent_task;
   DateTime? exp_start_date;
   // String? exp_end_date;
   // String? progress;
   //Float? expected_time;
-  // String? description;
+  String? description;
   TextEditingController dateinput = TextEditingController();
   String dropdownvalue = 'Open';
 
@@ -116,7 +131,8 @@ class CreateTaskState extends State<CreateTask> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const Taskindex()));
-                      sendData(subject, status, priority, exp_start_date);
+                      sendData(
+                          subject, status, priority, task_weight, description);
                     },
                     child: Icon(Icons.check))),
           ]),
@@ -137,14 +153,42 @@ class CreateTaskState extends State<CreateTask> {
                       });
                     }),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Project', icon: Icon(Icons.add_business)),
-                    // onChanged: ((value) {
-                    //   setState(() {
-                    //     project = value;
-                    //   });
-                    // }),
+                  FutureBuilder(
+                    future: pl.fetchCNameList(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person_outline_outlined),
+                            labelText: 'Select Project',
+                          ),
+                          value: proj,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: pl.plst.map((items) {
+                            return DropdownMenuItem(
+                              value: items.toString(),
+                              child: Text(items['name']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              pl.fetchCNameList();
+                              temp = value.toString();
+                              temp1 = temp
+                                  .toString()
+                                  .substring(7)
+                                  .replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                              print(temp1);
+                              //dsp1=dsp();
+
+                              //dsp1=dsp.toString().substring(7).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                            });
+                          },
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
                   DropdownButtonFormField(
                       decoration: InputDecoration(
@@ -184,36 +228,124 @@ class CreateTaskState extends State<CreateTask> {
                           priority = dropdownvalue3;
                         });
                       }),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Issue', icon: Icon(Icons.add_rounded)),
-                    // onChanged: ((value) {
-                    //   setState(() {
-                    //     issue = value;
-                    //   });
-                    // }),
+                  FutureBuilder(
+                    future: issue.fetchCNameList(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person_outline_outlined),
+                            labelText: 'Select Issue',
+                          ),
+                          value: Issue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: issue.Ilst.map((items) {
+                            return DropdownMenuItem(
+                              value: items.toString(),
+                              child: Text(items['name']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              pl.fetchCNameList();
+                              Itemp = value.toString();
+                              Itemp1 = Itemp.toString()
+                                  .substring(7)
+                                  .replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                              print(Itemp1);
+                              //dsp1=dsp();
+
+                              //dsp1=dsp.toString().substring(7).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                            });
+                          },
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
                         labelText: 'Weight', icon: Icon(Icons.circle)),
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    // onChanged: ((value) {
-                    //   setState(() {
-                    //     task_weight = value;
-                    //   });
-                    // }),
+                    onChanged: ((value) {
+                      setState(() {
+                        task_weight = value;
+                      });
+                    }),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Type', icon: Icon(Icons.library_add)),
-                    // onChanged: ((value) {
-                    //   setState(() {
-                    //     type = value;
-                    //   });
-                    // }),
+                  FutureBuilder(
+                    future: issue.fetchCNameList(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person_outline_outlined),
+                            labelText: 'Select Issue',
+                          ),
+                          value: Issue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: issue.Ilst.map((items) {
+                            return DropdownMenuItem(
+                              value: items.toString(),
+                              child: Text(items['name']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              pl.fetchCNameList();
+                              Itemp = value.toString();
+                              Itemp1 = Itemp.toString()
+                                  .substring(7)
+                                  .replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                              print(Itemp1);
+                              //dsp1=dsp();
+
+                              //dsp1=dsp.toString().substring(7).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                            });
+                          },
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
+                  FutureBuilder(
+                    future: xy.fetchTNameList(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person_outline_outlined),
+                            labelText: 'Task Type',
+                          ),
+                          value: TT,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: xy.Tlst.map((items) {
+                            return DropdownMenuItem(
+                              value: items.toString(),
+                              child: Text(items['name']),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              xy.fetchTNameList();
+                              TTtemp = value.toString();
+                              TTtemp1 = TTtemp.toString()
+                                  .substring(7)
+                                  .replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                              print(TTtemp1);
+                              //dsp1=dsp();
+
+                              //dsp1=dsp.toString().substring(7).replaceAll(RegExp('[^A-Za-z0-9-  \t]'), '');
+                            });
+                          },
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  ),
+
                   TextFormField(
                     decoration: const InputDecoration(
                         labelText: 'Parent Task',
@@ -322,12 +454,13 @@ class CreateTaskState extends State<CreateTask> {
                       }
                       return null;
                     },
-                    //        onChanged: ((value) {
-                    //   setState(() {
-                    //  description = value;
-                    //   });
-                    // }),),
+                    onChanged: ((value) {
+                      setState(() {
+                        description = value;
+                      });
+                    }),
                   ),
+
                   // DropdownButtonFormField(
                   //     decoration: const InputDecoration(
                   //       icon: Icon(Icons.crop_square),

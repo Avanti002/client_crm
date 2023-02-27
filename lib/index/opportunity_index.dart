@@ -47,7 +47,7 @@ Future<Data> fetchOpponame() async {
   var request = http.Request(
       'GET',
       Uri.parse(
-          'https://demo.erpdata.in/api/resource/Opportunity?filters=[["title","=","$tech"]]'));
+          'https://mobilecrm.erpdata.in/api/resource/Opportunity?filters=[["title","=","$tech"]]'));
 
   request.headers.addAll(headers);
 

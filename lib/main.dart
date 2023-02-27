@@ -8,8 +8,8 @@ import 'package:quantbit_crm/login.dart';
 import 'package:workmanager/workmanager.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
- 
   Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   runApp(const MyApp());
 }

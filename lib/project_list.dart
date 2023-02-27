@@ -14,7 +14,7 @@ import 'package:quantbit_crm/create/create_opportunity.dart' as temp;
 
 String accessToken = at.tokenAccess;
 String curl = login.custUrl;
-List lst1 = [];
+List plst = [];
 String company_name = "";
 
 String? _myState;
@@ -23,16 +23,16 @@ Future<List<Data>> fetchCNameList() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'mobilecrm.erpdata.in',
-      path: '/api/resource/Lead',
+      host: 'demo.erpdata.in',
+      path: '/api/resource/Project',
       query: 'fields=["name"]');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
     'Cookie':
-        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   });
   if (res.statusCode == 200) {
-    lst1 = json.decode(res.body)["data"] as List;
+    plst = json.decode(res.body)["data"] as List;
     fetchCNameList();
   }
   return list;
@@ -45,7 +45,7 @@ Future<List<Data>> fetchCNameList() async {
 //         'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 //   };
 //   var request = http.Request('GET',
-//       Uri.parse('https://mobilecrm.erpdata.in/api/resource/Opportunity%20Type'));
+//       Uri.parse('https://demo.erpdata.in/api/resource/Opportunity%20Type'));
 
 //   request.headers.addAll(headers);
 
@@ -126,11 +126,11 @@ class TestState extends State<Test> {
               return DropdownButtonFormField(
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person_outline_outlined),
-                  labelText: 'Select Lead',
+                  labelText: 'Select Project',
                 ),
                 value: _myState,
                 icon: const Icon(Icons.keyboard_arrow_down),
-                items: lst1.map((items) {
+                items: plst.map((items) {
                   return DropdownMenuItem(
                     value: items,
                     child: Text(items['name']),

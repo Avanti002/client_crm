@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, avoid_types_as_parameter_names, library_private_types_in_public_api
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,7 @@ class _MyLoginState extends State<MyLogin> {
   }
 
   TextEditingController curlController = TextEditingController()
-    ..text = "demo.erpdata.in";
+    ..text = "mobilecrm.erpdata.in";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   void usrMobAccess() async {
@@ -45,14 +44,12 @@ class _MyLoginState extends State<MyLogin> {
       String email = emailController.text;
       String cUrl = curlController.text;
       var headers = {
-        'Authorization': '$accessToken',
+        'Authorization': accessToken,
         'Cookie':
             'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
       };
-      var request = http.Request(
-          'GET',
-          Uri.parse(
-              'https://$cUrl/api/resource/User?filters=[["name","=","$email"]]&fields=["mob_access"]'));
+      var request = http.Request('GET', Uri.parse('''
+https://$cUrl/api/resource/User?filters=[["name","=","$email"]]&fields=["mob_access"]'''));
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
@@ -60,6 +57,7 @@ class _MyLoginState extends State<MyLogin> {
           mobaccess = value.toString();
           usrLogin(curlController.text, emailController.text,
               passwordController.text);
+
           if (mobaccess.substring(23, 24) == "1") {
             accessStatus = "Granted";
           } else {
@@ -194,7 +192,7 @@ class _MyLoginState extends State<MyLogin> {
                               if (emailController.text != "" &&
                                   passwordController.text != "") {
                                 usrMobAccess();
-                                Timer(const Duration(seconds: 4), () {
+                                Timer(const Duration(seconds: 2), () {
                                   sCode = loginStatus.toString();
                                 });
                                 Timer(const Duration(seconds: 4), () {

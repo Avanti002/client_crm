@@ -326,6 +326,7 @@ class UpdateLeadState extends _UpdateLead with AutoReloadMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FloatingActionButton(
+                  heroTag: whatsapp,
                   onPressed: () {
                     whatsapp(mobile_no);
                   },
@@ -335,6 +336,7 @@ class UpdateLeadState extends _UpdateLead with AutoReloadMixin {
                 width: 30,
               ),
               FloatingActionButton(
+                  heroTag: 'makecall',
                   onPressed: () {
                     _service.call(mobile_no);
                   },
@@ -344,6 +346,7 @@ class UpdateLeadState extends _UpdateLead with AutoReloadMixin {
                 width: 30,
               ),
               FloatingActionButton(
+                  heroTag: 'sendsms',
                   onPressed: () {
                     _service.sendSms(mobile_no);
                   },
@@ -353,6 +356,7 @@ class UpdateLeadState extends _UpdateLead with AutoReloadMixin {
                 width: 30,
               ),
               FloatingActionButton(
+                  heroTag: 'email',
                   onPressed: () {
                     _service.sendEmail(email_id);
                   },

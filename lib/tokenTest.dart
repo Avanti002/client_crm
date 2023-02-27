@@ -68,7 +68,7 @@ Future<Data> fetchApiSecret() async {
 //     'Authorization': token_secret,
 //     'Cookie': 'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
 //   };
-//   var request = http.Request('POST', Uri.parse('https://demo.erpdata.in/api/method/frappe.auth.get_logged_user'));
+//   var request = http.Request('POST', Uri.parse('https://mobilecrm.erpdata.in/api/method/frappe.auth.get_logged_user'));
 
 //   request.headers.addAll(headers);
 

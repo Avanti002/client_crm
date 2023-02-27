@@ -18,7 +18,7 @@ class _AccessTokenState extends State<AccessToken> {
   void initState() {
     setState(() {
       tokenAccess = tokenAccess + passwordController.text;
-      tokenAccess = "token 94133f5eab07810:15bfb8b48ed4b73";
+      tokenAccess = "token c70cff58637dd55:bd938f47f0ce1d0";
     });
     _passwordVisible = false;
     super.initState();
@@ -83,7 +83,7 @@ class _AccessTokenState extends State<AccessToken> {
                               tokenAccess =
                                   tokenAccess + passwordController.text;
                               tokenAccess =
-                                  "token 94133f5eab07810:15bfb8b48ed4b73";
+                                  "token c70cff58637dd55:bd938f47f0ce1d0";
                             });
 
                             Navigator.push(

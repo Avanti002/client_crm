@@ -22,7 +22,7 @@ Future<List<Data>> fetchOppoind() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'demo.erpdata.in',
+      host: 'mobilecrm.erpdata.in',
       path: '/api/resource/Opportunity/${oppo.oppoind}');
   var res = await http.get(httpsUri, headers: {
     'Authorization': '$accessToken',
@@ -40,7 +40,6 @@ Future<List<Data>> fetchOppoind() async {
     expected_closing =
         (json.decode(res.body)["data"]["expected_closing"]).toString();
     probability = (json.decode(res.body)["data"]["probability"]).toString();
-   
     fetchOppoind();
   }
   return list;
@@ -139,21 +138,31 @@ class DisplayOppoState extends _DisplayOppo with AutoReloadMixin {
     startAutoReload();
   }
 
+
   @override
   void autoReload() {
-    setState(() {
-      oppo.fetchOpponame();
-      opportunity_fromcontroller = TextEditingController()
-        ..text = opportunity_from;
-      partycontroller = TextEditingController()..text = party;
-      titlecontroller = TextEditingController()..text = title;
-      opportunity_typecontroller = TextEditingController()
-        ..text = opportunity_type;
-      sales_stagecontroller = TextEditingController()..text = sales_stage;
-      statuscontroller = TextEditingController()..text = status;
-      dateinput = TextEditingController()..text = expected_closing;
-      probabilitycontroller = TextEditingController()..text = probability;
-      dropdownvalue;
+    Timer.periodic(const Duration(seconds: 10), (timer) async {
+      if (mounted) {
+        setState(() {
+          
+          setState(() {
+            oppo.fetchOpponame();
+            opportunity_fromcontroller = TextEditingController()
+              ..text = opportunity_from;
+            partycontroller = TextEditingController()..text = party;
+            titlecontroller = TextEditingController()..text = title;
+            opportunity_typecontroller = TextEditingController()
+              ..text = opportunity_type;
+            sales_stagecontroller = TextEditingController()..text = sales_stage;
+            statuscontroller = TextEditingController()..text = status;
+            dateinput = TextEditingController()..text = expected_closing;
+            probabilitycontroller = TextEditingController()..text = probability;
+            dropdownvalue;
+          });
+        });
+      } else {
+        timer.cancel();
+      }
     });
   }
 
@@ -161,13 +170,13 @@ class DisplayOppoState extends _DisplayOppo with AutoReloadMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Update Opportunity"),
+          title: const Text("Update Opportunity"),
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Opportunityindex(
+                    builder: (context) => const Opportunityindex(
                           title: '',
                         )),
               );

@@ -2,15 +2,12 @@ import 'package:auto_reload/auto_reload.dart';
 import 'package:flutter/material.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:http/http.dart' as http;
-
 import 'dart:convert';
 import 'package:quantbit_crm/index/contact_index.dart' as contact;
-import 'package:quantbit_crm/index/contact_index.dart';
 import 'package:quantbit_crm/accessToken.dart' as at;
 import 'package:quantbit_crm/service_locator.dart';
 import 'package:quantbit_crm/home.dart';
 import 'package:quantbit_crm/update_lead.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 String accessToken = at.tokenAccess;
 String first_name = "";
@@ -20,14 +17,15 @@ String last_name = "";
 
 String mobile_no = "";
 String company_name = "";
+
 Future<List<Data>> fetchContactind() async {
   List<Data> list = [];
   var httpsUri = Uri(
       scheme: 'https',
-      host: 'demo.erpdata.in',
+      host: 'mobilecrm.erpdata.in',
       path: '/api/resource/Contact/${contact.contactind}');
   var res = await http.get(httpsUri, headers: {
-    'Authorization': '$accessToken',
+    'Authorization': accessToken,
     'Cookie':
         'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   });
@@ -95,9 +93,6 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
   void initState() {
     contact.fetchContactname();
     fetchContactind();
-    // setState(() {
-
-    // });
     super.initState();
     startAutoReload();
   }
@@ -118,7 +113,6 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
   String? companyname;
   String? emailid;
   String? mobileno;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +133,7 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
             ),
           ]),
           body: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 TextFormField(
@@ -232,7 +226,7 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
                     },
                     child: Image.network(
                         'https://cdn-icons-png.flaticon.com/512/4494/4494494.png')),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 FloatingActionButton(
@@ -241,7 +235,7 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
                     },
                     child: Image.network(
                         'https://cdn-icons-png.flaticon.com/512/724/724664.png')),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 FloatingActionButton(
@@ -250,7 +244,7 @@ class _DisplayContactState extends _DisplayContact with AutoReloadMixin {
                     },
                     child: Image.network(
                         'https://cdn-icons-png.flaticon.com/512/234/234129.png')),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 FloatingActionButton(

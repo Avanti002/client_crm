@@ -1,27 +1,27 @@
 import 'package:http/http.dart' as http;
 import 'package:quantbit_crm/accessToken.dart' as at;
 
-String accessToken=at.tokenAccess;
+String accessToken = at.tokenAccess;
 void postlead(
-    String? companyname,
-    String? firstname,
-    String? lastname,
-    String? mobileno,
-    String? leadstatus,
-    String? emailid,
-    String? city,
-    String? state,
-    ) async {
+  String? companyname,
+  String? firstname,
+  String? lastname,
+  String? mobileno,
+  String? leadstatus,
+  String? emailid,
+  String? city,
+  String? state,
+) async {
   var headers = {
-    'Authorization': '$accessToken',
+    'Authorization': accessToken,
     'Content-Type': 'text/plain',
     'Cookie':
-    'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+        'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   };
   var request = http.Request(
-      'POST', Uri.parse('https://demo.erpdata.in/api/resource/Lead'));
+      'POST', Uri.parse('https://mobilecrm.erpdata.in/api/resource/Lead'));
   request.body =
-  '''{"first_name":"$firstname","last_name": "$lastname","mobile_no": "$mobileno","status": "$leadstatus","email_id": "$emailid","company_name":"$companyname","city": "$city","state":"$state"}''';
+      '''{"first_name":"$firstname","last_name": "$lastname","mobile_no": "$mobileno","status": "$leadstatus","email_id": "$emailid","company_name":"$companyname","city": "$city","state":"$state"}''';
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();

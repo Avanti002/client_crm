@@ -11,8 +11,8 @@ void postoppo(String? opportunity_type, String? sales_stage, String? status1,
     'Cookie':
         'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   };
-  var request = http.Request(
-      'POST', Uri.parse('https://demo.erpdata.in/api/resource/Opportunity'));
+  var request = http.Request('POST',
+      Uri.parse('https://mobilecrm.erpdata.in/api/resource/Opportunity'));
   request.body =
       '''{\r\n    "opportunity_from": "Lead","party_name":"${toc.temp1}",\r\n    "opportunity_type": "${opportunity_type}",\r\n    "sales_stage": "${sales_stage}",\r\n    "status": "${status1}",\r\n    "probability": "${probability}"\r\n\r\n\r\n\r\n}''';
 

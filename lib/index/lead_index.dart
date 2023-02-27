@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:quantbit_crm/create/create_leadwithcontact.dart';
 import 'package:quantbit_crm/update_lead.dart';
 import 'package:quantbit_crm/app_drawer.dart';
 import 'package:quantbit_crm/create/create_lead.dart.';
@@ -11,6 +12,7 @@ import 'package:quantbit_crm/test.dart';
 import 'package:quantbit_crm/home.dart' as home;
 import 'package:quantbit_crm/update_lead.dart' as api;
 import 'package:quantbit_crm/accessToken.dart' as at;
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 
 String accessToken = at.tokenAccess;
 String curl = login.custUrl;
@@ -18,6 +20,8 @@ List lst1 = [];
 String companyName = "";
 String leadind = "";
 String temp = "";
+Contact? contact;
+var ct = "";
 
 Future<List<Data>> fetchCNameList() async {
   List<Data> list = [];
@@ -33,7 +37,9 @@ Future<List<Data>> fetchCNameList() async {
   });
   if (res.statusCode == 200) {
     lst1 = json.decode(res.body)["data"] as List;
-    fetchCNameList();
+    for (var item in lst1) {
+      list.add(Data.fromJson(item));
+    }
   }
   return list;
 }
@@ -64,7 +70,12 @@ Future<Data> fetchCname() async {
   } else {
     print(response.reasonPhrase);
   }
-  return Data.fromJson(jsonDecode(request.body));
+
+  var dataJson = jsonDecode(temp)["data"][0];
+  return Data(
+    data: dataJson["name"],
+    company_name: dataJson["company_name"],
+  );
 }
 
 class Data {
@@ -93,12 +104,12 @@ class Leadindex extends StatefulWidget {
 }
 
 class LeadindexState extends State<Leadindex> {
+  final FlutterContactPicker _contactPicker = FlutterContactPicker();
+
   @override
   void initState() {
-    setState(() {
-      fetchCNameList();
-      api.fetchLeadind();
-    });
+    fetchCNameList();
+    api.fetchLeadind();
     super.initState();
   }
 
@@ -169,10 +180,17 @@ class LeadindexState extends State<Leadindex> {
                 color: Colors.white),
             label: 'Import from Address Book',
             backgroundColor: Colors.blue,
-            onTap: () {
+            onTap: () async {
+              Contact? contact1 = await _contactPicker.selectContact();
+              setState(() {
+                contact = contact1;
+                print(contact);
+                ct = contact.toString();
+                print(ct);
+              });
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LeadPicker()),
+                MaterialPageRoute(builder: (context) => ICreateLead()),
               );
             },
           ),
