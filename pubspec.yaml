@@ -30,6 +30,8 @@ dependencies:
   call_log: ^4.0.0
   workmanager: ^0.5.1
   json_annotation: ^4.8.0
+  location: ^4.4.0
+  syncfusion_flutter_calendar: ^20.4.52
 
 dev_dependencies:
   flutter_test:

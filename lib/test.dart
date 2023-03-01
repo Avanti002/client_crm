@@ -123,25 +123,29 @@ class TestState extends State<Test> {
           future: fetchCNameList(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              return DropdownButtonFormField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.person_outline_outlined),
-                  labelText: 'Select Lead',
-                ),
-                value: _myState,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                items: lst1.map((items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(items['name']),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _myState = value as String?;
-                    fetchCNameList();
-                  });
-                },
+              return Column(
+                children: [
+                  DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person_outline_outlined),
+                      labelText: 'Select Lead',
+                    ),
+                    value: _myState,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: lst1.map((items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items['name']),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _myState = value as String?;
+                        fetchCNameList();
+                      });
+                    },
+                  )
+                ],
               );
             } else {
               return const CircularProgressIndicator();

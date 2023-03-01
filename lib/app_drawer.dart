@@ -143,16 +143,18 @@ Widget myDrawer(BuildContext context) {
                 context, MaterialPageRoute(builder: (context) => const Test()));
           },
         ),
-        //  ListTile(
-        //   title: const Text('Test2',
-        //       style: TextStyle(fontWeight: FontWeight.bold)),
-        //   selectedTileColor: Colors.blue[100],
-        //   leading: const Icon(Icons.location_on, color: Colors.black),
-        //   onTap: () {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => const LocationPage2()));
-        //   },
-        // ),
+        ListTile(
+          title: const Text('Test2',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          selectedTileColor: Colors.blue[100],
+          leading: const Icon(Icons.location_on, color: Colors.black),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AttendanceScreen()));
+          },
+        ),
         ListTile(
           title: const Text('Tasks',
               style: TextStyle(fontWeight: FontWeight.bold)),

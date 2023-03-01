@@ -167,177 +167,178 @@ class _LocationPageState extends State<LocationPage> {
         drawer: myDrawer(context),
         appBar: AppBar(title: const Text("GeoLocation")),
         body: SafeArea(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-                Row(children: [getInCurrentLoc()]),
-                Row(children: [
-                  Text('Date: $inDate'),
-                  const SizedBox(
-                    width: 140,
+            child: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
                   ),
-                  Text('Time:$inTime'),
-                ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text('LAT: $inlat'),
-                        const SizedBox(
-                          width: 100,
-                        ),
-                        Text('LNG: $inlong'),
-                        const SizedBox(
-                          height: 10,
-                        )
-                      ],
-                    ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  Row(children: [getInCurrentLoc()]),
+                  Row(children: [
+                    Text('Date: $inDate'),
                     const SizedBox(
-                      height: 10,
+                      width: 140,
                     ),
-                    Text('ADDRESS: $inaddress'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      maxLength: 5,
-                      controller: _controller1,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter your Meter Running',
-                        border: OutlineInputBorder(),
-                      ),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      keyboardType: TextInputType.number,
-                    )
-                  ],
-                )
-              ]),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-                Row(
-                  children: [
-                    getOutCurrentLoc(),
-                  ],
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                Row(children: [
-                  Text('Date: $outDate'),
-                  const SizedBox(
-                    width: 140,
-                  ),
-                  Text('Time:$outTime'),
+                    Text('Time:$inTime'),
+                  ]),
                   const SizedBox(
                     height: 10,
                   ),
-                ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text('LAT: $outlat'),
-                        const SizedBox(
-                          width: 120,
-                        ),
-                        Text('LNG: $outlong'),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text('ADDRESS: $outaddress'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      maxLength: 5,
-                      controller: _controller2,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter your  Meter Running',
-                        border: OutlineInputBorder(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('LAT: $inlat'),
+                          const SizedBox(
+                            width: 100,
+                          ),
+                          Text('LNG: $inlong'),
+                          const SizedBox(
+                            height: 10,
+                          )
+                        ],
                       ),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      keyboardType: TextInputType.number,
-                    )
-                  ],
-                )
-              ]),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text('ADDRESS: $inaddress'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        maxLength: 5,
+                        controller: _controller1,
+                        decoration: const InputDecoration(
+                          labelText: 'Enter your Meter Running',
+                          border: OutlineInputBorder(),
+                        ),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
+                      )
+                    ],
+                  )
+                ]),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+            const SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  Row(
+                    children: [
+                      getOutCurrentLoc(),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Row(children: [
+                    Text('Date: $outDate'),
+                    const SizedBox(
+                      width: 140,
+                    ),
+                    Text('Time:$outTime'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ]),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('LAT: $outlat'),
+                          const SizedBox(
+                            width: 100,
+                          ),
+                          Text('LNG: $outlong'),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text('ADDRESS: $outaddress'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        maxLength: 5,
+                        controller: _controller2,
+                        decoration: const InputDecoration(
+                          labelText: 'Enter your  Meter Running',
+                          border: OutlineInputBorder(),
+                        ),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
+                      )
+                    ],
+                  )
+                ]),
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Total (kms): $_result km',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                Text(
-                  'Total Work Hours (Hours): $differenceHours ',
-                  style: const TextStyle(fontSize: 20),
-                )
-              ],
+            const SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Total (kms): $_result km',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    'Total Work Hours (Hours): $differenceHours ',
+                    style: const TextStyle(fontSize: 20),
+                  )
+                ],
+              ),
             ),
-          ),
-        ])));
+          ]),
+        )));
   }
 
   Widget getInCurrentLoc() {
@@ -360,27 +361,15 @@ class _LocationPageState extends State<LocationPage> {
                   totalkm = _result.toString();
                   totalHours = differenceHours.toString();
                 });
-                postlocation(
-                    inlat,
-                    inlong,
-                    inaddress,
-                    inTime,
-                    inDate,
-                    inRunning,
-                    outlat,
-                    outlong,
-                    outaddress,
-                    outTime,
-                    outDate,
-                    outRunning,
-                    totalkm!,
-                    totalHours!);
+                postinlocation(inlat, inlong, inaddress, inTime, inDate,
+                    inRunning, totalkm!, totalHours!);
                 print(inlat);
                 print(inlong);
                 print(inaddress);
                 print(inDate);
                 print(inRunning);
                 print(totalkm);
+                print(totalHours);
               });
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -413,22 +402,8 @@ class _LocationPageState extends State<LocationPage> {
                   totalkm = _result.toString();
                   totalHours = differenceHours.toString();
                 });
-                postlocation(
-                    inlat,
-                    inlong,
-                    inaddress,
-                    inTime,
-                    inDate,
-                    inRunning,
-                    outlat,
-                    outlong,
-                    outaddress,
-                    outTime,
-                    outDate,
-                    outRunning,
-                    totalkm!,
-                    totalHours!);
-                print(outlong);
+                postoutlocation(outlat, outlong, outaddress, outTime, outDate,
+                    outRunning, totalkm!, totalHours!);
                 print(outaddress);
                 print(outDate);
                 print(outRunning);
