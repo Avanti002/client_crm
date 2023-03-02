@@ -2,15 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:quantbit_crm/accessToken.dart' as at;
+
+String accessToken = at.tokenAccess;
+
+class Data {
+  final String status;
+  final String attendance_date;
+  final String data;
+
+  const Data(
+      {required this.data,
+      required this.status,
+      required this.attendance_date});
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+        data: json['data'],
+        status: json['status'],
+        attendance_date: json['attendance_date']);
+  }
+}
 
 class AttendancePage extends StatefulWidget {
   const AttendancePage({Key? key}) : super(key: key);
 
   @override
-  _AttendancePageState createState() => _AttendancePageState();
+  AttendancePageState createState() => AttendancePageState();
 }
 
-class _AttendancePageState extends State<AttendancePage> {
+class AttendancePageState extends State<AttendancePage> {
   List<MyEvent> _events = [];
 
   @override
@@ -20,10 +41,18 @@ class _AttendancePageState extends State<AttendancePage> {
   }
 
   Future<void> _fetchAttendanceData() async {
-    final response =
-        await http.get(Uri.parse('https://example.com/api/attendance'));
-    final List<dynamic> attendanceData = jsonDecode(response.body);
-
+    var httpsUri = Uri(
+        scheme: 'https',
+        host: 'demo.erpdata.in',
+        path: '/api/resource/Issue',
+        query: 'fields=["name"]');
+    var res = await http.get(httpsUri, headers: {
+      'Authorization': accessToken,
+      'Cookie':
+          'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
+    });
+    final List<dynamic> attendanceData = jsonDecode(res.body)["data"];
+    print(attendanceData);
     setState(() {
       _events = attendanceData
           .map((record) => MyEvent(

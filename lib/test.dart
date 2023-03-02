@@ -27,7 +27,7 @@ Future<List<Data>> fetchCNameList() async {
       path: '/api/resource/Lead',
       query: 'fields=["name"]');
   var res = await http.get(httpsUri, headers: {
-    'Authorization': '$accessToken',
+    'Authorization': accessToken,
     'Cookie':
         'full_name=Guest; sid=Guest; system_user=no; user_id=Guest; user_image='
   });
