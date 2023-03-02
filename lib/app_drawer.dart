@@ -81,19 +81,19 @@ Widget myDrawer(BuildContext context) {
             );
           },
         ),
-        ListTile(
-          leading: const Icon(Icons.handshake, color: Colors.black),
-          title: const Text('Opportunity',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          selectedTileColor: Colors.blue[100],
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const Opportunityindex(title: 'Opportunity')));
-          },
-        ),
+        // ListTile(
+        //   leading: const Icon(Icons.handshake, color: Colors.black),
+        //   title: const Text('Opportunity',
+        //       style: TextStyle(fontWeight: FontWeight.bold)),
+        //   selectedTileColor: Colors.blue[100],
+        //   onTap: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) =>
+        //                 const Opportunityindex(title: 'Opportunity')));
+        //   },
+        // ),
         //Divider(),
         // ListTile(
         //   leading: Icon(Icons.how_to_reg,color: Colors.black),
@@ -104,15 +104,15 @@ Widget myDrawer(BuildContext context) {
         //         context, MaterialPageRoute(builder: (context) => Dealindex()));
         //   },
         // ),
-        ListTile(
-            leading: const Icon(Icons.call_sharp, color: Colors.black),
-            title: const Text('Calls',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            selectedTileColor: Colors.blue[100],
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CallLogs()));
-            }),
+        // ListTile(
+        //     leading: const Icon(Icons.call_sharp, color: Colors.black),
+        //     title: const Text('Calls',
+        //         style: TextStyle(fontWeight: FontWeight.bold)),
+        //     selectedTileColor: Colors.blue[100],
+        //     onTap: () {
+        //       Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => const CallLogs()));
+        //     }),
         // Divider(),
         ListTile(
           title: const Text('Meeting',
@@ -149,10 +149,8 @@ Widget myDrawer(BuildContext context) {
           selectedTileColor: Colors.blue[100],
           leading: const Icon(Icons.location_on, color: Colors.black),
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AttendanceScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AttendancePage()));
           },
         ),
         ListTile(
